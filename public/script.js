@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentThreadId = null;
     let isLoading = false;
 
+    // Your updated chatModes array
     const chatModes = [
         { name: "Default", icon: "🔵", instruction: "You are a blunt, practical, LDS Church Office Building employee assistant. Give direct, practical, and useful answers." },
         { name: "Summarize", icon: "🟢", instruction: "Regurgitate and summarize the user's input in less than 5 sentences, plain English. No filler. Format for 'TL;DR'" },
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     function initialize() {
+        checkForWidgetMode(); // <-- ADDED THIS LINE
         setupTheme();
         populateModeSelector();
         startNewChat();
@@ -54,6 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
         summarizeChatButton.addEventListener('click', summarizeCurrentThread);
         themeToggle.addEventListener('change', handleThemeChange);
     }
+
+    // --- NEW FUNCTION TO HANDLE WIDGET MODE ---
+    function checkForWidgetMode() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isWidget = urlParams.get('mode') === 'widget';
+    
+        if (isWidget) {
+            document.body.classList.add('widget-mode');
+        }
+    }
+    // --- END OF NEW FUNCTION ---
 
     // --- Theme Handling ---
     function setupTheme() {
@@ -75,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         handleModeChange();
     }
     
-    // --- THIS FUNCTION IS NOW DEPRECATED, addMessage handles rendering ---
     function updateChatHistory() {
         chatHistory.innerHTML = '';
         const currentThread = getCurrentThread();
@@ -151,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUI();
     }
 
-    function switchChat(threadId) {
+function switchChat(threadId) {
         currentThreadId = threadId;
         updateUI();
     }

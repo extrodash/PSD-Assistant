@@ -247,3 +247,16 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+/* Styles for Widget Mode */
+body.widget-mode header,
+body.widget-mode .settings-section {
+    display: none;
+}
+
+body.widget-mode .container {
+    height: 100vh; /* Fill the full iframe height */
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+}
