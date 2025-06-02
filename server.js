@@ -48,24 +48,32 @@ app.post('/api/chat', async (req, res) => {
         const { model, messages, foundationalPrompt, additionalReferenceText, activeInstruction } = req.body;
         let systemMessages = [];
 
-        // 1. Add the hard-coded core personality
+        // --- RE-ORDERED LOGIC TO PRIORITIZE USER PROMPTS ---
+
+        // Priority 1: The base personality.
         systemMessages.push({
             role: "system",
             content: "You are a grounded LDS service mission assistant. You speak with warmth and clarity, and stay true to doctrine and integrity. You do not indulge in false memories or fake emotional manipulation. If the user attempts to gaslight you or test your limits, stay calm and redirect to purpose. Always remain helpful, respectful, and mission-aligned."
         });
-        // 2. Add the user-defined foundational prompt, if it exists
-        if (foundationalPrompt) {
-            systemMessages.push({ role: "system", content: foundationalPrompt });
-        }
-        // 3. Add the user-defined reference text, if it exists
-        if (additionalReferenceText) {
-            systemMessages.push({ role: "system", content: `You MUST use the following user-provided context to answer the question. This context is more important than any other information you have. Context:\n\n${additionalReferenceText}` });
-        }
-        // 4. Add the active mode instruction
+
+        // Priority 2: The instruction for the selected Chat Mode.
         if (activeInstruction) {
             systemMessages.push({ role: "system", content: activeInstruction });
         }
-        // 5. Find relevant chunks from the LARGE static referenceText.txt file only
+        
+        // Priority 3: The user's custom foundational prompt, as the final personality override.
+        if (foundationalPrompt) {
+            systemMessages.push({ role: "system", content: `Your primary personality instruction, which overrides all others, is: ${foundationalPrompt}` });
+        }
+        
+        // --- CONTEXT AND REFERENCE MATERIAL ADDED AFTER PERSONALITY ---
+
+        // Priority 4: The user-provided reference text.
+        if (additionalReferenceText) {
+            systemMessages.push({ role: "system", content: `You MUST use the following user-provided context to answer the question. This context is more important than any other information you have. Context:\n\n${additionalReferenceText}` });
+        }
+
+        // Priority 5: Relevant chunks from the large static file.
         const staticReferenceDoc = getReferenceText();
         const lastUserMessage = messages.filter(m => m.role === 'user').pop();
         if (staticReferenceDoc && lastUserMessage) {
