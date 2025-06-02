@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentThreadId = null;
     let isLoading = false;
 
-    // Your updated chatModes array
     const chatModes = [
         { name: "Default", icon: "🔵", instruction: "You are a blunt, practical, LDS Church Office Building employee assistant. Give direct, practical, and useful answers." },
         { name: "Summarize", icon: "🟢", instruction: "Regurgitate and summarize the user's input in less than 5 sentences, plain English. No filler. Format for 'TL;DR'" },
@@ -37,12 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     function initialize() {
-        checkForWidgetMode(); // <-- ADDED THIS LINE
+        checkForWidgetMode();
         setupTheme();
+        loadSettingsFromLocalStorage();
         populateModeSelector();
         startNewChat();
         updateUI();
 
+        // Event Listeners
         sendButton.addEventListener('click', sendMessage);
         userInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -52,36 +53,52 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         newChatButton.addEventListener('click', startNewChat);
         chatThreadsMenu.addEventListener('change', (e) => switchChat(e.target.value));
-        modeSelect.addEventListener('change', handleModeChange);
         summarizeChatButton.addEventListener('click', summarizeCurrentThread);
         themeToggle.addEventListener('change', handleThemeChange);
+
+        // Add listeners to save settings to localStorage on input
+        modeSelect.addEventListener('change', handleModeChange);
+        modelSelect.addEventListener('change', () => localStorage.setItem('savedModel', modelSelect.value));
+        foundationalPromptInput.addEventListener('input', () => localStorage.setItem('savedPrompt', foundationalPromptInput.value));
+        additionalReferenceInput.addEventListener('input', () => localStorage.setItem('savedReferenceText', additionalReferenceInput.value));
     }
 
-    // --- NEW FUNCTION TO HANDLE WIDGET MODE ---
+    // --- Setup Functions ---
     function checkForWidgetMode() {
         const urlParams = new URLSearchParams(window.location.search);
-        const isWidget = urlParams.get('mode') === 'widget';
-    
-        if (isWidget) {
+        if (urlParams.get('mode') === 'widget') {
             document.body.classList.add('widget-mode');
         }
     }
-    // --- END OF NEW FUNCTION ---
 
-    // --- Theme Handling ---
     function setupTheme() {
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
         themeToggle.checked = savedTheme === 'dark';
     }
 
-    function handleThemeChange() {
-        const newTheme = themeToggle.checked ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
+    function loadSettingsFromLocalStorage() {
+        const savedModeIndex = localStorage.getItem('savedModeIndex') || 0;
+        const savedModel = localStorage.getItem('savedModel') || 'gpt-3.5-turbo';
+        const savedPrompt = localStorage.getItem('savedPrompt') || '';
+        const savedReferenceText = localStorage.getItem('savedReferenceText') || '';
+
+        modeSelect.value = savedModeIndex;
+        modelSelect.value = savedModel;
+        foundationalPromptInput.value = savedPrompt;
+        additionalReferenceInput.value = savedReferenceText;
     }
 
-    // --- UI Update Functions ---
+    function populateModeSelector() {
+        chatModes.forEach((mode, index) => {
+            const option = document.createElement('option');
+            option.value = index;
+            option.textContent = `${mode.icon} ${mode.name}`;
+            modeSelect.appendChild(option);
+        });
+    }
+
+    // --- UI Update and Message Rendering ---
     function updateUI() {
         updateChatHistory();
         updateThreadMenu();
@@ -100,18 +117,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderMessage(text, isUser) {
         const messageEl = document.createElement('div');
         messageEl.classList.add('message', isUser ? 'user' : 'assistant');
-
         if (isUser) {
             messageEl.textContent = text;
         } else {
-            // Use Marked and DOMPurify to safely render Markdown
             messageEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
         }
-        
         chatHistory.appendChild(messageEl);
         chatHistory.scrollTop = chatHistory.scrollHeight;
     }
-
 
     function updateThreadMenu() {
         chatThreadsMenu.innerHTML = '';
@@ -126,15 +139,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function populateModeSelector() {
-        chatModes.forEach((mode, index) => {
-            const option = document.createElement('option');
-            option.value = index;
-            option.textContent = `${mode.icon} ${mode.name}`;
-            modeSelect.appendChild(option);
-        });
+    function handleThemeChange() {
+        const newTheme = themeToggle.checked ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
     }
-
+    
     function handleModeChange() {
         const selectedMode = chatModes[modeSelect.value];
         if (selectedMode.name === "Custom") {
@@ -145,9 +155,10 @@ document.addEventListener('DOMContentLoaded', () => {
             modeInstructionContainer.style.display = 'block';
             modeInstructionText.textContent = selectedMode.instruction;
         }
+        localStorage.setItem('savedModeIndex', modeSelect.value);
     }
 
-    // --- Chat Logic ---
+    // --- Core Chat Logic ---
     function getCurrentThread() {
         return chatThreads.find(t => t.id === currentThreadId);
     }
@@ -163,9 +174,16 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUI();
     }
 
-function switchChat(threadId) {
+    function switchChat(threadId) {
         currentThreadId = threadId;
         updateUI();
+    }
+
+    function addMessageToState(text, isUser) {
+        const currentThread = getCurrentThread();
+        if (currentThread) {
+            currentThread.messages.push({ text, isUser });
+        }
     }
 
     async function sendMessage() {
@@ -173,7 +191,7 @@ function switchChat(threadId) {
         if (!text || isLoading) return;
 
         addMessageToState(text, true);
-        renderMessage(text, true); // Render immediately
+        renderMessage(text, true);
         userInput.value = '';
         isLoading = true;
 
@@ -193,6 +211,10 @@ function switchChat(threadId) {
             additionalReferenceText: additionalReferenceInput.value.trim(),
             activeInstruction: activeInstruction
         };
+
+        // This is the crucial diagnostic line.
+        // Check your browser's developer console to see this output when you send a message.
+        console.log("Sending this payload to the server:", payload);
 
         try {
             const response = await fetch('/api/chat', {
@@ -225,14 +247,6 @@ function switchChat(threadId) {
         }
     }
     
-    function addMessageToState(text, isUser) {
-        const currentThread = getCurrentThread();
-        if (currentThread) {
-            currentThread.messages.push({ text, isUser });
-        }
-    }
-
-    // Summarization function remains the same
     async function summarizeCurrentThread() {
         const currentThread = getCurrentThread();
         if (!currentThread || currentThread.messages.length === 0) {
@@ -267,5 +281,6 @@ function switchChat(threadId) {
         }
     }
 
+    // Start the application
     initialize();
 });
