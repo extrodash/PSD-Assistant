@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Reflection", icon: "⚫️", instruction: "Respond with an intense, bold question that highly reflects the Biblical tone. Make it brief, not cringe." },
         { name: "Explain Simply", icon: "🟤", instruction: "Explain the user's input as if to a 10-year-old. Use simple words, but don't be condescending." },
         { name: "Gospel Mode", icon: "🟣", instruction: "Offer LDS insight, deep dive into scripture, real-life reference, and reflection questions." },
+        { name: "Skill/Tool Matcher", icon: "🟡", instruction: "When prompted with an inquiry about projects matched with the users input, reference projects listed under the relevant category" },
         { name: "Custom", icon: "🛠️", instruction: "" }
     ];
 
