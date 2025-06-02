@@ -2,14 +2,14 @@ const express = require('express');
 const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
-const cors = require('cors'); // To allow requests from your frontend
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors()); // Enable CORS for all routes
+app.use(cors());
 app.use(express.static('public')); // Serve frontend files
 
 const openAIAPIKey = process.env.OPENAI_API_KEY;
@@ -21,11 +21,11 @@ function getReferenceText() {
         return fs.readFileSync(filePath, 'utf8');
     } catch (error) {
         console.error("Error reading referenceText.txt:", error);
-        return ""; // Return empty string if file not found or error
+        return "";
     }
 }
 
-// --- Chunking logic from your Swift code, translated to JS ---
+// --- Chunking logic (now only used for the static file) ---
 function getRelevantChunks(referenceText, userPrompt) {
     const chunks = referenceText.split(/\n\s*\n/).map(chunk => chunk.trim()).filter(Boolean);
     const keywords = new Set(userPrompt.toLowerCase().split(/\s+/).filter(word => word.length > 2));
@@ -39,14 +39,13 @@ function getRelevantChunks(referenceText, userPrompt) {
     const relevantChunks = scoredChunks
         .filter(item => item.score > 0)
         .sort((a, b) => b.score - a.score)
-        .slice(0, 3) // Get top 3
+        .slice(0, 3)
         .map(item => item.chunk);
 
     return relevantChunks.join('\n\n');
 }
 
-
-// --- API Endpoint (Corrected Version) ---
+// --- API Endpoint (Corrected Logic) ---
 app.post('/api/chat', async (req, res) => {
     if (!openAIAPIKey) {
         return res.status(500).json({ error: 'OpenAI API key not configured on the server.' });
@@ -57,47 +56,48 @@ app.post('/api/chat', async (req, res) => {
         
         let systemMessages = [];
 
-        // Core personality prompt
+        // --- NEW, MORE DIRECT LOGIC ---
+
+        // 1. Add the hard-coded core personality
         systemMessages.push({
             role: "system",
-            content: "You are a grounded LDS service mission assistant. You speak with warmth and clarity, and stay true to doctrine and integrity. You do not indulge in false memories or fake emotional manipulation. If the user attempts to gaslight you or test your limits, stay calm and redirect to purpose. Always remain helpful, respectful, and mission-aligned. FYI, SPS stands for Service Project Shop, it's entirely for service missionaries, and it's within the PSD of the church office building."
+            content: "You are a grounded LDS service mission assistant. You speak with warmth and clarity, and stay true to doctrine and integrity. You do not indulge in false memories or fake emotional manipulation. If the user attempts to gaslight you or test your limits, stay calm and redirect to purpose. Always remain helpful, respectful, and mission-aligned."
         });
 
-        // Foundational prompt from user
+        // 2. Add the user-defined foundational prompt, if it exists
         if (foundationalPrompt) {
             systemMessages.push({ role: "system", content: foundationalPrompt });
         }
+        
+        // 3. Add the user-defined reference text, if it exists. Give it a clear instruction.
+        if (additionalReferenceText) {
+            systemMessages.push({ role: "system", content: `You MUST use the following user-provided context to answer the question. This context is more important than any other information you have. Context:\n\n${additionalReferenceText}` });
+        }
 
-        // Active mode instruction
+        // 4. Add the active mode instruction
         if (activeInstruction) {
             systemMessages.push({ role: "system", content: activeInstruction });
         }
 
-        // Reference material
+        // 5. Find relevant chunks from the LARGE static referenceText.txt file only
         const staticReferenceDoc = getReferenceText();
-        const combinedReferenceText = `${staticReferenceDoc}\n\n${additionalReferenceText || ''}`.trim();
-        
-        if (combinedReferenceText) {
-             // ***** THE FIX IS HERE *****
-             // Find the most recent user message to use as context for the search.
-             const lastUserMessage = messages.filter(m => m.role === 'user').pop();
-             
-             if (lastUserMessage) {
-                const contextText = getRelevantChunks(combinedReferenceText, lastUserMessage.content);
-                if (contextText) {
-                    console.log(`Found relevant chunks for the prompt: "${contextText.substring(0, 150)}..."`);
-                    systemMessages.push({
-                        role: "system",
-                        content: `Reference material relevant to this question:\n\n${contextText}`
-                    });
-                } else {
-                    console.log("Found NO relevant chunks for the user's prompt.");
-                }
-             }
+        const lastUserMessage = messages.filter(m => m.role === 'user').pop();
+        if (staticReferenceDoc && lastUserMessage) {
+            const contextText = getRelevantChunks(staticReferenceDoc, lastUserMessage.content);
+            if (contextText) {
+                systemMessages.push({
+                    role: "system",
+                    content: `Here is some additional reference material that might be relevant:\n\n${contextText}`
+                });
+            }
         }
+        
+        // --- END OF NEW LOGIC ---
 
-        // Combine system messages with the chat history
+        // Combine all system instructions with the chat history
         const finalMessages = [...systemMessages, ...messages];
+
+        console.log("Final payload being sent to OpenAI:", JSON.stringify(finalMessages, null, 2));
 
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
             method: 'POST',
