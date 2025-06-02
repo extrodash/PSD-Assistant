@@ -40,6 +40,48 @@ function getRelevantChunks(referenceText, userPrompt) {
     return relevantChunks.join('\n\n');
 }
 
+// --- DEDICATED ENDPOINT FOR SUMMARIZATION ---
+app.post('/api/summarize', async (req, res) => {
+    if (!openAIAPIKey) {
+        return res.status(500).json({ error: 'OpenAI API key not configured on the server.' });
+    }
+    try {
+        const { messages } = req.body;
+
+        // Create a clean, focused set of messages for the AI
+        const summarizationPayload = [
+            {
+                role: "system",
+                content: "You are a summarization expert. Summarize the following conversation in 1-2 clear, concise sentences. Do not add any commentary or introductory text. Respond only with the summary."
+            },
+            ...messages // Add the full conversation history
+        ];
+
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${openAIAPIKey}`
+            },
+            body: JSON.stringify({
+                model: 'gpt-3.5-turbo', // Use a fast, cheap model for this task
+                messages: summarizationPayload,
+            })
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.error?.message || 'Failed to fetch from OpenAI');
+        }
+        res.json(data);
+    } catch (error) {
+        console.error('Error in /api/summarize:', error);
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+// --- MAIN ENDPOINT FOR CHAT MESSAGES ---
 app.post('/api/chat', async (req, res) => {
     if (!openAIAPIKey) {
         return res.status(500).json({ error: 'OpenAI API key not configured on the server.' });
@@ -47,8 +89,6 @@ app.post('/api/chat', async (req, res) => {
     try {
         const { model, messages, foundationalPrompt, additionalReferenceText, activeInstruction } = req.body;
         let systemMessages = [];
-
-        // --- RE-ORDERED LOGIC TO PRIORITIZE USER PROMPTS ---
 
         // Priority 1: The base personality.
         systemMessages.push({
@@ -66,8 +106,6 @@ app.post('/api/chat', async (req, res) => {
             systemMessages.push({ role: "system", content: `Your primary personality instruction, which overrides all others, is: ${foundationalPrompt}` });
         }
         
-        // --- CONTEXT AND REFERENCE MATERIAL ADDED AFTER PERSONALITY ---
-
         // Priority 4: The user-provided reference text.
         if (additionalReferenceText) {
             systemMessages.push({ role: "system", content: `You MUST use the following user-provided context to answer the question. This context is more important than any other information you have. Context:\n\n${additionalReferenceText}` });

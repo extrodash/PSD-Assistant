@@ -253,17 +253,16 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         chatSummaryDiv.textContent = "Summarizing...";
+        
         const payload = {
-            model: "gpt-3.5-turbo",
             messages: currentThread.messages.map(msg => ({
                 role: msg.isUser ? 'user' : 'assistant',
                 content: msg.text
-            })),
-            activeInstruction: "Summarize this entire conversation in 1-2 sentences. Be concise, practical, and clear."
+            }))
         };
 
         try {
-            const response = await fetch('/api/chat', {
+            const response = await fetch('/api/summarize', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
