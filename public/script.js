@@ -211,9 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
             additionalReferenceText: additionalReferenceInput.value.trim(),
             activeInstruction: activeInstruction
         };
-
-        // This is the crucial diagnostic line.
-        // Check your browser's developer console to see this output when you send a message.
+        
         console.log("Sending this payload to the server:", payload);
 
         try {

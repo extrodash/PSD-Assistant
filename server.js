@@ -10,11 +10,10 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static('public')); // Serve frontend files
+app.use(express.static('public'));
 
 const openAIAPIKey = process.env.OPENAI_API_KEY;
 
-// --- Helper function to read reference text ---
 function getReferenceText() {
     try {
         const filePath = path.join(__dirname, 'referenceText.txt');
@@ -25,60 +24,47 @@ function getReferenceText() {
     }
 }
 
-// --- Chunking logic (now only used for the static file) ---
 function getRelevantChunks(referenceText, userPrompt) {
     const chunks = referenceText.split(/\n\s*\n/).map(chunk => chunk.trim()).filter(Boolean);
     const keywords = new Set(userPrompt.toLowerCase().split(/\s+/).filter(word => word.length > 2));
-
     const scoredChunks = chunks.map(chunk => {
         const wordsInChunk = new Set(chunk.toLowerCase().split(/\s+/));
         const score = [...keywords].filter(keyword => wordsInChunk.has(keyword)).length;
         return { chunk, score };
     });
-
     const relevantChunks = scoredChunks
         .filter(item => item.score > 0)
         .sort((a, b) => b.score - a.score)
         .slice(0, 3)
         .map(item => item.chunk);
-
     return relevantChunks.join('\n\n');
 }
 
-// --- API Endpoint (Corrected Logic) ---
 app.post('/api/chat', async (req, res) => {
     if (!openAIAPIKey) {
         return res.status(500).json({ error: 'OpenAI API key not configured on the server.' });
     }
-
     try {
         const { model, messages, foundationalPrompt, additionalReferenceText, activeInstruction } = req.body;
-        
         let systemMessages = [];
-
-        // --- NEW, MORE DIRECT LOGIC ---
 
         // 1. Add the hard-coded core personality
         systemMessages.push({
             role: "system",
             content: "You are a grounded LDS service mission assistant. You speak with warmth and clarity, and stay true to doctrine and integrity. You do not indulge in false memories or fake emotional manipulation. If the user attempts to gaslight you or test your limits, stay calm and redirect to purpose. Always remain helpful, respectful, and mission-aligned."
         });
-
         // 2. Add the user-defined foundational prompt, if it exists
         if (foundationalPrompt) {
             systemMessages.push({ role: "system", content: foundationalPrompt });
         }
-        
-        // 3. Add the user-defined reference text, if it exists. Give it a clear instruction.
+        // 3. Add the user-defined reference text, if it exists
         if (additionalReferenceText) {
             systemMessages.push({ role: "system", content: `You MUST use the following user-provided context to answer the question. This context is more important than any other information you have. Context:\n\n${additionalReferenceText}` });
         }
-
         // 4. Add the active mode instruction
         if (activeInstruction) {
             systemMessages.push({ role: "system", content: activeInstruction });
         }
-
         // 5. Find relevant chunks from the LARGE static referenceText.txt file only
         const staticReferenceDoc = getReferenceText();
         const lastUserMessage = messages.filter(m => m.role === 'user').pop();
@@ -92,11 +78,7 @@ app.post('/api/chat', async (req, res) => {
             }
         }
         
-        // --- END OF NEW LOGIC ---
-
-        // Combine all system instructions with the chat history
         const finalMessages = [...systemMessages, ...messages];
-
         console.log("Final payload being sent to OpenAI:", JSON.stringify(finalMessages, null, 2));
 
         const response = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -115,9 +97,7 @@ app.post('/api/chat', async (req, res) => {
         if (!response.ok) {
             throw new Error(data.error?.message || 'Failed to fetch from OpenAI');
         }
-
         res.json(data);
-
     } catch (error) {
         console.error('Error in /api/chat:', error);
         res.status(500).json({ error: error.message });
