@@ -2,15 +2,27 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const chatHistory = document.getElementById('chat-history');
     const userInput = document.getElementById('user-input');
-    // ... (all your other DOM elements are the same)
+    const sendButton = document.getElementById('send-button');
+    const newChatButton = document.getElementById('new-chat-button');
+    const chatThreadsMenu = document.getElementById('chat-threads-menu');
+    const modelSelect = document.getElementById('model-select');
+    const modeSelect = document.getElementById('mode-select');
+    const customPromptContainer = document.getElementById('custom-prompt-container');
+    const customPromptInput = document.getElementById('custom-prompt');
+    const modeInstructionContainer = document.getElementById('mode-instruction-container');
+    const modeInstructionText = document.getElementById('mode-instruction');
     const foundationalPromptInput = document.getElementById('foundational-prompt');
+    const additionalReferenceInput = document.getElementById('additional-reference');
+    const summarizeChatButton = document.getElementById('summarize-chat-button');
+    const chatSummaryDiv = document.getElementById('chat-summary');
     const themeToggle = document.getElementById('theme-toggle');
 
     // --- State Management ---
     let chatThreads = [];
-    // ... (rest of state is the same)
-    
-    // ... (your chatModes array is the same)
+    let currentThreadId = null;
+    let isLoading = false;
+
+    // Your updated chatModes array
     const chatModes = [
         { name: "Default", icon: "🔵", instruction: "You are a blunt, practical, LDS Church Office Building employee assistant. Give direct, practical, and useful answers." },
         { name: "Summarize", icon: "🟢", instruction: "Regurgitate and summarize the user's input in less than 5 sentences, plain English. No filler. Format for 'TL;DR'" },
@@ -25,9 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     function initialize() {
-        checkForWidgetMode();
+        checkForWidgetMode(); // <-- ADDED THIS LINE
         setupTheme();
-        loadSettings(); // <-- NEW: Load saved settings from localStorage
         populateModeSelector();
         startNewChat();
         updateUI();
@@ -41,29 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         newChatButton.addEventListener('click', startNewChat);
         chatThreadsMenu.addEventListener('change', (e) => switchChat(e.target.value));
-        
-        // --- UPDATED: Add event listeners to save settings on change ---
         modeSelect.addEventListener('change', handleModeChange);
-        modelSelect.addEventListener('change', () => localStorage.setItem('savedModel', modelSelect.value));
-        foundationalPromptInput.addEventListener('input', () => localStorage.setItem('savedPrompt', foundationalPromptInput.value));
-        // ---
-
         summarizeChatButton.addEventListener('click', summarizeCurrentThread);
         themeToggle.addEventListener('change', handleThemeChange);
     }
 
-    // --- NEW: Function to load settings ---
-    function loadSettings() {
-        const savedModeIndex = localStorage.getItem('savedModeIndex') || 0; // Default to 'Default' mode
-        const savedModel = localStorage.getItem('savedModel') || 'gpt-3.5-turbo';
-        const savedPrompt = localStorage.getItem('savedPrompt') || ''; // Default to empty prompt
-
-        modeSelect.value = savedModeIndex;
-        modelSelect.value = savedModel;
-        foundationalPromptInput.value = savedPrompt;
-    }
-
-    // ... (checkForWidgetMode and theme functions are the same)
+    // --- NEW FUNCTION TO HANDLE WIDGET MODE ---
     function checkForWidgetMode() {
         const urlParams = new URLSearchParams(window.location.search);
         const isWidget = urlParams.get('mode') === 'widget';
@@ -72,7 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('widget-mode');
         }
     }
-    
+    // --- END OF NEW FUNCTION ---
+
+    // --- Theme Handling ---
     function setupTheme() {
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
@@ -84,23 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.documentElement.setAttribute('data-theme', newTheme);
         localStorage.setItem('theme', newTheme);
     }
-    
-    // --- UPDATED: handleModeChange now also saves the selected mode ---
-    function handleModeChange() {
-        const selectedMode = chatModes[modeSelect.value];
-        if (selectedMode.name === "Custom") {
-            customPromptContainer.style.display = 'block';
-            modeInstructionContainer.style.display = 'none';
-        } else {
-            customPromptContainer.style.display = 'none';
-            modeInstructionContainer.style.display = 'block';
-            modeInstructionText.textContent = selectedMode.instruction;
-        }
-        // Save the chosen mode index to localStorage
-        localStorage.setItem('savedModeIndex', modeSelect.value);
-    }
 
-    // ... (The rest of your script.js file, like sendMessage, etc., remains exactly the same)
     // --- UI Update Functions ---
     function updateUI() {
         updateChatHistory();
@@ -124,6 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isUser) {
             messageEl.textContent = text;
         } else {
+            // Use Marked and DOMPurify to safely render Markdown
             messageEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
         }
         
@@ -154,6 +135,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function handleModeChange() {
+        const selectedMode = chatModes[modeSelect.value];
+        if (selectedMode.name === "Custom") {
+            customPromptContainer.style.display = 'block';
+            modeInstructionContainer.style.display = 'none';
+        } else {
+            customPromptContainer.style.display = 'none';
+            modeInstructionContainer.style.display = 'block';
+            modeInstructionText.textContent = selectedMode.instruction;
+        }
+    }
+
     // --- Chat Logic ---
     function getCurrentThread() {
         return chatThreads.find(t => t.id === currentThreadId);
@@ -170,7 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUI();
     }
 
-    function switchChat(threadId) {
+function switchChat(threadId) {
         currentThreadId = threadId;
         updateUI();
     }
@@ -180,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!text || isLoading) return;
 
         addMessageToState(text, true);
-        renderMessage(text, true);
+        renderMessage(text, true); // Render immediately
         userInput.value = '';
         isLoading = true;
 
@@ -239,6 +232,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // Summarization function remains the same
     async function summarizeCurrentThread() {
         const currentThread = getCurrentThread();
         if (!currentThread || currentThread.messages.length === 0) {
