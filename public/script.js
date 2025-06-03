@@ -2,11 +2,28 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const chatHistory = document.getElementById('chat-history');
     const userInput = document.getElementById('user-input');
-    // ... (all your other DOM element consts) ...
+    const sendButton = document.getElementById('send-button'); // Make sure this is declared
+    const newChatButton = document.getElementById('new-chat-button');
+    const chatThreadsMenu = document.getElementById('chat-threads-menu');
+    const modelSelect = document.getElementById('model-select'); // This was undefined
+    const modeSelect = document.getElementById('mode-select');   // Likely also undefined
+    const customPromptContainer = document.getElementById('custom-prompt-container');
+    const customPromptInput = document.getElementById('custom-prompt');
+    const modeInstructionContainer = document.getElementById('mode-instruction-container');
+    const modeInstructionText = document.getElementById('mode-instruction');
+    const foundationalPromptInput = document.getElementById('foundational-prompt'); // Likely also undefined
+    const additionalReferenceInput = document.getElementById('additional-reference'); // Likely also undefined
+    const summarizeChatButton = document.getElementById('summarize-chat-button');
+    const chatSummaryDiv = document.getElementById('chat-summary');
+    const fullMessageModal = document.getElementById('full-message-modal');
+    const fullMessageTextDisplay = document.getElementById('full-message-text-display');
+    const closeFullMessageBtn = document.getElementById('close-full-message-btn');
     const copyFullMessageBtn = document.getElementById('copy-full-message-btn');
+    // themeToggle was removed, so it's correctly not here.
 
+    // --- CONFIGURATION ---
     const LONG_MESSAGE_THRESHOLD = 300;
-    const LOADING_BUBBLE_ID = 'loading-bubble-placeholder'; // ID for our loading bubble
+    const LOADING_BUBBLE_ID = 'loading-bubble-placeholder';
 
     // ... (State Management and chatModes array remain the same) ...
     let chatThreads = [];
