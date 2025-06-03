@@ -29,17 +29,16 @@
     --icon-color: #a8b0b8; 
     --shadow-color: rgba(0, 0, 0, 0.3); 
         
-    /* Button & Accent Colors - Universal Neon Glow */
-    --button-base-purple: #583770; /* Slightly adjusted base purple for buttons */
-    --button-neon-glow-color: rgba(200, 160, 220, 0.75); /* Main neon glow color */
-    --button-neon-glow-soft-aura: rgba(200, 160, 220, 0.45); /* Softer outer aura for neon glow */
-    --button-text-color: #ffffff; /* Text color for these buttons */
+    --button-base-purple: #583770; 
+    --button-neon-glow-color: rgba(200, 160, 220, 0.75); 
+    --button-neon-glow-soft-aura: rgba(200, 160, 220, 0.45); 
+    --button-text-color: #ffffff; 
 
     --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.12); 
     --bg-edge-glow-milkyway-2: rgba(190, 170, 220, 0.12); 
 
     --header-text-gradient: linear-gradient(90deg, #C373E6, #8A55C1, #4AA0D1);
-    --button-accent-purple-rgb: 112, 66, 136; /* RGB for original #704288, if needed for expand-btn*/
+    --button-accent-purple-rgb: 112, 66, 136; /* RGB for #704288, used for expand-btn */
 }
 
 * { box-sizing: border-box; }
@@ -120,21 +119,19 @@ header h1 {
 .header-controls { display: flex; align-items: center; gap: 0.75rem; }
 .menu { display: flex; align-items: center; gap: 0.6rem; }
 
-/* Updated Button Styles for Universal Glow */
 #new-chat-button, #summarize-chat-button, #chat-threads-menu {
     background-color: var(--button-base-purple);
     color: var(--button-text-color);
-    border: 1px solid transparent; /* Or var(--button-neon-glow-color) for a very thin neon border */
+    border: 1px solid transparent; 
     padding: 0.5rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.2s ease-out;
-    /* Subtle but sharp neon glow */
-    box-shadow: 0 0 5px 1px var(--button-neon-glow-color), /* Inner, sharper part */
-                0 0 10px 2px var(--button-neon-glow-soft-aura), /* Softer outer aura */
-                inset 0 0 1px rgba(255,255,255,0.1); /* Slight inner edge */
+    box-shadow: 0 0 5px 1px var(--button-neon-glow-color), 
+                0 0 10px 2px var(--button-neon-glow-soft-aura), 
+                inset 0 0 1px rgba(255,255,255,0.1); 
 }
 #new-chat-button:hover, #summarize-chat-button:hover, #chat-threads-menu:hover {
     background-color: color-mix(in srgb, var(--button-base-purple) 85%, white);
@@ -160,15 +157,14 @@ header h1 {
 }
 .settings-section summary::after {
     content: ''; position: absolute; bottom: 2px; left: 10%; right: 10%; 
-    height: 2px; background: var(--button-neon-glow-color); /* Using button neon glow */
-    border-radius: 1px;
+    height: 2px; background: var(--button-neon-glow-color); border-radius: 1px;
     opacity: 0.6; filter: blur(1.5px); 
     transition: opacity 0.3s ease, filter 0.3s ease, background 0.3s ease, transform 0.3s ease;
 }
 .settings-section summary:hover::after,
 .settings-section summary:focus-visible::after {
     opacity: 0.85; filter: blur(2.5px); transform: scaleY(1.5); 
-    background: var(--button-neon-glow-soft-aura); /* Use softer aura on hover */
+    background: var(--button-neon-glow-soft-aura); 
 }
 .settings-section summary:focus-visible { color: var(--button-base-purple); }
 
@@ -260,18 +256,16 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     background-color: var(--input-bg-color); color: var(--text-color); 
 }
 #user-input:focus {
-    border-color: var(--button-base-purple); /* Changed from button-accent-purple */
+    border-color: var(--button-base-purple); 
     box-shadow: 0 0 0 2px var(--button-neon-glow-color); 
 }
 
-/* Updated Send Button Style */
 #send-button {
     background: var(--button-base-purple);
-    border: 1px solid transparent; /* Or var(--button-neon-glow-color) for a thin neon border */
+    border: 1px solid transparent; 
     cursor: pointer; padding: 0; width: 44px; height: 44px;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     transition: all 0.2s ease-out; flex-shrink: 0;
-    /* Subtle but sharp neon glow */
     box-shadow: 0 0 4px 0px var(--button-neon-glow-color), 
                 0 0 8px 2px var(--button-neon-glow-soft-aura);
 }
@@ -285,40 +279,162 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 #send-button:disabled { background-color: var(--secondary-text-color); opacity: 0.6; cursor: not-allowed; box-shadow: none; }
 #send-button:disabled svg { fill: var(--text-color); opacity: 0.7; }
 
-/* Loading Bubble Styles - no change from previous */
-.message.loading-bubble { /* ... */ }
-.loading-dot-container { /* ... */ }
-.loading-dot { /* ... */ }
-.loading-dot:nth-child(1) { /* ... */ }
-.loading-dot:nth-child(2) { /* ... */ }
-@keyframes loadingPulse { /* ... */ }
+/* Loading Bubble Styles */
+.message.loading-bubble {
+    background-color: var(--assistant-message-bg); /* Use assistant base color */
+    /* Or for gradient: background: linear-gradient(135deg, var(--assistant-message-bg-start) 0%, var(--assistant-message-bg-end) 100%); */
+    color: var(--assistant-message-text);
+    align-self: flex-start;
+    border-bottom-left-radius: 8px;
+    box-shadow: 0px 0px 6px 1px var(--assistant-glow-sharp-1), 
+                0px 0px 12px 2px var(--assistant-glow-sharp-2), 
+                inset 0px 0px 4px 0px var(--assistant-pearl-highlight);
+    padding: 0.75rem 1.25rem;
+    display: flex;
+    align-items: center;
+    min-height: 40px; /* Or match message padding for consistent height */
+}
+.loading-dot-container { display: flex; align-items: center; }
+.loading-dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; background-color: var(--assistant-message-text);
+    margin: 0 3px; animation: loadingPulse 1.4s infinite ease-in-out both;
+}
+.loading-dot:nth-child(1) { animation-delay: -0.32s; }
+.loading-dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes loadingPulse {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.5; }
+    40% { transform: scale(1.0); opacity: 1; }
+}
 
-/* Styles for Widget Mode - no change from previous */
-body.widget-mode header, body.widget-mode .settings-section { display: none; }
+/* Styles for Widget Mode */
+body.widget-mode header,
+body.widget-mode .settings-section { display: none; }
 body.widget-mode .container { height: 100%; border: none; border-radius: 0; box-shadow: none; }
 body.widget-mode { padding: 0; }
 body.widget-mode::before { display: none; } 
 
-/* Expand Message Button on individual messages - no change from previous */
+/* Expand Message Button on individual messages */
 .message { position: relative; }
-.expand-message-btn { /* ... */ }
-.expand-message-btn:hover { /* ... */ }
+.expand-message-btn {
+    position: absolute; bottom: 5px; right: 8px;
+    background-color: rgba(var(--button-accent-purple-rgb), 0.6); /* Slightly more opaque */
+    color: var(--button-text-color); border: none; border-radius: 50%;
+    width: 26px; height: 26px; font-size: 16px; /* Slightly larger */
+    line-height: 26px; text-align: center; cursor: pointer;
+    opacity: 0.6; /* Less intrusive */
+    transition: opacity 0.2s ease, background-color 0.2s ease;
+    padding: 0; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+.expand-message-btn:hover {
+    opacity: 1;
+    background-color: rgba(var(--button-accent-purple-rgb), 0.9);
+}
 
-/* Full Screen Message Modal Styles - no change from previous */
-.modal-overlay { /* ... */ }
-.modal-overlay:not(.hidden) { /* ... */ }
-.modal-content { /* ... */ }
-.modal-overlay:not(.hidden) .modal-content { /* ... */ }
-.modal-header { /* ... */ }
-.modal-header h2 { /* ... */ }
-.modal-close-btn { /* ... */ }
-.modal-close-btn:hover { /* ... */ }
-.modal-body { /* ... */ }
-.modal-body p { /* ... */ } /* and other markdown styles */
-.modal-footer { /* ... */ }
-#copy-full-message-btn { /* ... */ }
-#copy-full-message-btn:hover { /* ... */ }
-.hidden { /* ... */ }
+/* Full Screen Message Modal Styles */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(10, 10, 20, 0.85); /* Darker, slightly bluer backdrop */
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000; opacity: 0; visibility: hidden;
+    transform: scale(0.95);
+    transition: opacity 0.25s ease-out, visibility 0s linear 0.25s, transform 0.25s ease-out;
+}
+.modal-overlay.visible {
+    opacity: 1; visibility: visible; transform: scale(1);
+    transition: opacity 0.25s ease-out, visibility 0s linear 0s, transform 0.25s ease-out;
+}
+.modal-content {
+    background-color: var(--container-bg-color); 
+    color: var(--text-color); 
+    padding: 25px; /* More padding */
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4); /* Deeper shadow for modal */
+    width: 90%; max-width: 750px; /* Slightly wider */
+    max-height: 88vh; display: flex; flex-direction: column;
+    position: relative; 
+    border: 1px solid var(--border-color);
+}
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px; margin-bottom: 20px; /* More spacing */
+}
+.modal-header h2 { margin: 0; font-size: 1.3rem; font-weight: 600; }
+.modal-close-btn {
+    background: none; border: none; font-size: 2rem; /* Larger close button */
+    color: var(--secondary-text-color); cursor: pointer;
+    padding: 0 8px; line-height: 1; transition: color 0.2s ease;
+}
+.modal-close-btn:hover { color: var(--text-color); }
+.modal-body {
+    flex-grow: 1; overflow-y: auto; line-height: 1.7; /* Increased line height */
+    white-space: pre-wrap; font-size: 1rem; margin-bottom: 20px;
+}
+.modal-body p { margin: 0 0 0.7em 0; }
+.modal-body p:last-child { margin-bottom: 0; }
+.modal-body strong { font-weight: 600; color: var(--text-color); }
+.modal-body ol, .modal-body ul { padding-left: 1.75rem; margin-top: 0.7em; margin-bottom: 0.7em;}
+.modal-body li { margin-bottom: 0.35em; }
+.modal-body code {
+    background-color: var(--input-bar-bg); padding: 0.2em 0.5em;
+    border-radius: 5px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.9em; border: 1px solid var(--border-color);
+}
+.modal-body pre {
+    background-color: var(--input-bar-bg); padding: 1rem;
+    border-radius: 8px; overflow-x: auto;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.9em; margin: 1em 0;
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.25); 
+}
+.modal-body pre code { padding: 0; background-color: transparent; border: none; box-shadow: none;}
 
-/* Mobile Responsiveness - no change from previous */
-@media (max-width: 600px) { /* ... */ }
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+    padding-top: 20px; /* More spacing */
+    text-align: right;
+}
+#copy-full-message-btn {
+    background-color: var(--button-base-purple);
+    color: var(--button-text-color);
+    border: 1px solid transparent;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease-out;
+    box-shadow: 0 0 4px 0px var(--button-neon-glow-color), 
+                0 0 8px 1px var(--button-neon-glow-soft-aura);
+}
+#copy-full-message-btn:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 6px 1px var(--button-neon-glow-color), 
+                0 0 12px 2px var(--button-neon-glow-soft-aura);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    body { padding: 0; font-size: 15px; }
+    body::before { display: none; } 
+    .container { height: 100vh; max-height: none; border-radius: 0; border: none; }
+    header { padding: 0.6rem 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
+    header h1 { font-size: 1rem; flex-basis: 100%; text-align: center; margin-bottom: 0.5rem;}
+    .header-controls { width: 100%; justify-content: space-around; gap: 0.5rem; }
+    #new-chat-button, #summarize-chat-button, #chat-threads-menu { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
+    .chat-history { padding: 0.75rem; gap: 0.75rem; }
+    .message { padding: 0.6rem 0.9rem; font-size: 0.9rem; }
+    .input-bar { padding: 0.6rem 0.75rem; gap: 0.5rem;}
+    #user-input { padding: 0.6rem 1rem; font-size: 0.9rem; max-height: 100px; }
+    #send-button { width: 38px; height: 38px; }
+    #send-button svg { width: 20px; height: 20px; }
+    .settings-section { padding: 0.75rem; }
+    label { font-size: 0.8rem; }
+    textarea, select:not(#chat-threads-menu) { padding: 0.6rem 0.8rem; font-size: 0.85rem; }
+    .modal-content { width: 95%; padding: 15px; } /* Modal adjustments for mobile */
+    .modal-header h2 { font-size: 1.1rem; }
+    .modal-body { font-size: 0.9rem; }
+}
