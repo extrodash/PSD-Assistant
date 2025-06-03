@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const fullMessageTextDisplay = document.getElementById('full-message-text-display');
     const closeFullMessageBtn = document.getElementById('close-full-message-btn');
     const copyFullMessageBtn = document.getElementById('copy-full-message-btn');
+    const referenceChunksSelect = document.getElementById('reference-chunks-select');
     // themeToggle was removed, so it's correctly not here.
 
     // --- CONFIGURATION ---
@@ -98,11 +99,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const savedModel = localStorage.getItem('savedModel') || 'gpt-3.5-turbo';
         const savedPrompt = localStorage.getItem('savedPrompt') || '';
         const savedReferenceText = localStorage.getItem('savedReferenceText') || '';
+        const savedReferenceChunks = localStorage.getItem('referenceChunks') || '10';
 
         if(modeSelect) modeSelect.value = savedModeIndex;
         if(modelSelect) modelSelect.value = savedModel;
         if(foundationalPromptInput) foundationalPromptInput.value = savedPrompt;
         if(additionalReferenceInput) additionalReferenceInput.value = savedReferenceText;
+        if(referenceChunksSelect) referenceChunksSelect.value = savedReferenceChunks;
     }
 
     function populateModeSelector() {
@@ -341,7 +344,8 @@ document.addEventListener('DOMContentLoaded', () => {
         })) : [],
         foundationalPrompt: foundationalPromptInput.value.trim(),
         additionalReferenceText: additionalReferenceInput.value.trim(),
-        activeInstruction: activeInstruction
+        activeInstruction: activeInstruction,
+        referenceChunks: referenceChunksSelect ? parseInt(referenceChunksSelect.value, 10) : 10
     };
     
     console.log("Sending this payload to the server:", payload);

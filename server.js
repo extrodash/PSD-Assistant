@@ -113,7 +113,7 @@ app.post('/api/chat', async (req, res) => {
         return res.status(500).json({ error: 'OpenAI API key not configured on the server.' });
     }
     try {
-        const { model, messages, foundationalPrompt, additionalReferenceText, activeInstruction } = req.body;
+        const { model, messages, foundationalPrompt, additionalReferenceText, activeInstruction, referenceChunks } = req.body;
         
         if (!messages || !Array.isArray(messages) || messages.length === 0) {
             return res.status(400).json({ error: 'Invalid or empty messages array provided.' });
@@ -133,8 +133,8 @@ app.post('/api/chat', async (req, res) => {
         const keywordExtractionText = userMessagesForKeywords.map(m => m.content).join(" ");
 
         if (staticReferenceDoc && keywordExtractionText) {
-            // ABSOLUTE OVERKILL: include the context blocks
-            const contextText = getRelevantChunks(staticReferenceDoc, keywordExtractionText, 15, true); // up to 15 chunks
+            const maxChunks = Math.max(2, Math.min(Number(referenceChunks) || 10, 10));
+            const contextText = getRelevantChunks(staticReferenceDoc, keywordExtractionText, maxChunks, true);
             if (contextText) {
                 systemMessages.push({
                     role: "system",
