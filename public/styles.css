@@ -11,12 +11,12 @@
     --input-bg-color: #282a30;
     --input-bar-bg: #181a1f;
     
-    /* Style for Gray Message Bubbles (now for user) */
-    --gray-message-bg: #32363e;
+    /* Style for Gray Message Bubbles (user) - MADE BRIGHTER */
+    --gray-message-bg: #4A4E5A; /* Changed from #32363e to a lighter Manatee gray */
     --gray-message-text: #e8eaed;
-    --gray-glow-sharp: rgba(130, 135, 145, 0.5);
+    --gray-glow-sharp: rgba(130, 135, 145, 0.5); /* Glow remains subtle */
     
-    /* Style for Colorful "Pearl/Milky Way" Message Bubbles (now for assistant) */
+    /* Style for Colorful "Pearl/Milky Way" Message Bubbles (assistant) */
     --colorful-message-bg-start: #2d3a4b; 
     --colorful-message-bg-end: #3f3251;   
     --colorful-message-text: #e8eaed;
@@ -32,11 +32,9 @@
     --button-neon-glow: rgba(200, 160, 220, 0.65); 
     --button-accent-text: #ffffff;
 
-    /* Background Edge Glow - "Milky Way" inspired */
-    --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.12); /* Slightly brighter for black bg */
-    --bg-edge-glow-milkyway-2: rgba(190, 170, 220, 0.12); /* Slightly brighter for black bg */
+    --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.12); 
+    --bg-edge-glow-milkyway-2: rgba(190, 170, 220, 0.12); 
 
-    /* Header Gradient */
     --header-text-gradient: linear-gradient(90deg, #C373E6, #8A55C1, #4AA0D1);
 }
 
@@ -55,7 +53,7 @@ body {
     font-size: 16px;
     position: relative; 
 }
-body::before { /* "Milky Way" edge glow */
+body::before { 
     content: '';
     position: fixed; 
     top: -50%; left: -50%; 
@@ -65,7 +63,7 @@ body::before { /* "Milky Way" edge glow */
         transparent 35%, 
         var(--bg-edge-glow-milkyway-1) 65%, 
         var(--bg-edge-glow-milkyway-2) 90%);
-    opacity: 0.7; /* Slightly more visible on pure black */
+    opacity: 0.7; 
     animation: subtlePulse 12s infinite alternate ease-in-out;
 }
 
@@ -182,7 +180,7 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 }
 
 #mode-instruction, .summary-display {
-    background-color: var(--gray-message-bg); /* Using gray message bg for consistency */
+    background-color: var(--gray-message-bg); 
     padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.875rem; 
     color: var(--gray-message-text); line-height: 1.5; 
     border: 1px solid var(--border-color);
@@ -198,17 +196,17 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 }
 .message:hover { transform: translateY(-1px); }
 
-/* USER messages now get the simpler gray style */
+/* USER messages now get the brighter gray style */
 .message.user {
-    background-color: var(--gray-message-bg);
+    background-color: var(--gray-message-bg); /* Uses the updated, brighter gray */
     color: var(--gray-message-text);
     align-self: flex-end;
     border-bottom-right-radius: 8px;
-    box-shadow: 0px 0px 7px 2px var(--gray-glow-sharp), /* Was assistant-glow-sharp */
+    box-shadow: 0px 0px 7px 2px var(--gray-glow-sharp), 
                 inset 0 0 3px rgba(255,255,255,0.03); 
 }
 
-/* ASSISTANT messages now get the colorful "pearl/milky way" style */
+/* ASSISTANT messages get the colorful "pearl/milky way" style */
 .message.assistant {
     background: linear-gradient(135deg, var(--colorful-message-bg-start) 0%, var(--colorful-message-bg-end) 100%);
     color: var(--colorful-message-text);
