@@ -2,44 +2,42 @@
 :root {
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     
-    /* Dark Theme Variables are now default */
-    --bg-color: #121418; /* Slightly bluer dark */
-    --container-bg-color: #1c1f26; /* Slightly bluer container */
+    /* Core Dark Theme Variables */
+    --bg-color: #000000; /* JET BLACK BACKGROUND */
+    --container-bg-color: #1c1f26; 
     --text-color: #e8eaed;
     --secondary-text-color: #9aa0a6;
-    --border-color: #3c4043; /* Adjusted border */
+    --border-color: #3c4043; 
     --input-bg-color: #282a30;
     --input-bar-bg: #181a1f;
     
-    /* User Message - "Pearl reflecting milky way" inspired */
-    --message-user-bg-start: #2d3a4b; /* Deep space blue */
-    --message-user-bg-end: #3f3251;   /* Cosmic purple */
-    --message-user-text: #e8eaed;
-    /* Subtle, sharper neon glows, leaning towards blues/purples/whites */
-    --user-glow-sharp-1: rgba(173, 216, 230, 0.5); /* Light Sky Blue, less spread */
-    --user-glow-sharp-2: rgba(220, 190, 255, 0.4); /* Soft Lavender, less spread */
-    --user-pearl-highlight: rgba(240, 248, 255, 0.15); /* AliceBlue for subtle pearl edge */
-
-    /* Assistant Message - Gray with subtle, sharper Lighter Gray Glow */
-    --message-assistant-bg: #32363e; 
-    --message-assistant-text: #e8eaed;
-    --assistant-glow-sharp: rgba(130, 135, 145, 0.5); /* Sharper, less diffuse gray glow */
+    /* Style for Gray Message Bubbles (now for user) */
+    --gray-message-bg: #32363e;
+    --gray-message-text: #e8eaed;
+    --gray-glow-sharp: rgba(130, 135, 145, 0.5);
+    
+    /* Style for Colorful "Pearl/Milky Way" Message Bubbles (now for assistant) */
+    --colorful-message-bg-start: #2d3a4b; 
+    --colorful-message-bg-end: #3f3251;   
+    --colorful-message-text: #e8eaed;
+    --colorful-glow-sharp-1: rgba(173, 216, 230, 0.5); 
+    --colorful-glow-sharp-2: rgba(220, 190, 255, 0.4); 
+    --colorful-pearl-highlight: rgba(240, 248, 255, 0.15); 
     
     --settings-bg: #282a30;
     --icon-color: #a8b0b8; 
-    --shadow-color: rgba(0, 0, 0, 0.3); /* Kept shadow deep for dark theme contrast */
+    --shadow-color: rgba(0, 0, 0, 0.3); 
         
-    /* Button & Accent Colors - Dark Purple with refined Neon Glow */
-    --button-accent-purple: #704288; /* Slightly less saturated purple */
-    --button-neon-glow: rgba(200, 160, 220, 0.65); /* Lilac for neon effect */
+    --button-accent-purple: #704288; 
+    --button-neon-glow: rgba(200, 160, 220, 0.65); 
     --button-accent-text: #ffffff;
 
     /* Background Edge Glow - "Milky Way" inspired */
-    --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.1); /* Faint light blue */
-    --bg-edge-glow-milkyway-2: rgba(190, 170, 220, 0.1); /* Faint soft purple */
+    --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.12); /* Slightly brighter for black bg */
+    --bg-edge-glow-milkyway-2: rgba(190, 170, 220, 0.12); /* Slightly brighter for black bg */
 
     /* Header Gradient */
-    --header-text-gradient: linear-gradient(90deg, #C373E6, #8A55C1, #4AA0D1); /* Purple-Pink-Blue */
+    --header-text-gradient: linear-gradient(90deg, #C373E6, #8A55C1, #4AA0D1);
 }
 
 * { box-sizing: border-box; }
@@ -64,16 +62,16 @@ body::before { /* "Milky Way" edge glow */
     width: 200%; height: 200%; 
     z-index: -1; 
     background-image: radial-gradient(ellipse at center, 
-        transparent 35%, /* Larger transparent center */
+        transparent 35%, 
         var(--bg-edge-glow-milkyway-1) 65%, 
         var(--bg-edge-glow-milkyway-2) 90%);
-    opacity: 0.6; /* Still subtle */
+    opacity: 0.7; /* Slightly more visible on pure black */
     animation: subtlePulse 12s infinite alternate ease-in-out;
 }
 
 @keyframes subtlePulse {
-    0% { transform: scale(1); opacity: 0.4; }
-    100% { transform: scale(1.03); opacity: 0.7; }
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.03); opacity: 0.8; }
 }
 
 @keyframes textGradientAnimation {
@@ -88,7 +86,7 @@ body::before { /* "Milky Way" edge glow */
     max-height: 850px;
     background-color: var(--container-bg-color);
     border-radius: 16px;
-    box-shadow: 0 8px 25px var(--shadow-color); /* Slightly adjusted */
+    box-shadow: 0 8px 25px var(--shadow-color);
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-color);
@@ -112,7 +110,7 @@ header h1 {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: textGradientAnimation 8s ease infinite alternate; /* Slightly faster animation */
+    animation: textGradientAnimation 8s ease infinite alternate;
     background-size: 250% auto; 
     display: inline-block; 
 }
@@ -123,24 +121,23 @@ header h1 {
 #new-chat-button, #summarize-chat-button, #chat-threads-menu {
     background-color: var(--button-accent-purple);
     color: var(--button-accent-text);
-    border: 1px solid rgba(255,255,255,0.1); /* Subtle border for definition */
+    border: 1px solid rgba(255,255,255,0.1); 
     padding: 0.5rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.2s ease-out;
-    /* Sharper, more focused neon glow */
     box-shadow: 0 0 3px 0px var(--button-neon-glow), 
                 0 0 6px 1px rgba(var(--button-neon-glow), 0.7),
-                inset 0 0 2px rgba(255,255,255,0.05); /* Very subtle inner edge */
+                inset 0 0 2px rgba(255,255,255,0.05); 
 }
 #new-chat-button:hover, #summarize-chat-button:hover, #chat-threads-menu:hover {
     background-color: color-mix(in srgb, var(--button-accent-purple) 90%, white);
     box-shadow: 0 0 5px 1px var(--button-neon-glow),
                 0 0 10px 3px rgba(var(--button-neon-glow), 0.8),
                 inset 0 0 3px rgba(255,255,255,0.1);
-    transform: translateY(-1px); /* Slight lift on hover */
+    transform: translateY(-1px); 
 }
 #chat-threads-menu {
     -webkit-appearance: none; -moz-appearance: none; appearance: none;
@@ -157,24 +154,15 @@ header h1 {
     position: relative; transition: color 0.2s ease, text-shadow 0.3s ease;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2); 
 }
-.settings-section summary::after { /* Sharper underglow */
-    content: '';
-    position: absolute;
-    bottom: 2px; /* Closer to text */
-    left: 10%; 
-    right: 10%; 
-    height: 2px; /* Thinner, sharper line */
-    background: var(--button-neon-glow); 
-    border-radius: 1px;
-    opacity: 0.6;
-    filter: blur(1.5px); /* Less blur for sharpness */
+.settings-section summary::after {
+    content: ''; position: absolute; bottom: 2px; left: 10%; right: 10%; 
+    height: 2px; background: var(--button-neon-glow); border-radius: 1px;
+    opacity: 0.6; filter: blur(1.5px); 
     transition: opacity 0.3s ease, filter 0.3s ease, background 0.3s ease, transform 0.3s ease;
 }
 .settings-section summary:hover::after,
 .settings-section summary:focus-visible::after {
-    opacity: 0.85;
-    filter: blur(2.5px);
-    transform: scaleY(1.5); /* Makes it slightly "brighter" by expanding */
+    opacity: 0.85; filter: blur(2.5px); transform: scaleY(1.5); 
 }
 .settings-section summary:focus-visible { color: var(--button-accent-purple); }
 
@@ -190,13 +178,14 @@ textarea, select:not(#chat-threads-menu) {
 }
 textarea:focus, select:not(#chat-threads-menu):focus {
     outline: none; border-color: var(--button-accent-purple);
-    box-shadow: 0 0 0 2px var(--button-neon-glow); /* Use neon glow for focus */
+    box-shadow: 0 0 0 2px var(--button-neon-glow); 
 }
 
 #mode-instruction, .summary-display {
-    background-color: var(--message-assistant-bg); padding: 0.8rem 1rem;
-    border-radius: 8px; font-size: 0.875rem; color: var(--message-assistant-text);
-    line-height: 1.5; border: 1px solid var(--border-color);
+    background-color: var(--gray-message-bg); /* Using gray message bg for consistency */
+    padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.875rem; 
+    color: var(--gray-message-text); line-height: 1.5; 
+    border: 1px solid var(--border-color);
 }
 .summary-display { margin-top: 0.75rem; }
 
@@ -207,29 +196,27 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     line-height: 1.6; word-wrap: break-word; position: relative;
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
 }
-.message:hover {
-    transform: translateY(-1px); /* Subtle lift on message hover */
-}
+.message:hover { transform: translateY(-1px); }
 
+/* USER messages now get the simpler gray style */
 .message.user {
-    background: linear-gradient(135deg, var(--message-user-bg-start) 0%, var(--message-user-bg-end) 100%);
-    color: var(--message-user-text);
+    background-color: var(--gray-message-bg);
+    color: var(--gray-message-text);
     align-self: flex-end;
     border-bottom-right-radius: 8px;
-    /* Sharper "neon pearl" glow */
-    box-shadow: 0px 0px 6px 1px var(--user-glow-sharp-1), /* Base sharp glow */
-                0px 0px 12px 2px var(--user-glow-sharp-2), /* Softer outer aura */
-                inset 0px 0px 4px 0px var(--user-pearl-highlight); /* Inner pearl highlight */
+    box-shadow: 0px 0px 7px 2px var(--gray-glow-sharp), /* Was assistant-glow-sharp */
+                inset 0 0 3px rgba(255,255,255,0.03); 
 }
 
+/* ASSISTANT messages now get the colorful "pearl/milky way" style */
 .message.assistant {
-    background-color: var(--message-assistant-bg);
-    color: var(--message-assistant-text);
+    background: linear-gradient(135deg, var(--colorful-message-bg-start) 0%, var(--colorful-message-bg-end) 100%);
+    color: var(--colorful-message-text);
     align-self: flex-start;
     border-bottom-left-radius: 8px;
-    /* Sharper, subtle gray glow */
-    box-shadow: 0px 0px 7px 2px var(--assistant-glow-sharp),
-                inset 0 0 3px rgba(255,255,255,0.03); 
+    box-shadow: 0px 0px 6px 1px var(--colorful-glow-sharp-1), 
+                0px 0px 12px 2px var(--colorful-glow-sharp-2), 
+                inset 0px 0px 4px 0px var(--colorful-pearl-highlight); 
 }
 
 .message p { margin: 0 0 0.6em 0; }
@@ -266,16 +253,15 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 }
 #user-input:focus {
     border-color: var(--button-accent-purple);
-    box-shadow: 0 0 0 2px var(--button-neon-glow); /* Use neon glow for input focus */
+    box-shadow: 0 0 0 2px var(--button-neon-glow); 
 }
 
 #send-button {
     background: var(--button-accent-purple);
-    border: 1px solid rgba(255,255,255,0.1); /* Subtle border */
+    border: 1px solid rgba(255,255,255,0.1); 
     cursor: pointer; padding: 0; width: 44px; height: 44px;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     transition: all 0.2s ease-out; flex-shrink: 0;
-    /* Sharper neon glow */
     box-shadow: 0 0 4px 0px var(--button-neon-glow), 
                 0 0 8px 2px rgba(var(--button-neon-glow), 0.7);
 }
@@ -284,7 +270,7 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     background-color: color-mix(in srgb, var(--button-accent-purple) 90%, white);
     box-shadow: 0 0 6px 1px var(--button-neon-glow), 
                 0 0 12px 4px rgba(var(--button-neon-glow), 0.8);
-    transform: scale(1.05); /* Slightly larger on hover */
+    transform: scale(1.05); 
 }
 #send-button:disabled { background-color: var(--secondary-text-color); opacity: 0.6; cursor: not-allowed; box-shadow: none; }
 #send-button:disabled svg { fill: var(--text-color); opacity: 0.7; }
