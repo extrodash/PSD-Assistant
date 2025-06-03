@@ -192,8 +192,6 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     max-width: 80%; padding: 0.75rem 1.25rem; border-radius: 20px;
     line-height: 1.6; word-wrap: break-word; position: relative;
     transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
-    display: flex;
-    align-items: flex-start;
 }
 .message:hover { transform: translateY(-1px); }
 
@@ -205,7 +203,6 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     box-shadow: 0 0 0 1.5px var(--user-message-perimeter-color), 
                 0px 0px 8px 2px var(--user-message-glow),     
                 inset 0 0 3px rgba(255,255,255,0.05); 
-    flex-direction: row-reverse;
 }
 
 .message.assistant {
@@ -216,7 +213,6 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     box-shadow: 0px 0px 6px 1px var(--assistant-glow-sharp-1), 
                 0px 0px 12px 2px var(--assistant-glow-sharp-2), 
                 inset 0px 0px 4px 0px var(--assistant-pearl-highlight); 
-    flex-direction: row;
 }
 
 .message p { margin: 0 0 0.6em 0; }
@@ -441,54 +437,4 @@ body.widget-mode::before { display: none; }
     color: var(--text-color);
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
-}
-
-.message {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-}
-.message.user {
-    flex-direction: row-reverse;
-}
-.message.assistant {
-    flex-direction: row;
-}
-.message-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-    align-items: center;
-    justify-content: flex-start;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s;
-    z-index: 2;
-    min-width: 32px;
-    margin: 0 0.3rem;
-}
-.message.user:hover .message-actions,
-.message.assistant:hover .message-actions {
-    opacity: 1;
-    pointer-events: auto;
-}
-.message-action-btn {
-    background: rgba(60, 60, 80, 0.85);
-    border: none;
-    border-radius: 6px;
-    color: var(--button-main-text);
-    padding: 4px 7px;
-    font-size: 1rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.13);
-    opacity: 0.85;
-    margin-bottom: 2px;
-}
-.message-action-btn:hover {
-    background: color-mix(in srgb, var(--button-main-bg) 80%, #fff 20%);
-    color: #fff;
-    opacity: 1;
 }
