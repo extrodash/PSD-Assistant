@@ -15,7 +15,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const additionalReferenceInput = document.getElementById('additional-reference');
     const summarizeChatButton = document.getElementById('summarize-chat-button');
     const chatSummaryDiv = document.getElementById('chat-summary');
-    const themeToggle = document.getElementById('theme-toggle');
 
     // --- State Management ---
     let chatThreads = [];
@@ -37,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     function initialize() {
         checkForWidgetMode();
-        setupTheme();
         loadSettingsFromLocalStorage();
         populateModeSelector();
         startNewChat();
@@ -54,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
         newChatButton.addEventListener('click', startNewChat);
         chatThreadsMenu.addEventListener('change', (e) => switchChat(e.target.value));
         summarizeChatButton.addEventListener('click', summarizeCurrentThread);
-        themeToggle.addEventListener('change', handleThemeChange);
 
         // Add listeners to save settings to localStorage on input
         modeSelect.addEventListener('change', handleModeChange);
@@ -69,12 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (urlParams.get('mode') === 'widget') {
             document.body.classList.add('widget-mode');
         }
-    }
-
-    function setupTheme() {
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-        themeToggle.checked = savedTheme === 'dark';
     }
 
     function loadSettingsFromLocalStorage() {
@@ -137,12 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             chatThreadsMenu.appendChild(option);
         });
-    }
-
-    function handleThemeChange() {
-        const newTheme = themeToggle.checked ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
     }
     
     function handleModeChange() {
