@@ -2,53 +2,135 @@
 :root {
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     
-    /* Light Theme Defaults (applied to :root directly) */
-    --bg-color: #f4f7f9;
-    --container-bg-color: #ffffff;
-    --text-color: #2c3e50;
-    --secondary-text-color: #7f8c8d;
-    --border-color: #e0e0e0;
-    --input-bg-color: #ffffff;
-    --input-bar-bg: #f0f2f5;
-    --message-user-bg: #007bff;
-    --message-user-text: #ffffff;
-    --message-assistant-bg: #e9ecef;
-    --message-assistant-text: #343a40;
-    --settings-bg: #f8f9fa;
-    --button-color: #007bff;
-    --button-text-color: #ffffff;
-    --icon-color: #555555; /* Default icon color for light mode */
-    --shadow-color: rgba(0, 0, 0, 0.08);
-    --accent-color: #007bff;
+    /* Light Theme Variables (base) */
+    --bg-color-light: #f0f2f5; /* Slightly off-white base */
+    --container-bg-color-light: #ffffff;
+    --text-color-light: #2c3e50;
+    --secondary-text-color-light: #7f8c8d;
+    --border-color-light: #dce1e6; /* Softer border */
+    --input-bg-color-light: #ffffff;
+    --input-bar-bg-light: #e9ecef; /* Lighter input bar */
+    
+    /* User Message - Light Theme (Green/Purple Glow) */
+    --message-user-bg-start-light: #e6fffa; /* Very pale mint green */
+    --message-user-bg-end-light: #f0e6ff;   /* Very pale lavender */
+    --message-user-glow-color-1-light: rgba(100, 220, 150, 0.4); /* Soft Green Glow */
+    --message-user-glow-color-2-light: rgba(170, 120, 220, 0.4); /* Soft Purple Glow */
+    --message-user-text-light: #2c3e50; /* Ensure readability */
+
+    /* Assistant Message - Light Theme (Gray with Lighter Gray Glow) */
+    --message-assistant-bg-light: #e9ecef;
+    --message-assistant-text-light: #343a40;
+    --message-assistant-glow-light: rgba(200, 205, 210, 0.7); /* Lighter gray glow */
+    
+    --settings-bg-light: #f8f9fa;
+    --icon-color-light: #555555;
+    --shadow-color-light: rgba(0, 0, 0, 0.06); /* Softer shadow */
+    
+    /* Button & Accent Colors - Light Theme (Dark Purple with Glow) */
+    --button-accent-purple-light: #5D3D7A; /* Dark Purple */
+    --button-accent-purple-glow-light: rgba(158, 108, 192, 0.5); /* Purple Glow */
+    --button-accent-text-light: #ffffff;
+
+    /* Background Edge Glow - Light Theme */
+    --bg-edge-glow-yellow-light: rgba(255, 250, 205, 0.3); /* Faint Lemon Chiffon */
+    --bg-edge-glow-purple-light: rgba(230, 200, 255, 0.3); /* Faint Lavender */
 }
 
-/* Dark Theme Overrides (applied when :root has data-theme="dark") */
 :root[data-theme="dark"] {
-    --bg-color: #1a1a1a;
-    --container-bg-color: #242424;
-    --text-color: #e0e0e0;
-    --secondary-text-color: #9e9e9e;
-    --border-color: #383838;
-    --input-bg-color: #2c2c2c;
-    --input-bar-bg: #1f1f1f;
-    /* --message-user-bg remains #007bff or adjust if needed */
-    --message-assistant-bg: #3a3a3c;
-    --message-assistant-text: #e0e0e0;
-    --settings-bg: #2c2c2c;
-    /* --button-color can remain #007bff or adjust */
-    --icon-color: #b0b0b0; /* Icon color for dark mode */
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --accent-color: #3498db;
+    --bg-color: #1a1d24; /* Deep dark blue/gray */
+    --container-bg-color: #23272f; /* Slightly lighter container */
+    --text-color: #e0e6f0;
+    --secondary-text-color: #98a0aa;
+    --border-color: #383f4d;
+    --input-bg-color: #2c3038;
+    --input-bar-bg: #1f2329;
+    
+    /* User Message - Dark Theme (Green/Purple Glow) */
+    --message-user-bg-start-dark: #2a3b34; /* Dark muted green base */
+    --message-user-bg-end-dark: #3a2a3b;   /* Dark muted purple base */
+    --message-user-glow-color-1-dark: rgba(80, 200, 130, 0.5);  /* Green Glow */
+    --message-user-glow-color-2-dark: rgba(160, 100, 200, 0.5); /* Purple Glow */
+    --message-user-text-dark: #e0e6f0;
+
+    /* Assistant Message - Dark Theme (Gray with Lighter Gray Glow) */
+    --message-assistant-bg-dark: #3a3f4b; /* Darker Gray */
+    --message-assistant-text-dark: #e0e6f0;
+    --message-assistant-glow-dark: rgba(100, 105, 115, 0.6); /* Lighter gray glow for dark */
+    
+    --settings-bg-dark: #2c3038;
+    --icon-color: #a0a8b4;
+    --shadow-color: rgba(0, 0, 0, 0.25);
+        
+    /* Button & Accent Colors - Dark Theme (Dark Purple with Glow) */
+    --button-accent-purple-dark: #7B4C9F; /* Slightly brighter Dark Purple for dark mode */
+    --button-accent-purple-glow-dark: rgba(178, 108, 224, 0.6); /* Brighter Purple Glow */
+    --button-accent-text-dark: #ffffff;
+
+    /* Background Edge Glow - Dark Theme */
+    --bg-edge-glow-yellow-dark: rgba(240, 220, 130, 0.1); /* Very Faint Gold */
+    --bg-edge-glow-purple-dark: rgba(190, 140, 240, 0.1); /* Very Faint Lavender */
 }
 
-* {
-    box-sizing: border-box;
+/* Initialize with light theme variables by default */
+body {
+    --current-bg-color: var(--bg-color-light);
+    --current-container-bg-color: var(--container-bg-color-light);
+    --current-text-color: var(--text-color-light);
+    --current-secondary-text-color: var(--secondary-text-color-light);
+    --current-border-color: var(--border-color-light);
+    --current-input-bg-color: var(--input-bg-color-light);
+    --current-input-bar-bg: var(--input-bar-bg-light);
+    --current-message-user-bg-start: var(--message-user-bg-start-light);
+    --current-message-user-bg-end: var(--message-user-bg-end-light);
+    --current-message-user-glow-1: var(--message-user-glow-color-1-light);
+    --current-message-user-glow-2: var(--message-user-glow-color-2-light);
+    --current-message-user-text: var(--message-user-text-light);
+    --current-message-assistant-bg: var(--message-assistant-bg-light);
+    --current-message-assistant-text: var(--message-assistant-text-light);
+    --current-message-assistant-glow: var(--message-assistant-glow-light);
+    --current-settings-bg: var(--settings-bg-light);
+    --current-button-accent-purple: var(--button-accent-purple-light);
+    --current-button-accent-purple-glow: var(--button-accent-purple-glow-light);
+    --current-button-accent-text: var(--button-accent-text-light);
+    --current-icon-color: var(--icon-color-light);
+    --current-shadow-color: var(--shadow-color-light);
+    --current-bg-edge-glow-yellow: var(--bg-edge-glow-yellow-light);
+    --current-bg-edge-glow-purple: var(--bg-edge-glow-purple-light);
 }
+
+body[data-theme="dark"] {
+    --current-bg-color: var(--bg-color-dark);
+    --current-container-bg-color: var(--container-bg-color-dark);
+    --current-text-color: var(--text-color-dark);
+    --current-secondary-text-color: var(--secondary-text-color-dark);
+    --current-border-color: var(--border-color-dark);
+    --current-input-bg-color: var(--input-bg-color-dark);
+    --current-input-bar-bg: var(--input-bar-bg-dark);
+    --current-message-user-bg-start: var(--message-user-bg-start-dark);
+    --current-message-user-bg-end: var(--message-user-bg-end-dark);
+    --current-message-user-glow-1: var(--message-user-glow-color-1-dark);
+    --current-message-user-glow-2: var(--message-user-glow-color-2-dark);
+    --current-message-user-text: var(--message-user-text-dark);
+    --current-message-assistant-bg: var(--message-assistant-bg-dark);
+    --current-message-assistant-text: var(--message-assistant-text-dark);
+    --current-message-assistant-glow: var(--message-assistant-glow-dark);
+    --current-settings-bg: var(--settings-bg-dark);
+    --current-button-accent-purple: var(--button-accent-purple-dark);
+    --current-button-accent-purple-glow: var(--button-accent-purple-glow-dark);
+    --current-button-accent-text: var(--button-accent-text-dark);
+    --current-icon-color: var(--icon-color-dark);
+    --current-shadow-color: var(--shadow-color-dark);
+    --current-bg-edge-glow-yellow: var(--bg-edge-glow-yellow-dark);
+    --current-bg-edge-glow-purple: var(--bg-edge-glow-purple-dark);
+}
+
+* { box-sizing: border-box; }
 
 body {
     font-family: var(--font-family);
-    background-color: var(--bg-color);
-    color: var(--text-color);
+    background-color: var(--current-bg-color);
+    color: var(--current-text-color);
     margin: 0;
     padding: 0.5rem;
     display: flex;
@@ -57,25 +139,47 @@ body {
     min-height: 100vh;
     transition: background-color 0.3s ease, color 0.3s ease;
     font-size: 16px;
+    /* Faint background edge glow */
+    position: relative; /* Needed for pseudo-element glow */
 }
+/* This pseudo-element creates the faint edge glow for the body */
+body::before {
+    content: '';
+    position: fixed; /* Use fixed to cover viewport */
+    top: -50%; left: -50%; /* Center it then expand */
+    width: 200%; height: 200%; /* Make it very large */
+    z-index: -1; /* Behind everything */
+    background-image: radial-gradient(ellipse at center, 
+        transparent 40%, 
+        var(--current-bg-edge-glow-yellow) 70%, 
+        var(--current-bg-edge-glow-purple) 95%);
+    opacity: 0.5; /* Make it very faint */
+    animation: subtlePulse 10s infinite alternate;
+}
+
+@keyframes subtlePulse {
+    0% { transform: scale(1); opacity: 0.3; }
+    100% { transform: scale(1.05); opacity: 0.6; }
+}
+
 
 .container {
     width: 100%;
     max-width: 800px;
     height: calc(100vh - 1rem);
     max-height: 850px;
-    background-color: var(--container-bg-color);
-    border-radius: 12px;
-    box-shadow: 0 8px 24px var(--shadow-color);
+    background-color: var(--current-container-bg-color);
+    border-radius: 16px; /* More rounded */
+    box-shadow: 0 10px 30px var(--current-shadow-color); /* Softer, deeper shadow */
     display: flex;
     flex-direction: column;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--current-border-color);
     overflow: hidden;
 }
 
 header {
-    padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--border-color);
+    padding: 0.75rem 1.25rem; /* More padding */
+    border-bottom: 1px solid var(--current-border-color);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -83,257 +187,251 @@ header {
 }
 
 header h1 {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     margin: 0;
     font-weight: 600;
 }
 
-.header-controls {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
+.header-controls { display: flex; align-items: center; gap: 0.75rem; }
+.menu { display: flex; align-items: center; gap: 0.6rem; }
 
-.menu {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-#new-chat-button, #summarize-chat-button {
-    background-color: var(--accent-color);
-    color: var(--button-text-color);
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 6px;
+#new-chat-button, #summarize-chat-button, #chat-threads-menu {
+    background-color: var(--current-button-accent-purple);
+    color: var(--current-button-accent-text);
+    border: 1px solid transparent; /* For glow effect */
+    padding: 0.5rem 1rem; /* More substantial buttons */
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     font-weight: 500;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 8px 0px var(--current-button-accent-purple-glow), /* Inner part of glow */
+                0 0 16px 2px var(--current-button-accent-purple-glow); /* Outer part of glow */
 }
-
-#new-chat-button:hover, #summarize-chat-button:hover {
-    opacity: 0.85;
+#new-chat-button:hover, #summarize-chat-button:hover, #chat-threads-menu:hover {
+    opacity: 0.9;
+    box-shadow: 0 0 12px 2px var(--current-button-accent-purple-glow),
+                0 0 24px 5px var(--current-button-accent-purple-glow);
 }
-
 #chat-threads-menu {
-    padding: 0.4rem 0.6rem;
-    font-size: 0.85rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
-    background-color: var(--input-bg-color);
-    color: var(--text-color);
-}
-
-/* Updated Theme Toggle with Icons */
-.theme-toggle-group {
-    display: flex;
-    align-items: center;
-}
-.theme-toggle-label {
+    /* These existing styles are from the previous version and should be part of this rule */
+    background-color: var(--current-button-accent-purple);
+    color: var(--current-button-accent-text);
+    border: 1px solid transparent; /* For glow effect */
+    padding: 0.5rem 1rem; /* More substantial buttons */
+    border-radius: 8px;
     cursor: pointer;
-    padding: 5px; /* Make it easier to click */
-    display: inline-flex; /* Aligns SVG nicely */
-    border-radius: 50%; /* Make it round if desired */
-    transition: background-color 0.2s ease;
-}
-.theme-toggle-label:hover {
-    background-color: rgba(128, 128, 128, 0.1); /* Subtle hover */
-}
-.theme-toggle-checkbox { /* This is the actual input, hidden */
-    opacity: 0;
-    width: 0;
-    height: 0;
-    position: absolute; 
-}
-.theme-icon-sun, .theme-icon-moon {
-    width: 22px; /* Slightly larger icon */
-    height: 22px;
-    fill: var(--icon-color); /* Use the theme-aware icon color */
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 8px 0px var(--current-button-accent-purple-glow), /* Inner part of glow */
+                0 0 16px 2px var(--current-button-accent-purple-glow); /* Outer part of glow */
+
+    /* Styles for custom dropdown arrow */
+    -webkit-appearance: none; 
+    -moz-appearance: none;
+    appearance: none;
+    padding-right: 2.5rem; /* Adjusted padding for arrow + text */
+    /* Corrected SVG data URI with a static white fill for the arrow (#FFFFFF) */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right .9em top 50%; /* Adjusted position */
+    background-size: .75em auto; /* Adjusted size */
 }
 
-/* Corrected theme switching for icons */
+
+
+.theme-toggle-group { display: flex; align-items: center; }
+.theme-toggle-label { cursor: pointer; padding: 6px; display: inline-flex; border-radius: 50%; transition: background-color 0.2s ease; }
+.theme-toggle-label:hover { background-color: rgba(128, 128, 128, 0.15); }
+.theme-toggle-checkbox { opacity: 0; width: 0; height: 0; position: absolute; }
+.theme-icon-sun, .theme-icon-moon { width: 22px; height: 22px; fill: var(--current-icon-color); }
 :root[data-theme="light"] .theme-icon-moon { display: none; }
 :root[data-theme="dark"] .theme-icon-sun { display: none; }
 
-
-.settings-section {
-    padding: 1rem;
-    border-bottom: 1px solid var(--border-color);
-    background-color: var(--settings-bg);
-    font-size: 0.9rem;
-}
-.settings-section summary {
-    cursor: pointer;
-    font-weight: 500;
-    padding-bottom: 0.5rem;
-    outline: none;
-}
-.settings-section summary:focus-visible {
-    color: var(--accent-color);
-}
-.settings-content { margin-top: 1rem; display: grid; gap: 1rem; }
+.settings-section { padding: 1.25rem; border-bottom: 1px solid var(--current-border-color); background-color: var(--current-settings-bg); font-size: 0.9rem; }
+.settings-section summary { cursor: pointer; font-weight: 600; padding-bottom: 0.75rem; outline: none; }
+.settings-section summary:focus-visible { color: var(--accent-color); }
+.settings-content { margin-top: 1rem; display: grid; gap: 1.25rem; }
 .prompt-editor, .model-picker, .mode-picker, .summary-section { display: flex; flex-direction: column; }
-label { margin-bottom: 0.4rem; font-size: 0.85rem; color: var(--secondary-text-color); font-weight: 500; }
+label { margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--current-secondary-text-color); font-weight: 500; }
 
-textarea, select {
+textarea, select:not(#chat-threads-menu) { /* Exclude already styled select */
     width: 100%;
-    padding: 0.6rem 0.8rem;
-    border-radius: 6px;
-    border: 1px solid var(--border-color);
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid var(--current-border-color);
     font-family: inherit;
     font-size: 0.9rem;
-    background-color: var(--input-bg-color);
-    color: var(--text-color);
+    background-color: var(--current-input-bg-color);
+    color: var(--current-text-color);
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
-textarea:focus, select:focus {
+textarea:focus, select:not(#chat-threads-menu):focus {
     outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px var(--accent-color); /* Generic focus for both themes */
+    border-color: var(--current-button-accent-purple);
+    box-shadow: 0 0 0 3px var(--current-button-accent-purple-glow);
 }
 
 #mode-instruction, .summary-display {
-    background-color: var(--message-assistant-bg);
-    padding: 0.75rem;
-    border-radius: 6px;
-    font-size: 0.85rem;
-    color: var(--message-assistant-text);
+    background-color: var(--current-message-assistant-bg);
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    color: var(--current-message-assistant-text);
     line-height: 1.5;
+    border: 1px solid var(--current-border-color);
 }
-.summary-display { margin-top: 0.5rem; }
+.summary-display { margin-top: 0.75rem; }
 
 .chat-history {
     flex-grow: 1;
     overflow-y: auto;
-    padding: 1rem;
+    padding: 1.25rem;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
 .message {
     max-width: 80%;
-    padding: 0.6rem 1rem;
-    border-radius: 18px;
-    line-height: 1.5;
+    padding: 0.75rem 1.25rem;
+    border-radius: 20px;
+    line-height: 1.6;
     word-wrap: break-word;
+    position: relative; /* For potential pseudo-elements if needed for more complex glows */
 }
-.message p { margin: 0 0 0.5em 0; }
-.message p:last-child { margin-bottom: 0; }
-.message strong { font-weight: 600; color: var(--text-color); }
-.message ol, .message ul { padding-left: 1.5rem; margin-top: 0.5em; margin-bottom: 0.5em;}
-.message li { margin-bottom: 0.25em; }
-.message code {
-    background-color: var(--input-bar-bg); /* Use a theme-aware color */
-    padding: 0.1em 0.4em;
-    border-radius: 4px;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 0.85em;
-    border: 1px solid var(--border-color); /* Add subtle border */
-}
-.message pre {
-    background-color: var(--input-bar-bg); /* Use a theme-aware color */
-    padding: 0.75rem;
-    border-radius: 6px;
-    overflow-x: auto;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 0.85em;
-    margin: 0.5em 0;
-    border: 1px solid var(--border-color); /* Add subtle border */
-}
-.message pre code { padding: 0; background-color: transparent; border: none; }
 
 .message.user {
-    background-color: var(--message-user-bg);
-    color: var(--message-user-text);
+    background: linear-gradient(135deg, var(--current-message-user-bg-start), var(--current-message-user-bg-end));
+    color: var(--current-message-user-text);
     align-self: flex-end;
-    border-bottom-right-radius: 6px;
+    border-bottom-right-radius: 8px;
+    box-shadow: 0 0 10px 2px var(--current-message-user-glow-1), 
+                0 0 20px 8px var(--current-message-user-glow-2),
+                inset 0 0 5px rgba(255,255,255,0.1); /* Subtle inner highlight */
 }
 
 .message.assistant {
-    background-color: var(--message-assistant-bg);
-    color: var(--message-assistant-text);
+    background-color: var(--current-message-assistant-bg);
+    color: var(--current-message-assistant-text);
     align-self: flex-start;
-    border-bottom-left-radius: 6px;
+    border-bottom-left-radius: 8px;
+    box-shadow: 0 0 12px 4px var(--current-message-assistant-glow),
+                inset 0 0 5px rgba(255,255,255,0.05); /* Subtle inner highlight */
 }
+
+/* Markdown generated HTML styling */
+.message p { margin: 0 0 0.6em 0; }
+.message p:last-child { margin-bottom: 0; }
+.message strong { font-weight: 600; color: var(--current-text-color); }
+.message ol, .message ul { padding-left: 1.75rem; margin-top: 0.6em; margin-bottom: 0.6em;}
+.message li { margin-bottom: 0.3em; }
+.message code {
+    background-color: var(--current-input-bar-bg);
+    padding: 0.15em 0.5em;
+    border-radius: 5px;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.875em;
+    border: 1px solid var(--current-border-color);
+}
+.message pre {
+    background-color: var(--current-input-bar-bg);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.875em;
+    margin: 0.75em 0;
+    border: 1px solid var(--current-border-color);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+}
+.message pre code { padding: 0; background-color: transparent; border: none; box-shadow: none;}
+
 
 .input-bar {
     display: flex;
     align-items: flex-end;
-    padding: 0.75rem 1rem;
-    border-top: 1px solid var(--border-color);
-    background-color: var(--input-bar-bg);
-    gap: 0.5rem;
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--current-border-color);
+    background-color: var(--current-input-bar-bg);
+    gap: 0.75rem;
 }
 
 #user-input {
     flex-grow: 1;
-    border-radius: 20px;
-    padding: 0.6rem 1rem;
+    border-radius: 22px;
+    padding: 0.75rem 1.25rem;
     resize: none;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    max-height: 120px;
+    font-size: 1rem;
+    line-height: 1.5;
+    max-height: 130px;
     overflow-y: auto;
+    border: 1px solid var(--current-border-color);
+}
+#user-input:focus {
+    border-color: var(--current-button-accent-purple);
+    box-shadow: 0 0 0 3px var(--current-button-accent-purple-glow);
 }
 
+
 #send-button {
-    background: var(--accent-color);
-    border: none;
+    background: var(--current-button-accent-purple);
+    border: 1px solid transparent;
     cursor: pointer;
     padding: 0;
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
+    transition: all 0.2s ease;
     flex-shrink: 0;
+    box-shadow: 0 0 8px 0px var(--current-button-accent-purple-glow),
+                0 0 16px 2px var(--current-button-accent-purple-glow);
 }
-#send-button svg {
-    width: 22px;
-    height: 22px;
-    fill: var(--button-text-color);
-    stroke: none;
-}
-#send-button:hover { opacity: 0.85; }
-#send-button:disabled { background-color: var(--secondary-text-color); opacity: 0.6; cursor: not-allowed; }
-#send-button:disabled svg { fill: var(--text-color); }
+#send-button svg { width: 24px; height: 24px; fill: var(--current-button-accent-text); stroke: none; }
+#send-button:hover { opacity: 0.9; box-shadow: 0 0 12px 2px var(--current-button-accent-purple-glow), 0 0 24px 5px var(--current-button-accent-purple-glow); }
+#send-button:disabled { background-color: var(--current-secondary-text-color); opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+#send-button:disabled svg { fill: var(--current-text-color); opacity: 0.7; }
 
-/* Styles for Widget Mode (no change from before) */
+
+/* Styles for Widget Mode */
 body.widget-mode header,
-body.widget-mode .settings-section {
-    display: none;
-}
-body.widget-mode .container {
-    height: 100%;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    /* padding: 0; */ /* Already handled by body.widget-mode */
-}
-body.widget-mode {
-    padding: 0;
-}
+body.widget-mode .settings-section { display: none; }
+body.widget-mode .container { height: 100%; border: none; border-radius: 0; box-shadow: none; }
+body.widget-mode { padding: 0; }
+body.widget-mode::before { display: none; } /* Disable body glow in widget mode */
 
-/* Mobile Responsiveness (no change from before) */
+
+/* Mobile Responsiveness */
 @media (max-width: 600px) {
     body { padding: 0; font-size: 15px; }
+    body::before { display: none; } /* Optionally disable body glow on mobile if too much */
+
     .container { height: 100vh; max-height: none; border-radius: 0; border: none; }
-    header { padding: 0.5rem 0.75rem; }
-    header h1 { font-size: 1rem; }
-    .header-controls { gap: 0.5rem; }
-    #new-chat-button, #chat-threads-menu { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
+    header {
+        padding: 0.6rem 0.75rem;
+        flex-wrap: wrap; /* Allow header items to wrap */
+        gap: 0.5rem;
+    }
+    header h1 { font-size: 1rem; flex-basis: 100%; text-align: center; margin-bottom: 0.5rem;} /* Title full width */
+    .header-controls { 
+        width: 100%;
+        justify-content: space-around; /* Distribute controls */
+        gap: 0.5rem; 
+    }
+    #new-chat-button, #summarize-chat-button, #chat-threads-menu { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
     .theme-icon-sun, .theme-icon-moon { width: 20px; height: 20px; }
-    .chat-history { padding: 0.75rem; }
-    .message { padding: 0.5rem 0.75rem; font-size: 0.9rem; }
-    .input-bar { padding: 0.5rem 0.75rem; }
-    #user-input { padding: 0.5rem 0.8rem; font-size: 0.9rem; max-height: 100px; }
-    #send-button { width: 36px; height: 36px; }
+
+    .chat-history { padding: 0.75rem; gap: 0.75rem; }
+    .message { padding: 0.6rem 0.9rem; font-size: 0.9rem; }
+    .input-bar { padding: 0.6rem 0.75rem; gap: 0.5rem;}
+    #user-input { padding: 0.6rem 1rem; font-size: 0.9rem; max-height: 100px; }
+    #send-button { width: 38px; height: 38px; }
     #send-button svg { width: 20px; height: 20px; }
     .settings-section { padding: 0.75rem; }
     label { font-size: 0.8rem; }
-    textarea, select { padding: 0.5rem 0.7rem; font-size: 0.85rem; }
+    textarea, select:not(#chat-threads-menu) { padding: 0.6rem 0.8rem; font-size: 0.85rem; }
 }
