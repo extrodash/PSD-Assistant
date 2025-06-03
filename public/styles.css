@@ -29,17 +29,16 @@
     --icon-color: #a8b0b8; 
     --shadow-color: rgba(0, 0, 0, 0.3); 
         
-    /* NEW Button Style Variables */
-    --button-main-bg: #3b3b58; /* Faint, dark, cloudy purple-ish-blue */
-    --button-main-text: #e0e6f0; /* Light text for contrast */
-    --button-main-glow: rgba(230, 230, 255, 0.35); /* Faint white/lavender glow */
-    --button-main-glow-hover: rgba(230, 230, 255, 0.55); /* Slightly stronger on hover */
-    --button-main-border: rgba(200, 200, 220, 0.25); /* Faint border */
+    /* Button Style Variables */
+    --button-main-bg: #3b3b58; 
+    --button-main-text: #e0e6f0; 
+    --button-main-glow: rgba(230, 230, 255, 0.35); 
+    --button-main-glow-hover: rgba(230, 230, 255, 0.55); 
+    --button-main-border: rgba(200, 200, 220, 0.25); 
 
-    /* Header & Settings Underglow (can keep previous purple or align with new button style) */
-    --button-accent-purple: #704288; /* Kept for settings underglow, can be changed */
-    --button-neon-glow-color: rgba(200, 160, 220, 0.65); /* Kept for settings underglow */
-    --button-neon-glow-soft-aura: rgba(200, 160, 220, 0.45); /* Kept for settings underglow */
+    /* Glow color for input bar and settings (if desired) */
+    --decorative-glow-color: rgba(200, 160, 220, 0.65); /* Was button-neon-glow-color */
+    --decorative-glow-soft-aura: rgba(200, 160, 220, 0.35); /* Was button-neon-glow-soft-aura, made softer */
 
 
     --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.12); 
@@ -105,7 +104,6 @@ header h1 {
 .header-controls { display: flex; align-items: center; gap: 0.75rem; }
 .menu { display: flex; align-items: center; gap: 0.6rem; }
 
-/* === UPDATED BUTTON STYLES === */
 #new-chat-button, #summarize-chat-button, #chat-threads-menu, #copy-full-message-btn {
     background-color: var(--button-main-bg);
     color: var(--button-main-text);
@@ -116,47 +114,39 @@ header h1 {
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.2s ease-out;
-    box-shadow: 0 0 7px 1px var(--button-main-glow), /* Faint white glow */
-                inset 0 0 3px rgba(255,255,255,0.05); /* Subtle inner highlight */
+    box-shadow: 0 0 7px 1px var(--button-main-glow),
+                inset 0 0 3px rgba(255,255,255,0.05); 
 }
 #new-chat-button:hover, #summarize-chat-button:hover, #chat-threads-menu:hover, #copy-full-message-btn:hover {
-    background-color: color-mix(in srgb, var(--button-main-bg) 85%, #ffffff 15%); /* Lighten on hover */
+    background-color: color-mix(in srgb, var(--button-main-bg) 85%, #ffffff 15%);
     border-color: color-mix(in srgb, var(--button-main-border) 70%, #ffffff 30%);
     box-shadow: 0 0 10px 2px var(--button-main-glow-hover),
                 inset 0 0 4px rgba(255,255,255,0.08);
     transform: translateY(-1px); 
 }
-#chat-threads-menu { /* Specifics for select still needed */
+#chat-threads-menu {
     -webkit-appearance: none; -moz-appearance: none; appearance: none;
-    padding-right: 2.5rem; /* Make sure there's space for the arrow */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23E0E6F0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* Arrow color matches --button-main-text */
+    padding-right: 2.5rem; 
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23E0E6F0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
     background-position: right .9em top 50%;
     background-size: .75em auto;
 }
-#copy-full-message-btn { /* If it needs specific padding different from header buttons */
+#copy-full-message-btn {
     padding: 0.6rem 1.2rem;
 }
 
-
 .settings-section { padding: 1.25rem; border-bottom: 1px solid var(--border-color); background-color: var(--settings-bg); font-size: 0.9rem; }
 .settings-section summary { 
-    cursor: pointer; font-weight: 600; padding-bottom: 0.85rem; outline: none; 
-    position: relative; transition: color 0.2s ease, text-shadow 0.3s ease;
+    cursor: pointer; font-weight: 600; 
+    padding-bottom: 0.5rem; /* Reduced padding as ::after glow is removed */
+    outline: none; 
+    position: relative; 
+    transition: color 0.2s ease, text-shadow 0.3s ease;
     text-shadow: 0 1px 2px rgba(0,0,0,0.2); 
 }
-.settings-section summary::after {
-    content: ''; position: absolute; bottom: 2px; left: 10%; right: 10%; 
-    height: 2px; background: var(--button-neon-glow-color); border-radius: 1px;
-    opacity: 0.6; filter: blur(1.5px); 
-    transition: opacity 0.3s ease, filter 0.3s ease, background 0.3s ease, transform 0.3s ease;
-}
-.settings-section summary:hover::after,
-.settings-section summary:focus-visible::after {
-    opacity: 0.85; filter: blur(2.5px); transform: scaleY(1.5); 
-    background: var(--button-neon-glow-soft-aura); 
-}
-.settings-section summary:focus-visible { color: var(--button-base-purple); }
+/* Removed .settings-section summary::after and its hover/focus state */
+.settings-section summary:focus-visible { color: var(--button-main-bg); } /* Changed focus color */
 
 .settings-content { margin-top: 1rem; display: grid; gap: 1.25rem; }
 .prompt-editor, .model-picker, .mode-picker, .summary-section { display: flex; flex-direction: column; }
@@ -169,8 +159,8 @@ textarea, select:not(#chat-threads-menu) {
     color: var(--text-color); transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 textarea:focus, select:not(#chat-threads-menu):focus {
-    outline: none; border-color: var(--button-base-purple); /* Using the new button base for consistency */
-    box-shadow: 0 0 0 2px var(--button-main-glow); /* Using the new faint white button glow */
+    outline: none; border-color: var(--button-main-bg); 
+    box-shadow: 0 0 0 2px var(--button-main-glow); 
 }
 
 #mode-instruction, .summary-display {
@@ -233,10 +223,16 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 }
 .message pre code { padding: 0; background-color: transparent; border: none; box-shadow: none;}
 
+/* === INPUT BAR GLOW ADDED HERE === */
 .input-bar {
     display: flex; align-items: flex-end; padding: 1rem 1.25rem;
-    border-top: 1px solid var(--border-color); background-color: var(--input-bar-bg);
+    border-top: 1px solid transparent; /* Make existing border transparent or very thin */
+    background-color: var(--input-bar-bg);
     gap: 0.75rem;
+    position: relative; /* For pseudo-element glow */
+    /* Add glow using box-shadow focusing on the top edge */
+    box-shadow: 0 -1px 4px -1px var(--decorative-glow-color), /* Inner sharp line */
+                0 -2px 8px -2px var(--decorative-glow-soft-aura); /* Softer aura above */
 }
 
 #user-input {
@@ -246,18 +242,17 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     background-color: var(--input-bg-color); color: var(--text-color); 
 }
 #user-input:focus {
-    border-color: var(--button-main-bg); /* Use new button base for consistency */
-    box-shadow: 0 0 0 2px var(--button-main-glow); /* Use new faint white glow */
+    border-color: var(--button-main-bg); 
+    box-shadow: 0 0 0 2px var(--button-main-glow); 
 }
 
-/* === UPDATED SEND BUTTON STYLE === */
 #send-button {
     background: var(--button-main-bg);
     border: 1px solid var(--button-main-border); 
     cursor: pointer; padding: 0; width: 44px; height: 44px;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     transition: all 0.2s ease-out; flex-shrink: 0;
-    box-shadow: 0 0 7px 1px var(--button-main-glow); /* Faint white glow */
+    box-shadow: 0 0 7px 1px var(--button-main-glow);
 }
 #send-button svg { width: 24px; height: 24px; fill: var(--button-main-text); stroke: none; }
 #send-button:hover { 
@@ -269,20 +264,19 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 #send-button:disabled { background-color: var(--secondary-text-color); opacity: 0.6; cursor: not-allowed; box-shadow: none; }
 #send-button:disabled svg { fill: var(--text-color); opacity: 0.7; }
 
-/* Loading Bubble Styles */
+/* Loading Bubble Styles - (assuming these are correct from previous version) */
 .message.loading-bubble {
-    background-color: var(--assistant-message-bg); /* Use assistant base color */
-    /* Or for gradient: background: linear-gradient(135deg, var(--assistant-message-bg-start) 0%, var(--assistant-message-bg-end) 100%); */
+    background-color: var(--assistant-message-bg); 
     color: var(--assistant-message-text);
-    align-self: flex-start;
+    align-self: flex-start; 
     border-bottom-left-radius: 8px;
     box-shadow: 0px 0px 6px 1px var(--assistant-glow-sharp-1), 
                 0px 0px 12px 2px var(--assistant-glow-sharp-2), 
                 inset 0px 0px 4px 0px var(--assistant-pearl-highlight);
-    padding: 0.75rem 1.25rem;
-    display: flex;
+    padding: 0.75rem 1.25rem; 
+    display: flex; 
     align-items: center;
-    min-height: 40px; /* Or match message padding for consistent height */
+    min-height: 40px; 
 }
 .loading-dot-container { display: flex; align-items: center; }
 .loading-dot {
@@ -308,11 +302,11 @@ body.widget-mode::before { display: none; }
 .message { position: relative; }
 .expand-message-btn {
     position: absolute; bottom: 5px; right: 8px;
-    background-color: rgba(var(--button-accent-purple-rgb), 0.6); /* Slightly more opaque */
+    background-color: rgba(var(--button-accent-purple-rgb), 0.6); 
     color: var(--button-text-color); border: none; border-radius: 50%;
-    width: 26px; height: 26px; font-size: 16px; /* Slightly larger */
+    width: 26px; height: 26px; font-size: 16px; 
     line-height: 26px; text-align: center; cursor: pointer;
-    opacity: 0.6; /* Less intrusive */
+    opacity: 0.6; 
     transition: opacity 0.2s ease, background-color 0.2s ease;
     padding: 0; display: flex; align-items: center; justify-content: center;
     box-shadow: 0 1px 2px rgba(0,0,0,0.2);
@@ -324,37 +318,29 @@ body.widget-mode::before { display: none; }
 
 /* Full Screen Message Modal Styles */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(10, 10, 20, 0.85); /* Darker backdrop */
-    z-index: 1000; /* Ensure it's on top */
-
-    /* Default state: hidden */
-    display: none; /* Hidden by default */
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(10, 10, 20, 0.85); 
+    z-index: 1000; 
+    display: none; 
     opacity: 0;
-    transform: scale(0.95); /* For entry animation */
-    
-    /* Transition will apply when 'visible' class is added */
+    transform: scale(0.95); 
     transition: opacity 0.25s ease-out, transform 0.25s ease-out;
 }
-
 .modal-overlay.visible {
-    display: flex; /* Change to flex to show and enable centering children */
+    display: flex; 
     justify-content: center;
     align-items: center;
     opacity: 1;
     transform: scale(1);
+    visibility: visible; 
 }
 .modal-content {
     background-color: var(--container-bg-color); 
     color: var(--text-color); 
-    padding: 25px; /* More padding */
+    padding: 25px; 
     border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.4); /* Deeper shadow for modal */
-    width: 90%; max-width: 750px; /* Slightly wider */
+    box-shadow: 0 8px 30px rgba(0,0,0,0.4); 
+    width: 90%; max-width: 750px; 
     max-height: 88vh; display: flex; flex-direction: column;
     position: relative; 
     border: 1px solid var(--border-color);
@@ -362,17 +348,17 @@ body.widget-mode::before { display: none; }
 .modal-header {
     display: flex; justify-content: space-between; align-items: center;
     border-bottom: 1px solid var(--border-color);
-    padding-bottom: 15px; margin-bottom: 20px; /* More spacing */
+    padding-bottom: 15px; margin-bottom: 20px; 
 }
 .modal-header h2 { margin: 0; font-size: 1.3rem; font-weight: 600; }
 .modal-close-btn {
-    background: none; border: none; font-size: 2rem; /* Larger close button */
+    background: none; border: none; font-size: 2rem; 
     color: var(--secondary-text-color); cursor: pointer;
     padding: 0 8px; line-height: 1; transition: color 0.2s ease;
 }
 .modal-close-btn:hover { color: var(--text-color); }
 .modal-body {
-    flex-grow: 1; overflow-y: auto; line-height: 1.7; /* Increased line height */
+    flex-grow: 1; overflow-y: auto; line-height: 1.7; 
     white-space: pre-wrap; font-size: 1rem; margin-bottom: 20px;
 }
 .modal-body p { margin: 0 0 0.7em 0; }
@@ -397,27 +383,10 @@ body.widget-mode::before { display: none; }
 
 .modal-footer {
     border-top: 1px solid var(--border-color);
-    padding-top: 20px; /* More spacing */
+    padding-top: 20px; 
     text-align: right;
 }
-#copy-full-message-btn {
-    background-color: var(--button-base-purple);
-    color: var(--button-text-color);
-    border: 1px solid transparent;
-    padding: 0.6rem 1.2rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease-out;
-    box-shadow: 0 0 4px 0px var(--button-neon-glow-color), 
-                0 0 8px 1px var(--button-neon-glow-soft-aura);
-}
-#copy-full-message-btn:hover {
-    opacity: 0.9;
-    box-shadow: 0 0 6px 1px var(--button-neon-glow-color), 
-                0 0 12px 2px var(--button-neon-glow-soft-aura);
-}
+/* #copy-full-message-btn is styled with other main buttons */
 
 /* Mobile Responsiveness */
 @media (max-width: 600px) {
@@ -437,7 +406,7 @@ body.widget-mode::before { display: none; }
     .settings-section { padding: 0.75rem; }
     label { font-size: 0.8rem; }
     textarea, select:not(#chat-threads-menu) { padding: 0.6rem 0.8rem; font-size: 0.85rem; }
-    .modal-content { width: 95%; padding: 15px; } /* Modal adjustments for mobile */
+    .modal-content { width: 95%; padding: 15px; } 
     .modal-header h2 { font-size: 1.1rem; }
     .modal-body { font-size: 0.9rem; }
 }
