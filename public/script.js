@@ -75,11 +75,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (event.target === fullMessageModal) closeFullScreenMessage();
             });
         }
-        document.addEventListener('keydown', (event) => {
-            if (event.key === 'Escape' && fullMessageModal && !fullMessageModal.classList.contains('hidden')) {
-                closeFullScreenMessage();
-            }
-        });
+       document.addEventListener('keydown', (event) => {
+    // Ensure fullMessageModal is defined and accessible here
+    const modal = document.getElementById('full-message-modal'); 
+    if (event.key === 'Escape' && modal && modal.classList.contains('visible')) { // <-- CHECK FOR .visible
+        closeFullScreenMessage();
+    }
+});
     }
 
     // --- Setup Functions (checkForWidgetMode, loadSettingsFromLocalStorage, populateModeSelector) ---
@@ -117,25 +119,25 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Modal Functions (openFullScreenMessage, closeFullScreenMessage, copyModalText) ---
     // ... (These functions remain the same as your last version)
     function openFullScreenMessage(text) {
-        if (fullMessageTextDisplay && fullMessageModal) {
-            if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
-                fullMessageTextDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
-            } else {
-                fullMessageTextDisplay.textContent = text;
-            }
-            fullMessageModal.classList.remove('hidden');
-            if(closeFullMessageBtn) closeFullMessageBtn.focus();
+    if (fullMessageTextDisplay && fullMessageModal) {
+        if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+            fullMessageTextDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
+        } else {
+            fullMessageTextDisplay.textContent = text;
         }
+        fullMessageModal.classList.add('visible'); // <-- USE .add('visible')
+        if(closeFullMessageBtn) closeFullMessageBtn.focus();
     }
+}
 
     function closeFullScreenMessage() {
-        if (fullMessageModal) {
-            fullMessageModal.classList.add('hidden');
-            if (fullMessageTextDisplay) {
-                 fullMessageTextDisplay.innerHTML = ''; 
-            }
+    if (fullMessageModal) {
+        fullMessageModal.classList.remove('visible'); // <-- USE .remove('visible')
+        if (fullMessageTextDisplay) {
+             fullMessageTextDisplay.innerHTML = ''; 
         }
     }
+}
 
     function copyModalText() {
         if (fullMessageTextDisplay && copyFullMessageBtn) {
