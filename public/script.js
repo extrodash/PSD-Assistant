@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const additionalReferenceInput = document.getElementById('additional-reference');
     const summarizeChatButton = document.getElementById('summarize-chat-button');
     const chatSummaryDiv = document.getElementById('chat-summary');
+    // themeToggle was removed in the permanent dark mode step
 
     // --- State Management ---
     let chatThreads = [];
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     function initialize() {
         checkForWidgetMode();
+        // setupTheme(); // Removed as theme is permanent dark
         loadSettingsFromLocalStorage();
         populateModeSelector();
         startNewChat();
@@ -52,6 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
         newChatButton.addEventListener('click', startNewChat);
         chatThreadsMenu.addEventListener('change', (e) => switchChat(e.target.value));
         summarizeChatButton.addEventListener('click', summarizeCurrentThread);
+        // themeToggle.addEventListener('change', handleThemeChange); // Removed
 
         // Add listeners to save settings to localStorage on input
         modeSelect.addEventListener('change', handleModeChange);
@@ -68,19 +71,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // setupTheme and handleThemeChange functions were removed for permanent dark mode
+
     function loadSettingsFromLocalStorage() {
-        const savedModeIndex = localStorage.getItem('savedModeIndex') || 0;
-        const savedModel = localStorage.getItem('savedModel') || 'gpt-3.5-turbo';
+        const savedModeIndex = localStorage.getItem('savedModeIndex') || 0; // Default to first mode
+        const savedModel = localStorage.getItem('savedModel') || 'gpt-3.5-turbo'; // Default model
         const savedPrompt = localStorage.getItem('savedPrompt') || '';
         const savedReferenceText = localStorage.getItem('savedReferenceText') || '';
 
-        modeSelect.value = savedModeIndex;
-        modelSelect.value = savedModel;
-        foundationalPromptInput.value = savedPrompt;
-        additionalReferenceInput.value = savedReferenceText;
+        if(modeSelect) modeSelect.value = savedModeIndex;
+        if(modelSelect) modelSelect.value = savedModel;
+        if(foundationalPromptInput) foundationalPromptInput.value = savedPrompt;
+        if(additionalReferenceInput) additionalReferenceInput.value = savedReferenceText;
     }
 
     function populateModeSelector() {
+        if(!modeSelect) return;
         chatModes.forEach((mode, index) => {
             const option = document.createElement('option');
             option.value = index;
@@ -93,10 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateUI() {
         updateChatHistory();
         updateThreadMenu();
-        handleModeChange();
+        handleModeChange(); // Call this to set initial instruction text
     }
     
     function updateChatHistory() {
+        if(!chatHistory) return;
         chatHistory.innerHTML = '';
         const currentThread = getCurrentThread();
         if (currentThread && currentThread.messages) {
@@ -106,18 +113,25 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function renderMessage(text, isUser) {
+        if(!chatHistory) return;
         const messageEl = document.createElement('div');
         messageEl.classList.add('message', isUser ? 'user' : 'assistant');
         if (isUser) {
             messageEl.textContent = text;
         } else {
-            messageEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
+            // Ensure 'marked' and 'DOMPurify' are loaded if you use this
+            if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                messageEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
+            } else {
+                messageEl.textContent = text; // Fallback if libraries not loaded
+            }
         }
         chatHistory.appendChild(messageEl);
         chatHistory.scrollTop = chatHistory.scrollHeight;
     }
 
     function updateThreadMenu() {
+        if(!chatThreadsMenu) return;
         chatThreadsMenu.innerHTML = '';
         chatThreads.forEach(thread => {
             const option = document.createElement('option');
@@ -131,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function handleModeChange() {
+        if(!modeSelect || !customPromptContainer || !modeInstructionContainer || !modeInstructionText) return;
         const selectedMode = chatModes[modeSelect.value];
         if (selectedMode.name === "Custom") {
             customPromptContainer.style.display = 'block';
@@ -172,6 +187,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     async function sendMessage() {
+        if (!userInput || !foundationalPromptInput || !additionalReferenceInput || !modelSelect || !modeSelect || !customPromptInput) {
+            console.error("One or more critical UI elements not found in sendMessage.");
+            return;
+        }
+
         const text = userInput.value.trim();
         if (!text || isLoading) return;
 
@@ -188,15 +208,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const payload = {
             model: modelSelect.value,
-            messages: currentThread.messages.map(msg => ({
+            messages: currentThread ? currentThread.messages.map(msg => ({
                 role: msg.isUser ? 'user' : 'assistant',
                 content: msg.text
-            })),
+            })) : [], // Send empty array if currentThread is null
             foundationalPrompt: foundationalPromptInput.value.trim(),
             additionalReferenceText: additionalReferenceInput.value.trim(),
             activeInstruction: activeInstruction
         };
         
+        // This is the crucial diagnostic line.
         console.log("Sending this payload to the server:", payload);
 
         try {
@@ -216,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addMessageToState(aiResponse, false);
             renderMessage(aiResponse, false);
 
-            if (currentThread.messages.length === 2) {
+            if (currentThread && currentThread.messages.length === 2) { // Check if currentThread exists
                 currentThread.title = text.substring(0, 20) + '...';
                 updateThreadMenu();
             }
@@ -231,6 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     async function summarizeCurrentThread() {
+        if(!chatSummaryDiv) return;
         const currentThread = getCurrentThread();
         if (!currentThread || currentThread.messages.length === 0) {
             alert("Nothing to summarize!");
