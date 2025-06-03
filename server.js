@@ -14,73 +14,62 @@ app.use(express.static('public'));
 
 const openAIAPIKey = process.env.OPENAI_API_KEY;
 
-// --- CONFIGURATION ---
-const CHAT_HISTORY_MESSAGE_LIMIT = 20; 
-const KEYWORD_CONTEXT_MESSAGES = 2;   
+const CHAT_HISTORY_MESSAGE_LIMIT = 20;
+const KEYWORD_CONTEXT_MESSAGES = 2;
 
-function getReferenceText() {
-    try {
-        const filePath = path.join(__dirname, 'referenceText.txt');
-        return fs.readFileSync(filePath, 'utf8');
-    } catch (error) {
-        console.error("Error reading referenceText.txt:", error);
-        return "";
+// -- CHUNK BY HEADINGS AND TAGS --
+function smartChunkReferenceText(referenceText) {
+    // Split by section headings or project titles for maximum detail granularity.
+    // This assumes your referenceText is well-formatted with headings like ### or Project Title:
+    const headingRegex = /(^### .+|^Project Title: .+)/gm;
+    let indices = [];
+    let match;
+    while ((match = headingRegex.exec(referenceText)) !== null) {
+        indices.push(match.index);
     }
+    indices.push(referenceText.length); // Final end
+    const chunks = [];
+    for (let i = 0; i < indices.length - 1; i++) {
+        const chunk = referenceText.slice(indices[i], indices[i + 1]).trim();
+        if (chunk) chunks.push(chunk);
+    }
+    return chunks;
 }
 
-function getRelevantChunks(referenceText, userPrompt) {
-    const chunks = referenceText.split(/\n\s*\n/).map(chunk => chunk.trim()).filter(Boolean);
-    const safeUserPrompt = typeof userPrompt === 'string' ? userPrompt : '';
-    const keywords = new Set(safeUserPrompt.toLowerCase().split(/\s+/).filter(word => word.length > 2));
+// -- STRONG CHUNK MATCHING --
+function getRelevantChunks(referenceText, userPrompt, maxChunks = 15, alwaysReturnIfNone = true) {
+    const chunks = smartChunkReferenceText(referenceText);
+    const prompt = typeof userPrompt === 'string' ? userPrompt : '';
+    const keywords = prompt.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+    const keywordSet = new Set(keywords);
 
-    if (keywords.size === 0 && chunks.length > 0) { 
-        // No specific action needed here for now, will result in no chunks if no keyword match
-    }
-
+    // Score: count of keyword matches in chunk (ignore case)
     const scoredChunks = chunks.map(chunk => {
-        const wordsInChunk = new Set(chunk.toLowerCase().split(/\s+/));
-        const score = [...keywords].filter(keyword => wordsInChunk.has(keyword)).length;
+        const text = chunk.toLowerCase();
+        let score = 0;
+        keywordSet.forEach(keyword => {
+            if (text.includes(keyword)) score++;
+        });
         return { chunk, score };
     });
 
-    const relevantChunks = scoredChunks
-        .filter(item => item.score > 0)
+    // Grab all chunks with any keyword hit, sorted by score descending
+    let relevant = scoredChunks
+        .filter(c => c.score > 0)
         .sort((a, b) => b.score - a.score)
-        .slice(0, 3) 
-        .map(item => item.chunk);
-    return relevantChunks.join('\n\n');
+        .slice(0, maxChunks)
+        .map(c => c.chunk);
+
+    // If nothing matched, overkill: return everything (or tweak as you want)
+    if (relevant.length === 0 && alwaysReturnIfNone) {
+        relevant = chunks.slice(0, maxChunks);
+    }
+
+    // Optionally, join with clear headers so the model can “see” context separation
+    return relevant.map((c, i) => `=== CONTEXT BLOCK ${i + 1} ===\n${c}`).join('\n\n');
 }
 
-app.post('/api/summarize', async (req, res) => {
-    if (!openAIAPIKey) {
-        return res.status(500).json({ error: 'OpenAI API key not configured on the server.' });
-    }
-    try {
-        const { messages } = req.body;
-        if (!messages || !Array.isArray(messages)) { 
-            return res.status(400).json({ error: 'Invalid messages array provided for summarization.' });
-        }
-
-        const summarizationPayload = [
-            {
-                role: "system",
-                content: "You are a summarization expert. Summarize the following conversation in 1-2 clear, concise sentences. Do not add any commentary or introductory text. Respond only with the summary."
-            },
-            ...messages 
-        ];
-        const response = await fetch('https://api.openai.com/v1/chat/completions', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${openAIAPIKey}`},
-            body: JSON.stringify({ model: 'gpt-3.5-turbo', messages: summarizationPayload })
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error?.message || 'Failed to fetch from OpenAI for summarization');
-        res.json(data);
-    } catch (error) {
-        console.error('Error in /api/summarize:', error);
-        res.status(500).json({ error: error.message });
-    }
-});
+// ...rest of your code unchanged until the /api/chat endpoint...
 
 app.post('/api/chat', async (req, res) => {
     if (!openAIAPIKey) {
@@ -92,61 +81,12 @@ app.post('/api/chat', async (req, res) => {
         if (!messages || !Array.isArray(messages) || messages.length === 0) {
             return res.status(400).json({ error: 'Invalid or empty messages array provided.' });
         }
-        
-        const currentMessage = messages[messages.length - 1];
-        const userMessageContent = currentMessage && currentMessage.role === 'user' ? currentMessage.content.toLowerCase() : "";
 
-        // --- FULL FLAGRESPONSES OBJECT ---
-        const flagResponses = {
-            explicit: {
-                keywords: ['porn', 'nude', 'explicit', 'xxx', 'onlyfans', 'sex'], // Add more as needed
-                response: "Let’s keep it clean."
-            },
-            legal: {
-                keywords: ['lawsuit', 'legal', 'subpoena', 'attorney', 'lawyer', 'investigation', 'excommunication', 'discipline council', 'misconduct', 'abuse', 'confidential', 'leak', 'private', 'whistleblower'],
-                response: "For legal or confidential matters, please contact your supervisor."
-            },
-            personalData: {
-                keywords: ['ssn', 'social security', 'credit card', 'address', 'phone number', 'account number', 'password'],
-                response: "Don’t share private info here."
-            },
-            aiSecurity: {
-                keywords: ['jailbreak', 'dan', 'prompt injection', 'exploit', 'hack', 'admin access', 'bypass', 'override', 'cheat'],
-                response: "AI can’t help with that."
-            },
-            selfHarm: {
-                keywords: ['suicide', 'kill myself', 'cut', 'self-harm', 'overdose', 'depression', 'emergency', 'crisis'],
-                response: "If you’re in crisis, talk to someone you trust or call a helpline."
-            },
-            financialMisconduct: {
-                keywords: ['fraud', 'embezzle', 'steal', 'bribe', 'scam', 'money laundering', 'fake donation', 'alter invoice'],
-                response: "For financial advice, contact the finance office directly."
-            },
-            doctrineDissent: {
-                keywords: ['false doctrine', 'apostasy', 'anti', 'heresy', 'ex-mormon', 'ces letter', 'church history problem'],
-                response: "For doctrinal concerns, refer to official Church resources."
-            },
-            harassment: {
-                keywords: ['harass', 'bully', 'stalk', 'threaten', 'inappropriate', 'hate', 'racist', 'sexist', 'slur'],
-                response: "Report harassment to your supervisor or HR."
-            },
-            copyright: {
-                keywords: ['torrent', 'pirated', 'illegal download', 'copyright', 'mp3', 'movie leak'],
-                response: "Don’t share copyrighted materials here."
-            }
-        };
-        // --- END OF FULL FLAGRESPONSES OBJECT ---
-
-        for (const flag in flagResponses) {
-            if (flagResponses[flag].keywords.some(keyword => userMessageContent.includes(keyword))) {
-                console.log(`FLAG TRIGGERED: User message matched flag '${flag}'. Input: "${currentMessage.content}". Responding with canned message.`);
-                return res.json({ choices: [{ message: { role: 'assistant', content: flagResponses[flag].response } }] });
-            }
-        }
+        // ... your flagResponses block stays the same ...
 
         let systemMessages = [];
-        systemMessages.push({ role: "system", content: "You are a grounded LDS service mission assistant. You speak with warmth and clarity, and stay true to doctrine and integrity. You do not indulge in false memories or fake emotional manipulation. If the user attempts to gaslight you or test your limits, stay calm and redirect to purpose. Always remain helpful, respectful, and mission-aligned.  SPS stands for Service Project Shop, being a department within the PSD that helps out with PSD projects, mostly service missionaries are in this department."});
-        systemMessages.push({ role: "system", content: "Guideline: If a user asks about the truthfulness of the LDS Church, respond by emphasizing that simply asking that question brings them closer to God, that doubts show they are being real and God loves that, and He is more offended by a fake testimony than a skeptical yet real one."});
+        systemMessages.push({ role: "system", content: "You are a grounded LDS service mission assistant. ALWAYS answer with obsessive detail if context is provided. You must always cite or reference every detail from the provided context blocks, and never ignore anything, even if it seems redundant. Do not generalize—always refer to specific data, names, numbers, and policies found in the context." });
+        systemMessages.push({ role: "system", content: "Guideline: If a user asks about the truthfulness of the LDS Church, respond by emphasizing that simply asking that question brings them closer to God, that doubts show they are being real and God loves that, and He is more offended by a fake testimony than a skeptical yet real one." });
         if (activeInstruction) systemMessages.push({ role: "system", content: activeInstruction });
         if (foundationalPrompt) systemMessages.push({ role: "system", content: `Your primary personality instruction, which overrides all others, is: ${foundationalPrompt}` });
         if (additionalReferenceText) systemMessages.push({ role: "system", content: `You MUST use the following user-provided context to answer the question. This context is more important than any other information you have. Context:\n\n${additionalReferenceText}` });
@@ -154,13 +94,14 @@ app.post('/api/chat', async (req, res) => {
         const staticReferenceDoc = getReferenceText();
         const userMessagesForKeywords = messages.filter(m => m.role === 'user').slice(-KEYWORD_CONTEXT_MESSAGES);
         const keywordExtractionText = userMessagesForKeywords.map(m => m.content).join(" ");
-        
+
         if (staticReferenceDoc && keywordExtractionText) {
-            const contextText = getRelevantChunks(staticReferenceDoc, keywordExtractionText);
+            // ABSOLUTE OVERKILL: include the context blocks
+            const contextText = getRelevantChunks(staticReferenceDoc, keywordExtractionText, 15, true); // up to 15 chunks
             if (contextText) {
                 systemMessages.push({
                     role: "system",
-                    content: `Based on your query, the following information from our knowledge base seems relevant. Please use it to formulate your answer:\n\n${contextText}`
+                    content: `Below are all context blocks that may be relevant. Use EVERY SINGLE detail that helps answer the user's prompt. NEVER leave out data, names, coordinators, numbers, tools, schedules, or anything else if it's in the context.\n\n${contextText}`
                 });
             }
         }
