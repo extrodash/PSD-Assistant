@@ -17,6 +17,62 @@ const openAIAPIKey = process.env.OPENAI_API_KEY;
 const CHAT_HISTORY_MESSAGE_LIMIT = 20;
 const KEYWORD_CONTEXT_MESSAGES = 2;
 
+// Add a new function for fine-grained chunking (by paragraph)
+function fineChunkReferenceText(referenceText) {
+    // Split by double newlines (paragraphs)
+    return referenceText.split(/\n\s*\n/).map(chunk => chunk.trim()).filter(Boolean);
+}
+
+// Modify getRelevantChunks to choose chunking strategy
+function getRelevantChunks(referenceText, userPrompt, maxChunks = 10, alwaysReturnIfNone = true, tokenLimit = 3500) {
+    // Decide chunking granularity based on prompt length or keyword count
+    const prompt = typeof userPrompt === 'string' ? userPrompt : '';
+    const keywords = prompt.toLowerCase().split(/\s+/).filter(w => w.length > 2);
+    const keywordSet = new Set(keywords);
+
+    // Use fine chunking for short prompts, coarse for long/complex
+    let chunks;
+    if (prompt.length < 80 && keywords.length <= 5) {
+        // Short/simple prompt: use fine-grained chunking
+        chunks = fineChunkReferenceText(referenceText);
+    } else {
+        // Long/complex prompt: use heading-based chunking
+        chunks = smartChunkReferenceText(referenceText);
+    }
+
+    const scoredChunks = chunks.map(chunk => {
+        const text = chunk.toLowerCase();
+        let score = 0;
+        keywordSet.forEach(keyword => {
+            if (text.includes(keyword)) score++;
+        });
+        return { chunk, score };
+    });
+
+    let relevant = scoredChunks
+        .filter(c => c.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, maxChunks)
+        .map(c => c.chunk);
+
+    if (relevant.length === 0 && alwaysReturnIfNone) {
+        relevant = chunks.slice(0, maxChunks);
+    }
+
+    // Add headers
+    let joined = relevant.map((c, i) => `=== CONTEXT BLOCK ${i + 1} ===\n${c}`).join('\n\n');
+
+    // TOKEN CHECK: If reference context is too large, trim
+    let tokens = encode(joined).length;
+    while (tokens > tokenLimit && relevant.length > 1) {
+        relevant.pop();
+        joined = relevant.map((c, i) => `=== CONTEXT BLOCK ${i + 1} ===\n${c}`).join('\n\n');
+        tokens = encode(joined).length;
+    }
+
+    return joined;
+}
+
 // -- CHUNK BY HEADINGS AND TAGS --
 function smartChunkReferenceText(referenceText) {
     // Split by section headings or project titles for maximum detail granularity.
