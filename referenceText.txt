@@ -268,6 +268,248 @@ Service Missionary Attendance Accountability in SPS:
 Attendance is taken in SPS. Team leads, Assistant Team Leads (ATLs), or managers are responsible for this. Missionaries are accountable for being late, absent, or leaving early for morning meetings, afternoon meetings, and their general work presence.
 Keywords for Chatbot: SPS attendance policy, missionary accountability, punctuality missionary
 
+SPS New Missionary Onboarding Process Overview: This guide outlines the process for Team Leads and Assistant Team Leads to onboard new service missionaries assigned to their team by the manager assistants. The starting process flowchart can be found at [insert actual link here if you have one, otherwise remove "here"].
+Keywords for Chatbot: new missionary onboarding, SPS onboarding, team lead responsibilities, assistant team lead, new missionary process, starting process flowchart
+
+Scheduling a Tour for Prospective Missionaries: Within 48 hours of a missionary being assigned to your team, call the Service Missionary Advisers (SMAs) to schedule a tour. Also, ensure you provide the missionary with the Experience Survey, as the information in that survey is critical for the Front Desk.
+Keywords for Chatbot: schedule missionary tour, SMA contact, Experience Survey, new missionary tour
+
+Tour Meeting Setup and Room Booking: Create a Microsoft Teams meeting for the tour. Add your Assistant Team Lead (or whoever will be joining you for the tour). Use "Appspace" to book an open conference room that has presenting ability for the tour.
+Keywords for Chatbot: Teams meeting tour, Appspace room booking, conference room reservation, tour logistics
+
+Recording Tour Date in Airtable: After scheduling the tour, enter the tour date into the "New Missionary View" in Airtable to keep records updated.
+Keywords for Chatbot: Airtable new missionary, record tour date, new missionary view
+
+Reminders for Tour - Day Before: One day before the scheduled tour, remind the prospective missionary and their SMAs about the upcoming tour. Remind them to meet in the Church Office Building (COB) lobby 10 minutes before the tour is scheduled to start. Instruct them to park in the Conference Center parking lot and inform them about the process to validate their parking using the provided form [insert actual link to form here if available, otherwise state "the designated validation form"].
+Keywords for Chatbot: tour reminder, SMA reminder, COB lobby meeting, conference center parking, parking validation FSY
+
+Preparing Spiritually and Logistically for the Tour: It is wise to prepare yourself spiritually before giving a tour; prayer is always helpful. Identify approximately three projects that you think may strike the new missionary's interest. Ensure you have another missionary (like an ATL or team member) to give the tour with you. Do what you can to have the SMAs join the missionary for the tour, but if manageable, avoid having the parents join, as the focus is on touring the missionary, not the parents.
+Keywords for Chatbot: tour preparation, spiritual preparation, project ideas for new missionary, co-giving tour, SMA tour attendance, parent tour attendance
+
+Arrival and Welcome for Tour: Be in the COB lobby 15 minutes before the tour begins. Be ready to give the missionary directions and help them know where they are going.
+Keywords for Chatbot: missionary tour arrival, COB lobby instructions, welcoming new missionary
+
+Giving the Tour - Initial Steps and Prayer: Lead the prospective missionary to your reserved conference room. Begin the tour with a prayer. Ask an icebreaker question to get to know the missionary.
+Keywords for Chatbot: giving missionary tour, tour prayer, icebreaker questions, getting to know missionary
+
+Giving the Tour - Presentation Content: Lead them through the official presentation (Slideshow Link: [insert actual link here, or state "the standard SPS presentation slides"]). Key points to cover include:
+1. Share the Service Missionary purpose; ask what sticks out to them and share what you like about it.
+2. Explain what the Service Project Shop (SPS) is and who we are.
+3. Show the organizational system of the SPS, explain it, and answer any questions.
+4. Explain the typical service day schedule.
+5. Explain the Culture and Expectations within SPS (e.g., attending meetings, respecting employees, responding timely to messages).
+6. You may discuss the "Elevate His Work" initiative. Consider sharing Sister Juarez's quote: "There is a reason you are here, but more importantly there is a purpose."
+7. Answer any questions they have throughout the presentation.
+Keywords for Chatbot: SPS presentation, service missionary purpose, SPS organizational system, service day schedule, SPS culture, SPS expectations, Elevate His Work, Sister Juarez quote
+
+Giving the Tour - Exploring Projects: Go through the "All Projects" view in Airtable with the missionary. Identify some projects that catch their interest. Ideally, these projects should have some form of availability; if there is no current availability for a project they like, be sure to clarify that.
+Keywords for Chatbot: Airtable projects, missionary project interest, project availability, exploring SPS projects
+Giving the Tour - Meeting Current Missionaries: Introduce the prospective missionary to some current SPS missionaries, ideally missionaries who serve on projects the prospect showed interest in. Facilitate a brief interaction where they can ask the currently serving missionary about their experience. Example questions for current missionaries: What drew you to SPS? What projects are you on and how do they help gather Israel? How do you bring Christ into your service? What do you love about SPS? What's something hard about SPS? How has serving here impacted your relationship with the Savior?
+Keywords for Chatbot: meet current missionaries, SPS missionary experience, project insights, spiritual aspects of service
+Concluding the Tour and Scheduling Shadow Day: At the end of the tour, DO NOT invite the missionary to serve in SPS yet. Instead, invite them to a Shadow Day. Schedule this Shadow Day with them before they leave. Aim to schedule it within the next few business days. A possible verbatim is: "Thank you for touring with us today, it was nice to meet you! Would you like to schedule a day to come in and shadow some projects?"
+Keywords for Chatbot: concluding tour, shadow day invitation, scheduling shadow day, tour next steps
+Closing the Tour with Prayer: As you feel inspired, close the tour with a prayer.
+Keywords for Chatbot: tour closing prayer
+
+Preparing for the Shadow Day - Project Selection: After the tour, identify 3-4 of the projects that the prospective missionary was interested in.
+Keywords for Chatbot: shadow day preparation, selecting shadow projects
+Preparing for the Shadow Day - Coordinator Outreach: Contact the requestors, Project Coordinators, or participants of the selected projects. Set up a specific time during the planned Shadow Day when they will be available to meet with the shadowing missionary, explain the project in depth, and show them what the work looks like.
+Keywords for Chatbot: shadow day logistics, contacting project coordinators, arranging project shadowing
+Shadow Day - Duration and Activities: Have the missionary plan to spend up to half a day shadowing. During this time, they should meet with the coordinators or participants of the 3-4 projects they are interested in. The project contact should explain the project in depth and show the shadowing missionary the actual work.
+Keywords for Chatbot: shadow day schedule, project shadowing, understanding project work
+Shadow Day - SPS Routine and Meetings: Depending on the timing of the shadow day, show the missionary the regular meetings or devotionals that are part of the SPS routine (e.g., daily huddle, Elevate, Gospel Study).
+Keywords for Chatbot: SPS routine, shadow day meetings, missionary devotionals
+Shadow Day - Manager Interview: Do not end the shadow day without having the missionary meet for a brief interview with one of the Manager Assistants (Elder Gailey, Elder Story) or Tyler Smith.
+Keywords for Chatbot: shadow day manager interview, Elder Gailey interview, Elder Story interview, Tyler Smith interview
+Post-Shadow Day Debrief and Decision: After the Shadow Day, meet briefly with the Manager Assistant who conducted the interview. If either you (the Team Lead/ATL) or the Manager Assistant has any concerns about the missionary's suitability, you may postpone inviting them to serve. In such a case, escort the missionary out without extending an invitation. A possible verbatim is: "Thank you for coming in for a shadow day! We will reach out to you about the possibility of you serving here."
+Keywords for Chatbot: post-shadow day review, manager assistant feedback, missionary suitability assessment
+
+Extending the Invitation to Serve: If all flags are green, the invitation to serve in SPS may be extended. "Green flags" include:
+- Several projects of interest identified and shadowed.
+- Manager interview went smoothly.
+- Missionary has reliable transportation.
+- Missionary can sit in front of a computer for several hours.
+- Available days of service and computer preference (e.g., Mac/PC) were identified.
+- The original tour went reasonably well.
+- They express genuine interest in serving here for good reasons (not solely for social aspects).
+- The Team Lead has no qualms or concerns.
+If extending the invitation, ensure the Manager Assistant completes the "New Missionary Survey" in Airtable and then clicks "Onboarding ready."
+Keywords for Chatbot: extending service invitation, green flags missionary, new missionary survey, airtable onboarding ready, reliable transportation, computer use, service availability
+
+Before the First Day - Final Preparations:
+1. Remind the missionary of their upcoming start date.
+2. Instruct the new missionary to arrive 15 minutes early on their first day and to park in the Conference Center parking (if vehicle parking is needed).
+3. Check with the SPS tech team to ensure their computer will be ready.
+4. Check with the SPS Front Desk to make sure their provisioning (access, accounts) is complete. If not, you may need to push back their start date.
+5. Check with the SPS Front Desk to see if their parking pass or UTA pass is ready.
+6. Ensure the missionary has recently re-set their Church Password, as this is often needed for system access.
+7. Set up the new missionary in the Elevate program and have them complete the initial sections, particularly regarding expectations.
+Keywords for Chatbot: new missionary first day prep, start date reminder, parking instructions, tech setup, provisioning check, UTA pass, church password reset, Elevate program setup
+
+The First Day - Onboarding Activities:
+1. Meet the new missionary in the COB lobby 15 minutes before the day officially starts.
+2. Take them to the badge office to acquire their Church Office Building badge. If it is not ready, have them sign in as a guest for the day and immediately inform the SPS Front Desk that they need a badge arranged.
+3. Help the missionary set up their new computer, using the provided instructions or with assistance from the tech team.
+4. Ensure the missionary attends any scheduled trainings for the specific projects they are starting on.
+5. Inform the new missionary about the New Missionary Orientation, which typically takes place every other Monday and is run by the Manager Assistants.
+Keywords for Chatbot: new missionary first day, COB badge, computer setup, project training, new missionary orientation
+
+Onboarding Complete - Congratulations: Celebrate a job well done! You have helped the Lord's work move forward by aiding one of His missionaries in their service. Thank you for being a magnificent Team Lead or Assistant Team Lead!
+Keywords for Chatbot: onboarding complete, team lead success, new missionary start
+
+SPS General Operating Policies: These policies apply to the entire SPS operation. Be aware that there may be additional policies you should follow in your specific assignment or team.
+Keywords for Chatbot: SPS policies, general conduct, operational guidelines, workplace rules
+
+Service Missionary Standards Handbook: All service missionaries should review the official Service Missionary Standards. This handbook can be found in the Gospel Library under Handbooks and Callings > Missionary Callings > Service Missionary > Missionary Standards for Disciples of Jesus Christ—Service Missionaries.
+Keywords for Chatbot: Service Missionary Standards, missionary handbook, Gospel Library standards, discipleship standards
+
+Punctuality and Commitment to Service Hours: Come on time and endure to the end of your scheduled service. Serve faithfully during the hours you have agreed to serve, as inputted by your SMAs into SMMS. While service missions are designed to be flexible, do your best to dedicate the full amount of time to the Lord that you committed to.
+Keywords for Chatbot: punctuality, on time, service hours, commitment, SMMS, missionary schedule adherence, endure to the end
+
+Missionary Purpose and Minimizing Distractions: Remember the call to "Go ye therefore, serve all nations." Distractions are one of the adversary's favorite ways of keeping us from the most important work. As you serve with your fellow Missionaries, remember your purpose. Remind each other to work as a team and help keep each other on track with the service you have been assigned to do. Elevate the Work!
+Keywords for Chatbot: missionary purpose, minimizing distractions, focus on service, teamwork, elevate the work, staying on track
+
+Inviting the Spirit and Maintaining a Reverent Atmosphere: Strive to invite the Spirit into your service. Consider if you would be comfortable doing what you're doing if an Apostle or General Authority suddenly walked into your work space—this has been known to happen! As the "UTA Trax Lady" quote reminds us (adapted): "Be considerate of others. Keep conversations and audio low. Headphones are required. Remember, this is a shared space."
+Keywords for Chatbot: invite the Spirit, reverent workplace, spiritual atmosphere, apostle visit, general authority visit, quiet environment, headphone policy, shared workspace etiquette
+
+Respectful Conduct and Titles: Calling other Missionaries "Elder" or "Sister" shows respect for the sacred calling we all share. You are a Missionary and a representative of Jesus Christ. Be Christlike in all you say and do.
+Keywords for Chatbot: Elder, Sister, missionary titles, respect for calling, Christlike conduct, representative of Christ
+
+Resolving Workplace Issues: If there is a problem or conflict occurring in the workspace, please bring it up to your Team Leads or other supervisors to discuss how to best resolve the problem. Focus on building each other up.
+Keywords for Chatbot: workplace conflict, resolving issues, reporting problems, building others up, supervisor communication
+
+SPS "The 10 Great..." Rules Overview: The following are key guidelines and rules for service missionaries serving in SPS, often referred to as "The 10 Great Rules."
+Keywords for Chatbot: SPS rules, 10 great rules, missionary guidelines, office conduct
+SPS Rule 1 - Interactions with Opposite Sex: Avoid situations where you are alone with a missionary of the opposite sex. Generally, navigating the building or walking to the bus together is fine, but use wisdom and avoid extended private interactions.
+Keywords for Chatbot: missionary companionship, opposite sex policy, alone with missionary, appropriate interactions
+SPS Rule 2 - Meeting Attendance: Attend all required meetings, including gospel study, and be on time. Meetings that count for gospel study include: specific devotionals (other than daily morning devotionals), field trips or activities that happen during service hours (not trips for UTA passes), and campus meetings, group meetings, sendoffs, etc.
+Keywords for Chatbot: meeting attendance, gospel study, punctuality meetings, required meetings, devotionals, field trips
+SPS Rule 3 - Gym Usage: There is a gym available on the seventh floor of the Church Office Building. You are welcome to use it, but please ensure you do so only before or after your scheduled service hours, not during.
+Keywords for Chatbot: COB gym, gym usage, fitness facility, service hours recreation
+SPS Rule 4 - Lunch Break: Lunch is one hour long. If you wish to sit together as a group, there is a large cafeteria on floor 1L with plenty of seats where conversations can be a bit louder than on service floors. If you need to continue working during your lunch break, you are welcome to eat at your desk.
+Keywords for Chatbot: lunch break policy, COB cafeteria, eating at desk, group lunch
+SPS Rule 5 - Respect for Property: Treat Church property, including the building and equipment, as if it is the house of the Lord. It is one of His buildings dedicated to His work. Damage to His property will not be tolerated.
+Keywords for Chatbot: respect for property, church property, COB facilities, preventing damage
+SPS Rule 6 - Appropriate Use of Time and Technology: Games, video games, streaming unrelated content, and similar personal entertainment are not part of our service here at SPS. Social and recreational gatherings should not take place during service hours or at service locations.
+Keywords for Chatbot: appropriate technology use, no games at work, no streaming, focus during service hours, recreational activities policy
+SPS Rule 7 - Cleanliness on 4E COB: If you serve on the 4th Floor East wing of the COB (4E COB), please help take out the trashes and recycling on Fridays. Sort your waste properly. SPS and your fellow Missionaries appreciate your help in keeping this floor clean.
+Keywords for Chatbot: 4E COB cleanliness, trash and recycling, office cleaning, Friday duties
+SPS Rule 8 - Voice Levels: Voices need to be kept low in the workspace to maintain a respectful and productive environment for everyone. Politely remind each other to quiet down if noise levels become too high.
+Keywords for Chatbot: voice levels, quiet workspace, noise policy, respectful volume
+SPS Rule 9 - Prohibited Items (Weapons): Weapons of any kind are strictly forbidden to be brought into the Church Office Building.
+Keywords for Chatbot: prohibited items, weapons policy, COB security, forbidden items
+SPS Rule 10 - Enjoy Your Service: Have fun serving the Lord! He wants you here, and so do we! Embrace the "New boost" spirit.
+Keywords for Chatbot: enjoy service, missionary attitude, positive service, new boost
+
+Our Purpose:
+"Serving...as the Savior would" - Service Missionary Purpose
+Elevate His Work - How can you elevate the service you are doing to be more Christ-like?
+As Service Project Shop Missionary, you are expected to strive to serve in alignment with Service Missionary Standards (review 2.1.6  and 2.2 ), Church Employee guidelines, and the SPS Policies.
+BACKGROUND
+It’s easy to lose perspective about the work of the Lord at Headquarters. Thrilling opportunities and honored responsibilities can, over time, be reduced to mere tasks, recurring meetings, and obligatory commitments. But we recognized years ago that because of their humility and the power of their call, Service Missionaries remind us of the peace, purpose, and joy of the Lord’s work. We witnessed that they not only got the work done, but they also changed us and our perspectives. So rather than focusing on doing tasks employees would otherwise be doing, we have focused on elevating the work at Church Headquarters. Here’s the difference this focus has made:
+TEAMS
+The missionaries who serve here are not just focused on preparing for future post-mission opportunities or on reaching work quotas; they are here because they love the Lord and want to serve Him. They use their unique talents to build capability of others, improve the work, and produce their best on a variety of creative, business and physical service projects. Missionaries don’t work exclusively on one type of project, rather they are assigned by team leads to projects where they can do the most good. 
+The missionaries have positive interactions with employees regularly. Whether they are reporting on completed work, helping to organize future efforts, or simply seeing employees in elevators and hallways. The missionaries are always looking for ways to interact in simple, Christlike ways. 
+SERVICES
+We offer service projects for creative, administrative, analysis, data processing, communication, design, organization, and physical service needs. Lead missionaries are assigned to shepherd each project and seek to establish a positive service relationship with the requestor. 
+We have also sent many missionaries to serve directly with employee teams on a short-term basis. We call these assignments. As they serve there, they often become trusted members of the team, introducing others to the power of service missionaries and elevating the culture of the teams on which they serve. These more intimate service assignments regularly lead requestors to create their own service operations into which they welcome missionaries directly from local missions.
+MARKETING
+Most of our marketing is done through positive relationships that the missionaries form with Church departments. But we also encourage teams throughout the Church to highlight in their meetings good service offered by employees and missionaries. These are featured in weekly stories of service emails sent to over 20,000 employees of the Church. These efforts don’t just highlight our group, but the value of service throughout Church Headquarters. 
+
+Missionary - any missionary serving with us that is part of an SPS team
+Team Lead - (includes assistant leads) A Missionary responsible for leading and supporting a Team of missionaries
+Manager - always an employee, working in SPS:
+                Operation Manager - Manager over all of Service Project Shop
+                   Portfolio Manager - organizes projects/deployments, manages project coordinators
+    Communications Manager - over marketing, SML relations, Departmental relations
+
+Missionary - any missionary serving with us that is part of an SPS team
+
+Team Lead - (includes assistant leads) A Missionary responsible for leading and supporting a Team of missionaries
+
+Manager - always an employee, working in SPS:
+                Operation Manager - Manager over all of Service Project Shop
+                   Portfolio Manager - organizes projects/deployments, manages project coordinators
+    Communications Manager - over marketing, SML relations, Departmental relations
+                     Section Manager - Manages a section of 5 teams, supports Team Leads
+
+Study Meetings by Day
+Monday - Elevate
+Tuesday - Gospel Study
+Wednesday - Elevate
+Thursday - Gospel Study
+Friday - Funday
+Special Meetings (as needed)
+Combined Morning Meeting - Every other Wednesday
+All SPS Devotionals - Usually Bimonthly. Watch for announcements in the SPS Missionaries chat in Teams and during Morning Meetings.
+Send-offs - Occurs on the first monday of each month from 9-9:30am. Send-offs are for those missionaries who are ending their service that month.
+Cafeteria Hours
+Breakfast: 7:00-8:30am
+Lunch: 11:00-1:30pm
+
+The Church Office Building (COB) has a main building and two wings. We are in the East Wing, which is the Publishing Services Department. The other wing is on the other side of the building.
+The West Office Building (WOB) is the red brick building west of here on North Temple. It formerly housed the GSD missionaries. Now the GSD is housed in the Riverton Office Building (ROB).
+
+The cafeteria is on 1L and the menu can be accessed for the on the HQ Facilities site
+There is also a cafe area in the center of the third floor. You are welcome to eat there.
+
+Conference Center Parking is where we have access to park. The entrance is on West Temple. You can take the elevator up to ground level and then walk across the street to the COB.
+You need to have a parking pass, which your team lead can order, but if necessary you can show the attendant your COB badge.
+
+There is a Materials Center on 1L. It is through the Hallway for the floors 1-14 Elevators. You can take what is needed, and record your name, what you took, and the department (PSD).
+There is also one on 2L that has different stuff.
+
+Out of Office? Absent? Absence?
+If it's less than a few days notice, send your team lead and proj coordinators a text to let them know.
+Try to give at least a week notice
+Create a meeting on your teams calendar that spans the time you will be gone
+Title it Elder / Sister ____ Out
+Invite your team leads
+Send you team lead a message about it as well
+Let Project Coordinators of any projects you're on know
+Take care of any responsibilities you won't be able to fulfill
+
+For UTA to be added to your badge, go to HR (in the COB lobby next to the security desk). There will be signs to direct you, and you can just ask for it to be added.
+
+If you are having trouble accessing anything, call PSD Tech Support: 801-240-6400
+PSD Dept ID (for billing): 5453805
+
+Be eager to serve! "And whatsoever ye do, do it heartily, as to the Lord". - Colossians 3:23
+Projects come to us from all over, and they vary in service type, length, etc. We need to be prepared to serve as needed and strive to Elevate His Work. Take heed from hymn #270 I'll Go Where You Want Me to Go. This is hymn is a perfect example of being willing to do the work of the Lord in whatever capacity he gives us. Strive to follow its advice on doing it his way. 
+
+Productivity. Understand that although we try to assign projects based on your interests and skills, not every project that you get to work on will be the most exciting thing in the world. We expect all missionaries to be thoroughly engaged in their service and continuously working on projects during our service time, regardless of whether you think it's interesting.
+Office Etiquette Keep distractions and unnecessary conversations to a minimum during service hours in order to maintain a level of reverence for the work and missionaries around you. When you do need to talk with another missionary, try to keep the volume level to a whisper. Think of how you would act if you were in the temple for a reference. 
+
+Communication will be an important part of your service in a large operation with many moving parts. You will need to communicate with missionaries, employees and others depending on you. You also need to communicate with your Team Lead about things such as your schedule , out-of-office days, needing more/less work, and other needs (things that may affect your service). Check Teams, Outlook, and Airtable regularly. Your Team Lead is your point of contact so reach out to them with any issues that may come up. Avoid sending messages to the SPS Missionaries chat that are not applicable to everybody (such as if you are late, sick, etc). 
+
+Be organized and involved. You are expected to serve a minimum of 3 days/week, exceptions may be made by managers in some situations. You will also be expected to stick to the hours of the shop which are from 9am - 4pm. Be on time as best you can each day and, not leave. Be willing to lead Gospel Study or give a morning thought when you are assigned to.
+
+Attendance You will need to attend all Team and Project meetings, as well as your weekly one on one with your Team Leads. These are all required meetings that need to be attended in order for the Shop, projects, and teams to run smoothly.
+
+Project Health and Effectiveness Guide for SPS: This document outlines how to maintain a project's health and effectiveness within the Service Project Shop (SPS), focusing on participant selection, documentation, and addressing common project issues.
+Keywords for Chatbot: project health, project management, SPS projects, project effectiveness, maintaining projects
+
+Choosing Project Participants - Overview: Choosing participants for SPS projects is relatively simple and can be done by Project Coordinators, Portfolio Managers, or Team Leads. It is crucial that whoever makes an assignment informs the other relevant parties of the change.
+Keywords for Chatbot: choosing project participants, assigning missionaries, project staffing, coordinator role, portfolio manager role, team lead role
+
+Guidelines for Inviting Missionaries to Projects: When inviting missionaries, first and foremost, follow the direction of the Spirit; this is paramount. Collaborate closely with Portfolio Managers, Team Leadership, and possibly Tyler Smith (PSD Manager) to identify suitable missionaries, often utilizing Assignment Meetings for these discussions. Consider missionaries who may need more tasks, but always prioritize suitability for the project; do not invite those who would not do well, even if they require more service hours. Communicate with the individual missionary and their Team Lead to determine their potential fit. Avoid overfilling projects by assessing actual needs. Verify that potential participants can attend weekly project meetings or stay adequately informed. Finally, clearly communicate all project expectations and ensure each participant's commitment to their role and responsibilities.
+Keywords for Chatbot: inviting missionaries, project participant selection, spiritual guidance assignment, collaboration assignment, missionary workload, project suitability, meeting attendance, project expectations, missionary commitment
+
+Project Documentation in SPS - Importance and Responsibility: As Project Coordinators change, thorough and up-to-date documentation is essential to keep projects running smoothly and ensure continuity. Project Coordinators are responsible for creating and maintaining necessary documentation, particularly for projects with specific, complex, or potentially confusing work processes.
+Keywords for Chatbot: project documentation, importance of documentation, coordinator responsibility, process documentation, knowledge transfer
+
+Project Documentation - Handover Process: When a Project Coordinator transitions out of their role, they must provide all relevant documentation to the upcoming Coordinator. The new Coordinator can then make improvements or additions to the documentation as needed to keep it current and comprehensive.
+Keywords for Chatbot: documentation handover, new coordinator onboarding, updating project documents, continuity planning
+
+Handling Issues with SPS Projects - General Approach: Working with diverse individuals means encountering issues. This section outlines how to address common project challenges.
+Keywords for Chatbot: project issues, troubleshooting projects, handling project problems, conflict resolution
+
+Troubleshooting Participants Not Meeting Expectations: If Project Participants don't meet project expectations, address this by: 1. Checking in with the individual missionary to understand their challenges and offer assistance. 2. If unresolved, inform the missionary's Team Lead and, if necessary, meet together with the individual and their Team Lead. 3. If the issue persists, refer it to Tyler Smith (PSD Manager). 4. As a last resort, after consultation, inform the Team Lead about dismissing the participant from the project.
+Keywords for Chatbot: participant performance, unmet expectations, missionary accountability, team lead intervention, escalating issues, dismissing from project
+
+Handling Project Evolution and Changing Scope: When projects evolve past their original intent due to new requirements or insights, the following steps should be taken: 1. Communicate proactively with Portfolio Managers, keeping them updated on the Requestor's evolving expectations and any scope changes. 2. Strive for clear and continuous communication with the Project Requestor, asking clarifying questions to fully understand their needs and informing them of the service capabilities and limitations. 3. Adjust project participation by adding or removing individuals as needs change, always informing the relevant Portfolio Manager and Team Leads of these adjustments.
+Keywords for Chatbot: project evolution, scope creep, changing requirements, requestor communication, managing project scope, participant adjustment
+
 ### All SPS Projects Information (Restructured for Chatbot)
 
 Project Title: Youth Music Asset Organization
@@ -500,6 +742,176 @@ Project Coordinators: Wright, Abigail.
 Missionary Need: Currently Full.
 Weekly Hours: 4-6 hours.
 Keywords for Chatbot: FSY Phone Support, For the Strength of Youth, customer service, communication, COB in-person.
+
+FSY Links and Pages Guide: This section outlines important web pages and tools related to FSY (For the Strength of Youth) program management and information.
+Keywords for Chatbot: FSY links, FSY pages, FSY tools, FSY websites, program management tools
+
+Schedule Login for FSY: This tool is used to show the number of spaces available in the American and Canadian FSY Sessions. Information from this tool can be shared, but the direct link to the login page itself cannot be shared.
+Keywords for Chatbot: FSY schedule login, session availability, American FSY sessions, Canadian FSY sessions, space availability
+
+FSY Leader Page - Participant Approval (Proxy Tool): This page, accessed via proxy for a leadership calling, shows a list of youth in the ward and any out-of-unit youth that the bishop has added. It also displays if youth in the ward have registered and which session they registered for. The information is updated within two minutes of registration and automatically shows the leader's own ward.
+Keywords for Chatbot: FSY leader page, participant approval, proxy tool, youth registration status, bishop approval tool, ward list FSY
+
+FSY Youth Unit Reports: These reports show if youth attended the FSY session they registered for and when they attended. Access requires proxying for a leadership calling. The data is updated every 24 hours.
+Keywords for Chatbot: FSY youth unit reports, attendance reports FSY, session attendance, leadership reports FSY
+
+FSY Registration Issues Page: This page shows the registration status of each participant in a specific unit. It will automatically display information for the leader's own ward.
+Keywords for Chatbot: FSY registration issues, participant registration status, unit registration problems
+
+FSY Frequently Asked Questions (FAQ) Page: This page answers general questions regarding FSY, including general information, youth registration details, rules and standards, dietary, disability, medical, or other accommodations, leader information (YSA Counselor, Assistant Coordinator, Health Coordinator, Coordinator), and contact information.
+Keywords for Chatbot: FSY FAQ, FSY general questions, youth registration information, FSY rules, FSY standards, FSY accommodations general, FSY leader information, FSY contact information
+
+FSY Registration Timeline: Registration for FSY, including approvals and withdrawals, closes at 6:00 pm Salt Lake City time on the Sunday before the session starts. Note that the link for this timeline may be subject to change.
+Keywords for Chatbot: FSY registration timeline, registration deadline, approval deadline, withdrawal deadline FSY
+
+FSY Stake Assignments: This resource indicates which stakes are on their on-cycle or off-cycle years for FSY participation. Assignments are typically done by even and odd years.
+Keywords for Chatbot: FSY stake assignments, on cycle stakes, off cycle stakes, stake FSY year
+
+Meetinghouse Locator for FSY: The Meetinghouse Locator tool is available but not typically used in the context of FSY support. It is listed here for awareness in case it becomes relevant.
+Keywords for Chatbot: Meetinghouse Locator, FSY meetinghouse tool (not used)
+
+FSY Billing Information Page Reference: For detailed FSY Billing Information, refer to page #3 of the FSY support documentation.
+Keywords for Chatbot: FSY billing information (see page 3)
+
+--- FSY Contact Information: Phone Numbers and Emails ---
+
+FSY Phone Numbers - Outgoing Call Prefix: When making an outgoing call from the FSY support system that needs to be transferred, you must start with the prefix +91 followed by the number in the format (xxx) xxx xxxx.
+Keywords for Chatbot: FSY outgoing calls, transfer call prefix, +91 prefix FSY
+
+FSY Support Number (801) 240-3009 - Overview: This is the main FSY Support Number. Callers will select extensions for different needs.
+Keywords for Chatbot: FSY support number, FSY main phone line
+
+FSY Support Ext. 1 - Leadership Calls: Calls to this extension come to FSY support staff. Leaders will call with questions regarding FSY Billing and Participant Approval.
+Keywords for Chatbot: FSY leadership support, FSY billing questions phone, FSY approval questions phone
+
+FSY Support Ext. 2 - Accommodations Calls: Calls to this extension come to FSY support staff. Parents will call with questions about FSY Accommodations, session space availability, registration issues, etc.
+Keywords for Chatbot: FSY accommodations phone, FSY session space phone, FSY registration phone support
+
+FSY Support Ext. 6 - Directors and Staff: Calls to this extension do NOT come to FSY support staff; they are for FSY Directors and internal staff.
+Keywords for Chatbot: FSY directors phone, FSY staff internal line
+
+FSY Support Ext. 7 - Registration (Direct to BYU): Calls to this extension (direct number: 801-422-8088) go directly to BYU registration offices. Any questions regarding FSY registration details or roommate requests should be transferred here. Roommate requests must be sent 2 weeks prior to the session.
+Keywords for Chatbot: FSY registration BYU phone, BYU FSY registration, roommate requests FSY phone
+
+Membership Support Number (855) 537-4357: Members experiencing problems with their Church account, such as login issues or membership record number (MRN) problems, should be transferred to this number.
+Keywords for Chatbot: Church account help, LDS account login issues, MRN problems, membership record number support
+
+FSYInfo@churchofjesuschrist.org Email: Questions regarding FSY invoices and general FSY questions for which support staff do not have an immediate answer should be referred to this email address. It is advised to check with the internal Teams Chat first for an answer.
+Keywords for Chatbot: FSYInfo email, FSY invoice questions email, general FSY questions email
+
+FSYRegistration@churchofjesuschrist.org Email: This email is used if individuals cannot get ahold of the FSY registration offices over the phone (FSY Support Ext. 7).
+Keywords for Chatbot: FSYRegistration email, FSY registration issues email
+
+FSYAccommodations@churchofjesuschrist.org Email: Any questions regarding FSY accommodation requests should be emailed here. Each request should be submitted 30 days prior to the session’s start. Requests can take up to two weeks to process.
+Keywords for Chatbot: FSYAccommodations email, FSY accommodation requests email, disability requests FSY, dietary requests FSY
+
+FSYConferenceVoicemails@churchofjesuschrist.org Email: Voicemails left for FSY support are sent to this email address. Every missionary has access to this email and should check it once or twice every day they serve.
+Keywords for Chatbot: FSYConferenceVoicemails, FSY voicemail, missionary email duties
+
+FSYYouthtravel@byu.edu Email: If questions regarding travel to FSY are received, callers should first be referred to their stake Young Women's president. If the caller *is* a stake Young Women's president, they should be referred to this email address.
+Keywords for Chatbot: FSYYouthtravel email, FSY travel questions, youth travel BYU
+
+fsysessionplanning@byu.edu Email: Refer people who want to know when their stakes are assigned for FSY (for planning purposes with other youth camps) to this email address.
+Keywords for Chatbot: fsysessionplanning email, FSY stake assignment schedule, FSY planning email
+
+--- General Information Regarding FSY ---
+
+FSY Age Range for Participants: Youth must turn 14 in the calendar year of the FSY session they attend. They cannot be 18 years old at any point during the session.
+Keywords for Chatbot: FSY age limit, FSY age requirements, who can attend FSY, 14 year olds FSY, 18 year olds FSY
+
+FSY Participant Conduct and Standards: Youth cannot be on probation or have committed a sexual felony. All youth must abide by all FSY Standards.
+Keywords for Chatbot: FSY conduct, FSY standards, participant eligibility FSY, FSY rules
+
+International Youth Attending FSY in the US: If a youth from any other country would like to attend an FSY session in the United States, they may contact a bishop in the US to approve them to go.
+Keywords for Chatbot: international youth FSY, FSY US sessions for international, foreign youth FSY
+
+FSY Session Attendance - US/Canada Restrictions: Canadians cannot attend US FSY sessions, and Americans cannot attend Canadian FSY sessions.
+Keywords for Chatbot: FSY US Canada sessions, cross-border FSY attendance, FSY national restrictions
+
+FSY Roommate Requests Deadline: Roommate requests for FSY must be submitted two weeks prior to the session starting.
+Keywords for Chatbot: FSY roommate requests, roommate deadline FSY
+
+FSY Registration Account Requirement: Youth or parents must have an LDS Church account to register for FSY. Registrations can only be found under the account they registered with. A membership record number (MRN) is not required to create an account for FSY registration.
+Keywords for Chatbot: FSY registration account, LDS account FSY, MRN FSY registration
+
+FSY Accommodations Request Deadline: Accommodations requests must be made 30 days prior to the FSY session beginning. If the 30-day deadline has passed, individuals should still submit an email to FSYAccommodations@churchofjesuschrist.org.
+Keywords for Chatbot: FSY accommodations deadline, late accommodation requests FSY
+
+FSY Withdrawal and Refund Deadline: Participants need to be withdrawn from their FSY session before 6:00 pm (Salt Lake City time) on the Sunday prior to the session beginning in order to receive their refund.
+Keywords for Chatbot: FSY withdrawal deadline, FSY refund policy, cancel FSY registration
+
+FSY Late Registration Deadline: Participants can register youth for FSY up until 6:00 pm (Salt Lake City time) on the Sunday prior to the session starting, assuming space is available.
+Keywords for Chatbot: FSY late registration, FSY registration closing time
+
+--- FSY Billing Information ---
+
+FSY Cost and Fees: Participants and their respective wards will each pay a $75 fee (totaling $150) for FSY to set aside resources. For detailed billing information, refer to the FSY Billing Information page (link found elsewhere or page #3).
+Keywords for Chatbot: FSY cost, FSY fee, FSY payment, participant fee FSY, ward fee FSY
+
+FSY Off-Cycle Ward Fee Obligation: If a ward is in an off-cycle year for FSY, the ward is not obligated to pay the $75 ward fee for its participating youth.
+Keywords for Chatbot: FSY off cycle fee, ward fee off cycle FSY
+
+Ward Fee Charges and Tithing Slips: Wards will still get charged the $75 ward fee for attending youth, whether they’ve formally agreed to pay or not. A family can cover this ward cost by filling out a PHYSICAL tithing slip to contribute the funds to the ward budget.
+Keywords for Chatbot: FSY ward fee charge, covering ward fee FSY, tithing slip FSY
+
+FSY Invoice and IROPS Questions: Questions regarding FSY invoices and IROPS (International Remittance Processing System) can be forwarded to FSYInfo@churchofjesuschrist.org.
+Keywords for Chatbot: FSY invoice questions, IROPS FSY, FSY financial questions
+
+FSY Fee for Non-Withdrawal: If a youth does not withdraw from an FSY session by the deadline, both the ward and the participant will still need to pay their respective fees. This is because resources are set aside based on registration numbers.
+Keywords for Chatbot: FSY fee no withdrawal, FSY cancellation fee, FSY refund non-withdrawal
+
+FSY Approval Transfer for Youth Moving Wards: If a youth moves into a new ward while already approved for FSY, the new bishop must move the youth's FSY approval into their new unit. If the approval is not moved and the previous bishop/ward gets charged, the two bishops can work together to move funds from one unit to the other.
+Keywords for Chatbot: FSY approval transfer, moving wards FSY, bishop approval FSY transfer
+
+FSY Refund Processing Time: If a ward or youth is due a refund for FSY, it may take up to six weeks to process.
+Keywords for Chatbot: FSY refund time, FSY refund processing, how long for FSY refund
+
+--- Common FSY Issues and Concerns ---
+
+Handling Impatient Members during FSY Support: If a member is getting impatient with you during an FSY support interaction, please politely pass the call or issue to the supervisors.
+Keywords for Chatbot: impatient caller FSY, FSY de-escalation, supervisor FSY support
+
+FSY Leadership Approval Issues - Unit Splits or Moves: When a Church unit splits or a youth moves out of a unit, the new bishop must take action to move the youth's FSY approval into the new unit.
+Keywords for Chatbot: FSY approval unit split, FSY approval youth move, new bishop FSY approval
+
+FSY Leadership Approval - Adding Out-of-Unit Youth: A bishop can add out-of-unit youth to their FSY approval list at the bottom of the participant page. If young people are non-members, they will need a Church account to register, even if they are only attending within the stake. Bishops may add any out-of-unit youth that are non-members.
+Keywords for Chatbot: FSY add out of unit youth, non-member FSY registration, bishop approval non-members
+
+FSY Approval Process Questions for Leaders: The FSY approval process asks leaders: 1. Is this youth likely to attend? 2. Is the ward going to cover the ward fee? 3. Is the bishop going to cover the Participant fee?
+Keywords for Chatbot: FSY approval questions, bishop FSY questions, ward fee approval, participant fee approval
+
+FSY Approval Revocation: Bishops cannot revoke FSY approval once it is given. Only the youth or the youth's family can withdraw from their FSY registration.
+Keywords for Chatbot: FSY revoke approval, bishop cancel FSY, withdraw FSY registration
+
+Viewing FSY Approver: You cannot see which specific member of the bishopric (bishop or counselors) approved a youth to attend FSY.
+Keywords for Chatbot: who approved FSY, FSY approver identity, bishopric FSY approval
+
+--- FSY Session Specific Information ---
+
+Finding Specific FSY Session Information: Any questions regarding specific FSY session information (site details, office phone, housing) can be found at fsy.churchofjesuschrist.org.
+Keywords for Chatbot: FSY session details, FSY site information, FSY housing information, FSY session phone number
+
+Navigating fsy.churchofjesuschrist.org for Session Info: To find US/Canada session info, first click on any country *other than* the United States on the fsy.churchofjesuschrist.org map. Then, use the dropdown menu that appears to switch to the United States or Canada Sessions.
+Keywords for Chatbot: how to find FSY session info, fsy.churchofjesuschrist.org navigation, US FSY sessions website, Canada FSY sessions website
+
+--- FSY Accommodations Details ---
+
+FSY Accommodations Request List and Process: Last-minute accommodation requests should be referred to the email FSYAccommodations@churchofjesuschrist.org. All requests can take a couple of weeks to process. This includes registrations, microwave needs, roommate requests, needing a caretaker, family situations, and mental health concerns.
+Keywords for Chatbot: FSY accommodation requests, FSY special needs, FSY dietary needs, FSY medical needs, FSY microwave, FSY caretaker, FSY family situations, FSY mental health
+Attending FSY Twice in One Year: Youth cannot attend two FSY Sessions in one year. This decision can only be granted by FSY HQ (Headquarters) and should be highly discouraged. Requests go through the accommodations team.
+Keywords for Chatbot: FSY twice a year, attend multiple FSY, FSY HQ approval
+
+Accommodations Made on Registration Page: Certain accommodation requests can be made directly on the FSY registration page (fsy.byu.edu). These include elevator access, first-floor room request, ADA accessible room and bathroom, service animal, refrigerator (for medical/dietary needs only), dietary needs, and preferred roommate (roommates must be within the same age group). If parents/youth cannot make these requests on the site, refer them to the FSYAccommodations@churchofjesuschrist.org email. An accommodation request does not guarantee approval; the FSY team carefully evaluates each one.
+Keywords for Chatbot: FSY registration accommodations, elevator FSY, ADA room FSY, service animal FSY, refrigerator FSY, dietary FSY, roommate FSY registration
+FSY Alternate Activities for Large Groups: For large group activities like dances and games night, there will be a separate area available for youth who wish to be in a quieter environment. FSY staff will be present in this area. Youth should inform their counselor if they wish to attend this alternate activity; counselors will also be aware and can inform youth.
+Keywords for Chatbot: FSY quiet activities, FSY alternative activities, FSY dances quiet option, FSY games night quiet option
+
+FSY Medication Administration Policy: FSY staff are NOT able to hold or administer PRESCRIPTION medications for youth. This is the only information that can be shared. For further questions, refer them to the accommodations team at FSYAccommodations@ChurchofJesusChrist.org.
+Keywords for Chatbot: FSY medication policy, prescription drugs FSY, administering medicine FSY
+FSY LGBTQ+ Inquiries: For any inquiries related to LGBTQ+ youth or guidelines at FSY, refer the questioner to FSYAccommodations@ChurchofJesusChrist.org. If they would like to speak with someone, they can specify that in their email. If the individual asking is not a parent or leader of an LGBTQ+ youth and is upset or critical, ask for their name, phone number, and reason for interest. Then, send Kelly (presumably a supervisor) a Teams message in the group chat asking her to call them back, and inform the individual that someone will be in touch.
+Keywords for Chatbot: FSY LGBTQ+, FSY gender identity, FSY sexual orientation, accommodations LGBTQ+
+FSY Aides or Parents Attending with Youth: FSY support staff are unable to make decisions about aides or parents attending FSY with their youth. Individuals should contact the accommodations team at FSYAccommodations@ChurchofJesusChrist.org OR they can select the “Other” option during the online registration process and answer the questions provided in the system.
+Keywords for Chatbot: FSY aides, parents at FSY, FSY support person, special assistance FSY
 
 Project Title: Missionary Painted Nametags
 Description: Ensure every missionary in the Service Project Shop has a hand-painted nametag. Involves painting and lettering nametags for new and current missionaries who don't have one. Progress tracked in Airtable.

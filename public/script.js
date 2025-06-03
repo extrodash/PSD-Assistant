@@ -15,7 +15,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const additionalReferenceInput = document.getElementById('additional-reference');
     const summarizeChatButton = document.getElementById('summarize-chat-button');
     const chatSummaryDiv = document.getElementById('chat-summary');
-    // themeToggle was removed in the permanent dark mode step
+    const fullMessageModal = document.getElementById('full-message-modal');
+    const fullMessageTextDisplay = document.getElementById('full-message-text-display');
+    const closeFullMessageBtn = document.getElementById('close-full-message-btn');
+    const copyFullMessageBtn = document.getElementById('copy-full-message-btn');
+
+    // --- CONFIGURATION ---
+    const LONG_MESSAGE_THRESHOLD = 300; // Characters
 
     // --- State Management ---
     let chatThreads = [];
@@ -37,30 +43,50 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Initialization ---
     function initialize() {
         checkForWidgetMode();
-        // setupTheme(); // Removed as theme is permanent dark
         loadSettingsFromLocalStorage();
         populateModeSelector();
         startNewChat();
-        updateUI();
+        updateUI(); // This will call handleModeChange initially
 
         // Event Listeners
-        sendButton.addEventListener('click', sendMessage);
-        userInput.addEventListener('keydown', (e) => {
+        if(sendButton) sendButton.addEventListener('click', sendMessage);
+        if(userInput) userInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
                 sendMessage();
             }
         });
-        newChatButton.addEventListener('click', startNewChat);
-        chatThreadsMenu.addEventListener('change', (e) => switchChat(e.target.value));
-        summarizeChatButton.addEventListener('click', summarizeCurrentThread);
-        // themeToggle.addEventListener('change', handleThemeChange); // Removed
+        if(newChatButton) newChatButton.addEventListener('click', startNewChat);
+        if(chatThreadsMenu) chatThreadsMenu.addEventListener('change', (e) => switchChat(e.target.value));
+        if(summarizeChatButton) summarizeChatButton.addEventListener('click', summarizeCurrentThread);
 
         // Add listeners to save settings to localStorage on input
-        modeSelect.addEventListener('change', handleModeChange);
-        modelSelect.addEventListener('change', () => localStorage.setItem('savedModel', modelSelect.value));
-        foundationalPromptInput.addEventListener('input', () => localStorage.setItem('savedPrompt', foundationalPromptInput.value));
-        additionalReferenceInput.addEventListener('input', () => localStorage.setItem('savedReferenceText', additionalReferenceInput.value));
+        if(modeSelect) modeSelect.addEventListener('change', handleModeChange);
+        if(modelSelect) modelSelect.addEventListener('change', () => localStorage.setItem('savedModel', modelSelect.value));
+        if(foundationalPromptInput) foundationalPromptInput.addEventListener('input', () => localStorage.setItem('savedPrompt', foundationalPromptInput.value));
+        if(additionalReferenceInput) additionalReferenceInput.addEventListener('input', () => localStorage.setItem('savedReferenceText', additionalReferenceInput.value));
+
+        // Event listeners for the modal
+        if (closeFullMessageBtn) {
+            closeFullMessageBtn.addEventListener('click', closeFullScreenMessage);
+        }
+        if (copyFullMessageBtn) {
+            copyFullMessageBtn.addEventListener('click', copyModalText);
+        }
+        if (fullMessageModal) {
+            fullMessageModal.addEventListener('click', (event) => {
+                if (event.target === fullMessageModal) {
+                    closeFullScreenMessage();
+                }
+            });
+            // Close modal with Escape key - This event listener should be on the document
+        }
+        // Moved Escape key listener to document level for global capture when modal is open
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && fullMessageModal && !fullMessageModal.classList.contains('hidden')) {
+                closeFullScreenMessage();
+            }
+        });
     }
 
     // --- Setup Functions ---
@@ -71,11 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // setupTheme and handleThemeChange functions were removed for permanent dark mode
-
     function loadSettingsFromLocalStorage() {
-        const savedModeIndex = localStorage.getItem('savedModeIndex') || 0; // Default to first mode
-        const savedModel = localStorage.getItem('savedModel') || 'gpt-3.5-turbo'; // Default model
+        const savedModeIndex = localStorage.getItem('savedModeIndex') || 0;
+        const savedModel = localStorage.getItem('savedModel') || 'gpt-3.5-turbo';
         const savedPrompt = localStorage.getItem('savedPrompt') || '';
         const savedReferenceText = localStorage.getItem('savedReferenceText') || '';
 
@@ -87,6 +111,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function populateModeSelector() {
         if(!modeSelect) return;
+        // Clear previous options before populating, if any
+        modeSelect.innerHTML = '';
         chatModes.forEach((mode, index) => {
             const option = document.createElement('option');
             option.value = index;
@@ -95,11 +121,53 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- Modal Functions ---
+    function openFullScreenMessage(text) {
+        if (fullMessageTextDisplay && fullMessageModal) {
+            if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                fullMessageTextDisplay.innerHTML = DOMPurify.sanitize(marked.parse(text));
+            } else {
+                fullMessageTextDisplay.textContent = text;
+            }
+            fullMessageModal.classList.remove('hidden');
+            if(closeFullMessageBtn) closeFullMessageBtn.focus();
+        }
+    }
+
+    function closeFullScreenMessage() {
+        if (fullMessageModal) {
+            fullMessageModal.classList.add('hidden');
+            if (fullMessageTextDisplay) {
+                 fullMessageTextDisplay.innerHTML = ''; 
+            }
+        }
+    }
+
+    function copyModalText() {
+        if (fullMessageTextDisplay && copyFullMessageBtn) {
+            const textToCopy = fullMessageTextDisplay.textContent || ""; 
+            navigator.clipboard.writeText(textToCopy)
+                .then(() => {
+                    const originalText = copyFullMessageBtn.textContent;
+                    copyFullMessageBtn.textContent = 'Copied!';
+                    copyFullMessageBtn.disabled = true;
+                    setTimeout(() => {
+                        copyFullMessageBtn.textContent = originalText;
+                        copyFullMessageBtn.disabled = false;
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    alert('Failed to copy text. You might need to grant clipboard permissions or copy manually.');
+                });
+        }
+    }
+
     // --- UI Update and Message Rendering ---
     function updateUI() {
         updateChatHistory();
         updateThreadMenu();
-        handleModeChange(); // Call this to set initial instruction text
+        handleModeChange(); 
     }
     
     function updateChatHistory() {
@@ -109,30 +177,54 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentThread && currentThread.messages) {
             currentThread.messages.forEach(msg => renderMessage(msg.text, msg.isUser));
         }
-        chatHistory.scrollTop = chatHistory.scrollHeight;
+        if (chatHistory.scrollHeight > chatHistory.clientHeight) { // Check if scrollable
+            chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
     }
 
     function renderMessage(text, isUser) {
-        if(!chatHistory) return;
+        if (!chatHistory) return;
         const messageEl = document.createElement('div');
         messageEl.classList.add('message', isUser ? 'user' : 'assistant');
+    
+        let messageContentEl = document.createElement('div');
+        messageContentEl.classList.add('message-content-text');
+    
         if (isUser) {
-            messageEl.textContent = text;
+            messageContentEl.textContent = text;
         } else {
-            // Ensure 'marked' and 'DOMPurify' are loaded if you use this
             if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
-                messageEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
+                messageContentEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
             } else {
-                messageEl.textContent = text; // Fallback if libraries not loaded
+                messageContentEl.textContent = text;
             }
         }
+        messageEl.appendChild(messageContentEl);
+    
+        // --- EXPAND BUTTON LOGIC MOVED HERE ---
+        if (!isUser && text.length > LONG_MESSAGE_THRESHOLD) {
+            const expandButton = document.createElement('button');
+            expandButton.innerHTML = '&#x2922;'; // Expand symbol
+            expandButton.classList.add('expand-message-btn');
+            expandButton.title = 'Expand message';
+            expandButton.setAttribute('aria-label', 'Expand message');
+            expandButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                openFullScreenMessage(text);
+            });
+            messageEl.appendChild(expandButton);
+        }
+        // --- END OF EXPAND BUTTON LOGIC ---
+    
         chatHistory.appendChild(messageEl);
-        chatHistory.scrollTop = chatHistory.scrollHeight;
-    }
+        if (chatHistory.scrollHeight > chatHistory.clientHeight) { // Check if scrollable
+             chatHistory.scrollTop = chatHistory.scrollHeight;
+        }
+    }    
 
     function updateThreadMenu() {
         if(!chatThreadsMenu) return;
-        chatThreadsMenu.innerHTML = '';
+        chatThreadsMenu.innerHTML = ''; // Clear previous options
         chatThreads.forEach(thread => {
             const option = document.createElement('option');
             option.value = thread.id;
@@ -146,11 +238,11 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function handleModeChange() {
         if(!modeSelect || !customPromptContainer || !modeInstructionContainer || !modeInstructionText) return;
-        const selectedMode = chatModes[modeSelect.value];
-        if (selectedMode.name === "Custom") {
+        const selectedMode = chatModes[modeSelect.value]; // Use selected value
+        if (selectedMode && selectedMode.name === "Custom") { // Check if selectedMode is valid
             customPromptContainer.style.display = 'block';
             modeInstructionContainer.style.display = 'none';
-        } else {
+        } else if (selectedMode) { // Check if selectedMode is valid
             customPromptContainer.style.display = 'none';
             modeInstructionContainer.style.display = 'block';
             modeInstructionText.textContent = selectedMode.instruction;
@@ -171,7 +263,10 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         chatThreads.unshift(newThread);
         currentThreadId = newThread.id;
+        // Ensure settings are loaded for the new chat context if they aren't global
+        // For now, global settings apply, so just update UI
         updateUI();
+        if(userInput) userInput.focus(); // Focus input on new chat
     }
 
     function switchChat(threadId) {
@@ -196,9 +291,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!text || isLoading) return;
 
         addMessageToState(text, true);
-        renderMessage(text, true);
+        renderMessage(text, true); 
         userInput.value = '';
-        isLoading = true;
+        isLoading = true; // Add loading indicator logic if you have one
 
         const currentThread = getCurrentThread();
         const selectedMode = chatModes[modeSelect.value];
@@ -211,13 +306,12 @@ document.addEventListener('DOMContentLoaded', () => {
             messages: currentThread ? currentThread.messages.map(msg => ({
                 role: msg.isUser ? 'user' : 'assistant',
                 content: msg.text
-            })) : [], // Send empty array if currentThread is null
+            })) : [],
             foundationalPrompt: foundationalPromptInput.value.trim(),
             additionalReferenceText: additionalReferenceInput.value.trim(),
             activeInstruction: activeInstruction
         };
         
-        // This is the crucial diagnostic line.
         console.log("Sending this payload to the server:", payload);
 
         try {
@@ -237,8 +331,8 @@ document.addEventListener('DOMContentLoaded', () => {
             addMessageToState(aiResponse, false);
             renderMessage(aiResponse, false);
 
-            if (currentThread && currentThread.messages.length === 2) { // Check if currentThread exists
-                currentThread.title = text.substring(0, 20) + '...';
+            if (currentThread && currentThread.messages.length === 2) { 
+                currentThread.title = text.substring(0, 20) + (text.length > 20 ? '...' : '');
                 updateThreadMenu();
             }
 
@@ -247,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addMessageToState(errorMessage, false);
             renderMessage(errorMessage, false);
         } finally {
-            isLoading = false;
+            isLoading = false; // Remove loading indicator
         }
     }
     
