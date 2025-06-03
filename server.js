@@ -36,6 +36,16 @@ function smartChunkReferenceText(referenceText) {
     return chunks;
 }
 
+function getReferenceText() {
+    try {
+        const filePath = path.join(__dirname, 'referenceText.txt');
+        return fs.readFileSync(filePath, 'utf8');
+    } catch (error) {
+        console.error("Error reading referenceText.txt:", error);
+        return "";
+    }
+}
+
 // -- STRONG CHUNK MATCHING --
 function getRelevantChunks(referenceText, userPrompt, maxChunks = 15, alwaysReturnIfNone = true) {
     const chunks = smartChunkReferenceText(referenceText);
