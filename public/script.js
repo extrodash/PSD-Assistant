@@ -201,28 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!chatHistory) return;
         const messageEl = document.createElement('div');
         messageEl.classList.add('message', isUser ? 'user' : 'assistant');
-    
-        let messageContentEl = document.createElement('div');
-        messageContentEl.classList.add('message-content-text');
-    
-        // Detect error message (simple heuristic)
-        const isError = typeof text === 'string' && text.startsWith('Error:');
-    
-        if (isUser) {
-            messageContentEl.textContent = text;
-        } else {
-            if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
-                messageContentEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
-            } else {
-                messageContentEl.textContent = text;
-            }
-        }
-        messageEl.appendChild(messageContentEl);
-    
+
         // --- Action Icons ---
         const actions = document.createElement('div');
         actions.className = 'message-actions';
-    
+
         // Copy icon (for both user and assistant)
         const copyBtn = document.createElement('button');
         copyBtn.className = 'message-action-btn';
@@ -234,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => copyBtn.innerHTML = `<svg width="18" height="18" viewBox="0 0 20 20" fill="none"><rect x="6" y="6" width="9" height="9" rx="2" stroke="currentColor" stroke-width="1.5"/><rect x="3" y="3" width="9" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>`, 1200);
         };
         actions.appendChild(copyBtn);
-    
+
         // Edit icon (user messages only)
         if (isUser) {
             const editBtn = document.createElement('button');
@@ -244,10 +227,8 @@ document.addEventListener('DOMContentLoaded', () => {
             editBtn.onclick = () => {
                 userInput.value = text;
                 userInput.focus();
-                // Remove the last user message and any following assistant message in the thread
                 const currentThread = getCurrentThread();
                 if (currentThread) {
-                    // Remove last user message and any following assistant message
                     let idx = currentThread.messages.findIndex(m => m.text === text && m.isUser);
                     if (idx !== -1) {
                         currentThread.messages = currentThread.messages.slice(0, idx);
@@ -257,9 +238,33 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             actions.appendChild(editBtn);
         }
-    
-        messageEl.appendChild(actions);
-    
+
+        // --- Message Content ---
+        let messageContentEl = document.createElement('div');
+        messageContentEl.classList.add('message-content-text');
+
+        // Detect error message (simple heuristic)
+        const isError = typeof text === 'string' && text.startsWith('Error:');
+
+        if (isUser) {
+            messageContentEl.textContent = text;
+        } else {
+            if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
+                messageContentEl.innerHTML = DOMPurify.sanitize(marked.parse(text));
+            } else {
+                messageContentEl.textContent = text;
+            }
+        }
+
+        // Arrange: [actions][bubble] for user, [bubble][actions] for assistant
+        if (isUser) {
+            messageEl.appendChild(actions);
+            messageEl.appendChild(messageContentEl);
+        } else {
+            messageEl.appendChild(messageContentEl);
+            messageEl.appendChild(actions);
+        }
+
         // Expand button for long assistant messages
         if (!isUser && text.length > LONG_MESSAGE_THRESHOLD) {
             const expandButton = document.createElement('button');
@@ -273,22 +278,19 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             messageEl.appendChild(expandButton);
         }
-    
+
         // Try Again button for error messages
         if (!isUser && isError) {
             const tryAgainBtn = document.createElement('button');
             tryAgainBtn.className = 'try-again-btn';
             tryAgainBtn.textContent = 'Try Again';
             tryAgainBtn.onclick = () => {
-                // Remove the error message from state and UI, then resend last user message
                 const currentThread = getCurrentThread();
                 if (currentThread) {
-                    // Remove last assistant message (the error)
                     currentThread.messages = currentThread.messages.filter((m, i, arr) =>
                         !(i === arr.length - 1 && !m.isUser && m.text.startsWith('Error:'))
                     );
                     updateChatHistory();
-                    // Resend last user message
                     const lastUserMsg = currentThread.messages.slice().reverse().find(m => m.isUser);
                     if (lastUserMsg) {
                         userInput.value = lastUserMsg.text;
@@ -298,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             messageEl.appendChild(tryAgainBtn);
         }
-    
+
         chatHistory.appendChild(messageEl);
         if (chatHistory.scrollHeight > chatHistory.clientHeight) {
             chatHistory.scrollTop = chatHistory.scrollHeight;
