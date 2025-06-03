@@ -2,28 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Elements ---
     const chatHistory = document.getElementById('chat-history');
     const userInput = document.getElementById('user-input');
-    const sendButton = document.getElementById('send-button');
-    const newChatButton = document.getElementById('new-chat-button');
-    const chatThreadsMenu = document.getElementById('chat-threads-menu');
-    const modelSelect = document.getElementById('model-select');
-    const modeSelect = document.getElementById('mode-select');
-    const customPromptContainer = document.getElementById('custom-prompt-container');
-    const customPromptInput = document.getElementById('custom-prompt');
-    const modeInstructionContainer = document.getElementById('mode-instruction-container');
-    const modeInstructionText = document.getElementById('mode-instruction');
-    const foundationalPromptInput = document.getElementById('foundational-prompt');
-    const additionalReferenceInput = document.getElementById('additional-reference');
-    const summarizeChatButton = document.getElementById('summarize-chat-button');
-    const chatSummaryDiv = document.getElementById('chat-summary');
-    const fullMessageModal = document.getElementById('full-message-modal');
-    const fullMessageTextDisplay = document.getElementById('full-message-text-display');
-    const closeFullMessageBtn = document.getElementById('close-full-message-btn');
+    // ... (all your other DOM element consts) ...
     const copyFullMessageBtn = document.getElementById('copy-full-message-btn');
 
-    // --- CONFIGURATION ---
-    const LONG_MESSAGE_THRESHOLD = 300; // Characters
+    const LONG_MESSAGE_THRESHOLD = 300;
+    const LOADING_BUBBLE_ID = 'loading-bubble-placeholder'; // ID for our loading bubble
 
-    // --- State Management ---
+    // ... (State Management and chatModes array remain the same) ...
     let chatThreads = [];
     let currentThreadId = null;
     let isLoading = false;
@@ -40,15 +25,15 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Custom", icon: "🛠️", instruction: "" }
     ];
 
+
     // --- Initialization ---
     function initialize() {
         checkForWidgetMode();
         loadSettingsFromLocalStorage();
         populateModeSelector();
         startNewChat();
-        updateUI(); // This will call handleModeChange initially
+        updateUI(); 
 
-        // Event Listeners
         if(sendButton) sendButton.addEventListener('click', sendMessage);
         if(userInput) userInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
@@ -60,28 +45,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if(chatThreadsMenu) chatThreadsMenu.addEventListener('change', (e) => switchChat(e.target.value));
         if(summarizeChatButton) summarizeChatButton.addEventListener('click', summarizeCurrentThread);
 
-        // Add listeners to save settings to localStorage on input
         if(modeSelect) modeSelect.addEventListener('change', handleModeChange);
         if(modelSelect) modelSelect.addEventListener('change', () => localStorage.setItem('savedModel', modelSelect.value));
         if(foundationalPromptInput) foundationalPromptInput.addEventListener('input', () => localStorage.setItem('savedPrompt', foundationalPromptInput.value));
         if(additionalReferenceInput) additionalReferenceInput.addEventListener('input', () => localStorage.setItem('savedReferenceText', additionalReferenceInput.value));
 
-        // Event listeners for the modal
-        if (closeFullMessageBtn) {
-            closeFullMessageBtn.addEventListener('click', closeFullScreenMessage);
-        }
-        if (copyFullMessageBtn) {
-            copyFullMessageBtn.addEventListener('click', copyModalText);
-        }
+        if (closeFullMessageBtn) closeFullMessageBtn.addEventListener('click', closeFullScreenMessage);
+        if (copyFullMessageBtn) copyFullMessageBtn.addEventListener('click', copyModalText);
+        
         if (fullMessageModal) {
             fullMessageModal.addEventListener('click', (event) => {
-                if (event.target === fullMessageModal) {
-                    closeFullScreenMessage();
-                }
+                if (event.target === fullMessageModal) closeFullScreenMessage();
             });
-            // Close modal with Escape key - This event listener should be on the document
         }
-        // Moved Escape key listener to document level for global capture when modal is open
         document.addEventListener('keydown', (event) => {
             if (event.key === 'Escape' && fullMessageModal && !fullMessageModal.classList.contains('hidden')) {
                 closeFullScreenMessage();
@@ -89,7 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Setup Functions ---
+    // --- Setup Functions (checkForWidgetMode, loadSettingsFromLocalStorage, populateModeSelector) ---
+    // ... (These functions remain the same as your last version)
     function checkForWidgetMode() {
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.get('mode') === 'widget') {
@@ -111,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function populateModeSelector() {
         if(!modeSelect) return;
-        // Clear previous options before populating, if any
         modeSelect.innerHTML = '';
         chatModes.forEach((mode, index) => {
             const option = document.createElement('option');
@@ -121,7 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Modal Functions ---
+    // --- Modal Functions (openFullScreenMessage, closeFullScreenMessage, copyModalText) ---
+    // ... (These functions remain the same as your last version)
     function openFullScreenMessage(text) {
         if (fullMessageTextDisplay && fullMessageModal) {
             if (typeof marked !== 'undefined' && typeof DOMPurify !== 'undefined') {
@@ -164,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- UI Update and Message Rendering ---
+    // ... (updateUI, updateChatHistory, handleModeChange are the same)
     function updateUI() {
         updateChatHistory();
         updateThreadMenu();
@@ -177,11 +155,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentThread && currentThread.messages) {
             currentThread.messages.forEach(msg => renderMessage(msg.text, msg.isUser));
         }
-        if (chatHistory.scrollHeight > chatHistory.clientHeight) { // Check if scrollable
+        if (chatHistory.scrollHeight > chatHistory.clientHeight) {
             chatHistory.scrollTop = chatHistory.scrollHeight;
         }
     }
-
+    
+    function handleModeChange() {
+        if(!modeSelect || !customPromptContainer || !modeInstructionContainer || !modeInstructionText) return;
+        const selectedMode = chatModes[modeSelect.value]; 
+        if (selectedMode && selectedMode.name === "Custom") { 
+            customPromptContainer.style.display = 'block';
+            modeInstructionContainer.style.display = 'none';
+        } else if (selectedMode) { 
+            customPromptContainer.style.display = 'none';
+            modeInstructionContainer.style.display = 'block';
+            modeInstructionText.textContent = selectedMode.instruction;
+        }
+        localStorage.setItem('savedModeIndex', modeSelect.value);
+    }
+    
+    // renderMessage includes expand button logic
     function renderMessage(text, isUser) {
         if (!chatHistory) return;
         const messageEl = document.createElement('div');
@@ -201,10 +194,9 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         messageEl.appendChild(messageContentEl);
     
-        // --- EXPAND BUTTON LOGIC MOVED HERE ---
         if (!isUser && text.length > LONG_MESSAGE_THRESHOLD) {
             const expandButton = document.createElement('button');
-            expandButton.innerHTML = '&#x2922;'; // Expand symbol
+            expandButton.innerHTML = '&#x2922;'; 
             expandButton.classList.add('expand-message-btn');
             expandButton.title = 'Expand message';
             expandButton.setAttribute('aria-label', 'Expand message');
@@ -214,17 +206,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             messageEl.appendChild(expandButton);
         }
-        // --- END OF EXPAND BUTTON LOGIC ---
     
         chatHistory.appendChild(messageEl);
-        if (chatHistory.scrollHeight > chatHistory.clientHeight) { // Check if scrollable
+        if (chatHistory.scrollHeight > chatHistory.clientHeight) {
              chatHistory.scrollTop = chatHistory.scrollHeight;
         }
     }    
 
     function updateThreadMenu() {
         if(!chatThreadsMenu) return;
-        chatThreadsMenu.innerHTML = ''; // Clear previous options
+        chatThreadsMenu.innerHTML = ''; 
         chatThreads.forEach(thread => {
             const option = document.createElement('option');
             option.value = thread.id;
@@ -236,21 +227,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    function handleModeChange() {
-        if(!modeSelect || !customPromptContainer || !modeInstructionContainer || !modeInstructionText) return;
-        const selectedMode = chatModes[modeSelect.value]; // Use selected value
-        if (selectedMode && selectedMode.name === "Custom") { // Check if selectedMode is valid
-            customPromptContainer.style.display = 'block';
-            modeInstructionContainer.style.display = 'none';
-        } else if (selectedMode) { // Check if selectedMode is valid
-            customPromptContainer.style.display = 'none';
-            modeInstructionContainer.style.display = 'block';
-            modeInstructionText.textContent = selectedMode.instruction;
+
+    // --- NEW HELPER FUNCTIONS FOR LOADING BUBBLE ---
+    function showLoadingBubble() {
+        if (!chatHistory) return;
+        removeLoadingBubble(); // Remove any existing one first
+
+        const loadingBubble = document.createElement('div');
+        loadingBubble.classList.add('message', 'assistant', 'loading-bubble');
+        loadingBubble.id = LOADING_BUBBLE_ID;
+
+        const dotContainer = document.createElement('div');
+        dotContainer.classList.add('loading-dot-container');
+        for (let i = 0; i < 3; i++) {
+            const dot = document.createElement('span');
+            dot.classList.add('loading-dot');
+            dotContainer.appendChild(dot);
         }
-        localStorage.setItem('savedModeIndex', modeSelect.value);
+        loadingBubble.appendChild(dotContainer);
+        chatHistory.appendChild(loadingBubble);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
     }
 
-    // --- Core Chat Logic ---
+    function removeLoadingBubble() {
+        const loadingBubble = document.getElementById(LOADING_BUBBLE_ID);
+        if (loadingBubble) {
+            loadingBubble.remove();
+        }
+    }
+    // --- END OF LOADING BUBBLE HELPERS ---
+
+    // --- Core Chat Logic (getCurrentThread, startNewChat, switchChat, addMessageToState) ---
+    // ... (These functions remain the same as your last version)
     function getCurrentThread() {
         return chatThreads.find(t => t.id === currentThreadId);
     }
@@ -263,10 +271,8 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         chatThreads.unshift(newThread);
         currentThreadId = newThread.id;
-        // Ensure settings are loaded for the new chat context if they aren't global
-        // For now, global settings apply, so just update UI
         updateUI();
-        if(userInput) userInput.focus(); // Focus input on new chat
+        if(userInput) userInput.focus();
     }
 
     function switchChat(threadId) {
@@ -280,7 +286,8 @@ document.addEventListener('DOMContentLoaded', () => {
             currentThread.messages.push({ text, isUser });
         }
     }
-
+    
+    // --- sendMessage MODIFIED ---
     async function sendMessage() {
         if (!userInput || !foundationalPromptInput || !additionalReferenceInput || !modelSelect || !modeSelect || !customPromptInput) {
             console.error("One or more critical UI elements not found in sendMessage.");
@@ -293,7 +300,9 @@ document.addEventListener('DOMContentLoaded', () => {
         addMessageToState(text, true);
         renderMessage(text, true); 
         userInput.value = '';
-        isLoading = true; // Add loading indicator logic if you have one
+        
+        isLoading = true;
+        showLoadingBubble(); // <-- SHOW LOADING BUBBLE
 
         const currentThread = getCurrentThread();
         const selectedMode = chatModes[modeSelect.value];
@@ -329,7 +338,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const data = await response.json();
             const aiResponse = data.choices[0].message.content;
             addMessageToState(aiResponse, false);
-            renderMessage(aiResponse, false);
+            renderMessage(aiResponse, false); // Render actual response
 
             if (currentThread && currentThread.messages.length === 2) { 
                 currentThread.title = text.substring(0, 20) + (text.length > 20 ? '...' : '');
@@ -339,12 +348,14 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (error) {
             const errorMessage = `Error: ${error.message}`;
             addMessageToState(errorMessage, false);
-            renderMessage(errorMessage, false);
+            renderMessage(errorMessage, false); // Render error message
         } finally {
-            isLoading = false; // Remove loading indicator
+            removeLoadingBubble(); // <-- REMOVE LOADING BUBBLE
+            isLoading = false; 
         }
     }
     
+    // summarizeCurrentThread remains the same
     async function summarizeCurrentThread() {
         if(!chatSummaryDiv) return;
         const currentThread = getCurrentThread();
@@ -352,25 +363,20 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Nothing to summarize!");
             return;
         }
-
         chatSummaryDiv.textContent = "Summarizing...";
-        
         const payload = {
             messages: currentThread.messages.map(msg => ({
                 role: msg.isUser ? 'user' : 'assistant',
                 content: msg.text
             }))
         };
-
         try {
             const response = await fetch('/api/summarize', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-
             if (!response.ok) throw new Error('Failed to get summary.');
-
             const data = await response.json();
             const summary = data.choices[0].message.content;
             chatSummaryDiv.textContent = summary;

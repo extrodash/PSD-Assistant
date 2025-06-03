@@ -47,13 +47,14 @@ function getReferenceText() {
 }
 
 // -- STRONG CHUNK MATCHING --
-function getRelevantChunks(referenceText, userPrompt, maxChunks = 15, alwaysReturnIfNone = true) {
+const { encode } = require('gpt-3-encoder'); // Or use tiktoken, same principle
+
+function getRelevantChunks(referenceText, userPrompt, maxChunks = 10, alwaysReturnIfNone = true, tokenLimit = 3500) {
     const chunks = smartChunkReferenceText(referenceText);
     const prompt = typeof userPrompt === 'string' ? userPrompt : '';
     const keywords = prompt.toLowerCase().split(/\s+/).filter(w => w.length > 2);
     const keywordSet = new Set(keywords);
 
-    // Score: count of keyword matches in chunk (ignore case)
     const scoredChunks = chunks.map(chunk => {
         const text = chunk.toLowerCase();
         let score = 0;
@@ -63,21 +64,30 @@ function getRelevantChunks(referenceText, userPrompt, maxChunks = 15, alwaysRetu
         return { chunk, score };
     });
 
-    // Grab all chunks with any keyword hit, sorted by score descending
     let relevant = scoredChunks
         .filter(c => c.score > 0)
         .sort((a, b) => b.score - a.score)
         .slice(0, maxChunks)
         .map(c => c.chunk);
 
-    // If nothing matched, overkill: return everything (or tweak as you want)
     if (relevant.length === 0 && alwaysReturnIfNone) {
         relevant = chunks.slice(0, maxChunks);
     }
 
-    // Optionally, join with clear headers so the model can “see” context separation
-    return relevant.map((c, i) => `=== CONTEXT BLOCK ${i + 1} ===\n${c}`).join('\n\n');
+    // Add headers
+    let joined = relevant.map((c, i) => `=== CONTEXT BLOCK ${i + 1} ===\n${c}`).join('\n\n');
+
+    // TOKEN CHECK: If reference context is too large, trim
+    let tokens = encode(joined).length;
+    while (tokens > tokenLimit && relevant.length > 1) {
+        relevant.pop();
+        joined = relevant.map((c, i) => `=== CONTEXT BLOCK ${i + 1} ===\n${c}`).join('\n\n');
+        tokens = encode(joined).length;
+    }
+
+    return joined;
 }
+
 
 // ...rest of your code unchanged until the /api/chat endpoint...
 
