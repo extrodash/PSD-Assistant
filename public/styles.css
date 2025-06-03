@@ -3,7 +3,7 @@
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     
     /* Core Dark Theme Variables */
-    --bg-color: #000000; /* JET BLACK BACKGROUND */
+    --bg-color: #000000; 
     --container-bg-color: #1c1f26; 
     --text-color: #e8eaed;
     --secondary-text-color: #9aa0a6;
@@ -11,13 +11,13 @@
     --input-bg-color: #282a30;
     --input-bar-bg: #181a1f;
     
-    /* User Message Bubble - Brighter with White Perimeter */
+    /* User Message Bubble */
     --user-message-bg: #484c54; 
     --user-message-text: #f0f2f5; 
     --user-message-perimeter-color: rgba(205, 205, 205, 0.511); 
     --user-message-glow: rgba(163, 170, 182, 0.4); 
     
-    /* Assistant Message Bubble - Colorful "Pearl/Milky Way" */
+    /* Assistant Message Bubble */
     --assistant-message-bg-start: #2d3a4b; 
     --assistant-message-bg-end: #3f3251;   
     --assistant-message-text: #e8eaed;
@@ -29,16 +29,24 @@
     --icon-color: #a8b0b8; 
     --shadow-color: rgba(0, 0, 0, 0.3); 
         
-    --button-base-purple: #583770; 
-    --button-neon-glow-color: rgba(200, 160, 220, 0.75); 
-    --button-neon-glow-soft-aura: rgba(200, 160, 220, 0.45); 
-    --button-text-color: #ffffff; 
+    /* NEW Button Style Variables */
+    --button-main-bg: #3b3b58; /* Faint, dark, cloudy purple-ish-blue */
+    --button-main-text: #e0e6f0; /* Light text for contrast */
+    --button-main-glow: rgba(230, 230, 255, 0.35); /* Faint white/lavender glow */
+    --button-main-glow-hover: rgba(230, 230, 255, 0.55); /* Slightly stronger on hover */
+    --button-main-border: rgba(200, 200, 220, 0.25); /* Faint border */
+
+    /* Header & Settings Underglow (can keep previous purple or align with new button style) */
+    --button-accent-purple: #704288; /* Kept for settings underglow, can be changed */
+    --button-neon-glow-color: rgba(200, 160, 220, 0.65); /* Kept for settings underglow */
+    --button-neon-glow-soft-aura: rgba(200, 160, 220, 0.45); /* Kept for settings underglow */
+
 
     --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.12); 
     --bg-edge-glow-milkyway-2: rgba(190, 170, 220, 0.12); 
 
     --header-text-gradient: linear-gradient(90deg, #C373E6, #8A55C1, #4AA0D1);
-    --button-accent-purple-rgb: 112, 66, 136; /* RGB for #704288, used for expand-btn */
+    --button-accent-purple-rgb: 112, 66, 136; 
 }
 
 * { box-sizing: border-box; }
@@ -57,97 +65,79 @@ body {
     position: relative; 
 }
 body::before { 
-    content: '';
-    position: fixed; 
-    top: -50%; left: -50%; 
-    width: 200%; height: 200%; 
+    content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; 
     z-index: -1; 
     background-image: radial-gradient(ellipse at center, 
         transparent 35%, 
         var(--bg-edge-glow-milkyway-1) 65%, 
         var(--bg-edge-glow-milkyway-2) 90%);
-    opacity: 0.7; 
-    animation: subtlePulse 12s infinite alternate ease-in-out;
+    opacity: 0.7; animation: subtlePulse 12s infinite alternate ease-in-out;
 }
 
 @keyframes subtlePulse {
     0% { transform: scale(1); opacity: 0.5; }
     100% { transform: scale(1.03); opacity: 0.8; }
 }
-
 @keyframes textGradientAnimation {
     0% { background-position: 0% 50%; }
     100% { background-position: 100% 50%; }
 }
 
 .container {
-    width: 100%;
-    max-width: 800px;
-    height: calc(100vh - 1rem);
-    max-height: 850px;
-    background-color: var(--container-bg-color);
-    border-radius: 16px;
-    box-shadow: 0 8px 25px var(--shadow-color);
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border-color);
-    overflow: hidden;
+    width: 100%; max-width: 800px; height: calc(100vh - 1rem); max-height: 850px;
+    background-color: var(--container-bg-color); border-radius: 16px;
+    box-shadow: 0 8px 25px var(--shadow-color); display: flex; flex-direction: column;
+    border: 1px solid var(--border-color); overflow: hidden;
 }
 
 header {
-    padding: 0.75rem 1.25rem;
-    border-bottom: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-shrink: 0;
+    padding: 0.75rem 1.25rem; border-bottom: 1px solid var(--border-color);
+    display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;
 }
-
 header h1 {
-    font-size: 1.25rem; 
-    margin: 0;
-    font-weight: 700; 
-    background: var(--header-text-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    font-size: 1.25rem; margin: 0; font-weight: 700; 
+    background: var(--header-text-gradient); -webkit-background-clip: text;
+    background-clip: text; color: transparent;
     animation: textGradientAnimation 8s ease infinite alternate;
-    background-size: 250% auto; 
-    display: inline-block; 
+    background-size: 250% auto; display: inline-block; 
 }
 
 .header-controls { display: flex; align-items: center; gap: 0.75rem; }
 .menu { display: flex; align-items: center; gap: 0.6rem; }
 
-#new-chat-button, #summarize-chat-button, #chat-threads-menu {
-    background-color: var(--button-base-purple);
-    color: var(--button-text-color);
-    border: 1px solid transparent; 
+/* === UPDATED BUTTON STYLES === */
+#new-chat-button, #summarize-chat-button, #chat-threads-menu, #copy-full-message-btn {
+    background-color: var(--button-main-bg);
+    color: var(--button-main-text);
+    border: 1px solid var(--button-main-border); 
     padding: 0.5rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.2s ease-out;
-    box-shadow: 0 0 5px 1px var(--button-neon-glow-color), 
-                0 0 10px 2px var(--button-neon-glow-soft-aura), 
-                inset 0 0 1px rgba(255,255,255,0.1); 
+    box-shadow: 0 0 7px 1px var(--button-main-glow), /* Faint white glow */
+                inset 0 0 3px rgba(255,255,255,0.05); /* Subtle inner highlight */
 }
-#new-chat-button:hover, #summarize-chat-button:hover, #chat-threads-menu:hover {
-    background-color: color-mix(in srgb, var(--button-base-purple) 85%, white);
-    box-shadow: 0 0 7px 2px var(--button-neon-glow-color),
-                0 0 15px 4px var(--button-neon-glow-soft-aura),
-                inset 0 0 2px rgba(255,255,255,0.15);
+#new-chat-button:hover, #summarize-chat-button:hover, #chat-threads-menu:hover, #copy-full-message-btn:hover {
+    background-color: color-mix(in srgb, var(--button-main-bg) 85%, #ffffff 15%); /* Lighten on hover */
+    border-color: color-mix(in srgb, var(--button-main-border) 70%, #ffffff 30%);
+    box-shadow: 0 0 10px 2px var(--button-main-glow-hover),
+                inset 0 0 4px rgba(255,255,255,0.08);
     transform: translateY(-1px); 
 }
-#chat-threads-menu {
+#chat-threads-menu { /* Specifics for select still needed */
     -webkit-appearance: none; -moz-appearance: none; appearance: none;
-    padding-right: 2.5rem;
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    padding-right: 2.5rem; /* Make sure there's space for the arrow */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23E0E6F0%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'); /* Arrow color matches --button-main-text */
     background-repeat: no-repeat;
     background-position: right .9em top 50%;
     background-size: .75em auto;
 }
+#copy-full-message-btn { /* If it needs specific padding different from header buttons */
+    padding: 0.6rem 1.2rem;
+}
+
 
 .settings-section { padding: 1.25rem; border-bottom: 1px solid var(--border-color); background-color: var(--settings-bg); font-size: 0.9rem; }
 .settings-section summary { 
@@ -179,8 +169,8 @@ textarea, select:not(#chat-threads-menu) {
     color: var(--text-color); transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 textarea:focus, select:not(#chat-threads-menu):focus {
-    outline: none; border-color: var(--button-base-purple);
-    box-shadow: 0 0 0 2px var(--button-neon-glow-color); 
+    outline: none; border-color: var(--button-base-purple); /* Using the new button base for consistency */
+    box-shadow: 0 0 0 2px var(--button-main-glow); /* Using the new faint white button glow */
 }
 
 #mode-instruction, .summary-display {
@@ -256,24 +246,24 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     background-color: var(--input-bg-color); color: var(--text-color); 
 }
 #user-input:focus {
-    border-color: var(--button-base-purple); 
-    box-shadow: 0 0 0 2px var(--button-neon-glow-color); 
+    border-color: var(--button-main-bg); /* Use new button base for consistency */
+    box-shadow: 0 0 0 2px var(--button-main-glow); /* Use new faint white glow */
 }
 
+/* === UPDATED SEND BUTTON STYLE === */
 #send-button {
-    background: var(--button-base-purple);
-    border: 1px solid transparent; 
+    background: var(--button-main-bg);
+    border: 1px solid var(--button-main-border); 
     cursor: pointer; padding: 0; width: 44px; height: 44px;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     transition: all 0.2s ease-out; flex-shrink: 0;
-    box-shadow: 0 0 4px 0px var(--button-neon-glow-color), 
-                0 0 8px 2px var(--button-neon-glow-soft-aura);
+    box-shadow: 0 0 7px 1px var(--button-main-glow); /* Faint white glow */
 }
-#send-button svg { width: 24px; height: 24px; fill: var(--button-text-color); stroke: none; }
+#send-button svg { width: 24px; height: 24px; fill: var(--button-main-text); stroke: none; }
 #send-button:hover { 
-    background-color: color-mix(in srgb, var(--button-base-purple) 85%, white);
-    box-shadow: 0 0 6px 1px var(--button-neon-glow-color), 
-                0 0 12px 3px var(--button-neon-glow-soft-aura);
+    background-color: color-mix(in srgb, var(--button-main-bg) 85%, #ffffff 15%);
+    border-color: color-mix(in srgb, var(--button-main-border) 70%, #ffffff 30%);
+    box-shadow: 0 0 10px 2px var(--button-main-glow-hover);
     transform: scale(1.05); 
 }
 #send-button:disabled { background-color: var(--secondary-text-color); opacity: 0.6; cursor: not-allowed; box-shadow: none; }
