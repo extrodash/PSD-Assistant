@@ -438,3 +438,56 @@ body.widget-mode::before { display: none; }
     font-size: 0.9rem;
     margin-bottom: 0.5rem;
 }
+
+.message-actions {
+    display: flex;
+    gap: 0.4rem;
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+    z-index: 2;
+}
+.message.user:hover .message-actions,
+.message.assistant:hover .message-actions {
+    opacity: 1;
+    pointer-events: auto;
+}
+.message-action-btn {
+    background: rgba(60, 60, 80, 0.85);
+    border: none;
+    border-radius: 6px;
+    color: var(--button-main-text);
+    padding: 4px 7px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.13);
+    opacity: 0.85;
+}
+.message-action-btn:hover {
+    background: color-mix(in srgb, var(--button-main-bg) 80%, #fff 20%);
+    color: #fff;
+    opacity: 1;
+}
+.message.user .message-actions { right: 12px; }
+.message.assistant .message-actions { right: 12px; }
+.message .try-again-btn {
+    margin-top: 0.5rem;
+    background: var(--button-main-bg);
+    color: var(--button-main-text);
+    border: 1px solid var(--button-main-border);
+    border-radius: 6px;
+    padding: 0.3rem 0.9rem;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+}
+.message .try-again-btn:hover {
+    background: color-mix(in srgb, var(--button-main-bg) 80%, #fff 20%);
+    color: #fff;
+}
