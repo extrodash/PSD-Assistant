@@ -308,71 +308,76 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // --- sendMessage MODIFIED ---
     async function sendMessage() {
-        if (!userInput || !foundationalPromptInput || !additionalReferenceInput || !modelSelect || !modeSelect || !customPromptInput) {
-            console.error("One or more critical UI elements not found in sendMessage.");
-            return;
-        }
-
-        const text = userInput.value.trim();
-        if (!text || isLoading) return;
-
-        addMessageToState(text, true);
-        renderMessage(text, true); 
-        userInput.value = '';
-        
-        isLoading = true;
-        showLoadingBubble(); // <-- SHOW LOADING BUBBLE
-
-        const currentThread = getCurrentThread();
-        const selectedMode = chatModes[modeSelect.value];
-        const activeInstruction = selectedMode.name === "Custom"
-            ? customPromptInput.value.trim()
-            : selectedMode.instruction;
-
-        const payload = {
-            model: modelSelect.value,
-            messages: currentThread ? currentThread.messages.map(msg => ({
-                role: msg.isUser ? 'user' : 'assistant',
-                content: msg.text
-            })) : [],
-            foundationalPrompt: foundationalPromptInput.value.trim(),
-            additionalReferenceText: additionalReferenceInput.value.trim(),
-            activeInstruction: activeInstruction
-        };
-        
-        console.log("Sending this payload to the server:", payload);
-
-        try {
-            const response = await fetch('/api/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.error || 'API request failed');
-            }
-
-            const data = await response.json();
-            const aiResponse = data.choices[0].message.content;
-            addMessageToState(aiResponse, false);
-            renderMessage(aiResponse, false); // Render actual response
-
-            if (currentThread && currentThread.messages.length === 2) { 
-                currentThread.title = text.substring(0, 20) + (text.length > 20 ? '...' : '');
-                updateThreadMenu();
-            }
-
-        } catch (error) {
-            const errorMessage = `Error: ${error.message}`;
-            addMessageToState(errorMessage, false);
-            renderMessage(errorMessage, false); // Render error message
-        } finally {
-            removeLoadingBubble(); // <-- REMOVE LOADING BUBBLE
-            isLoading = false; 
-        }
+    if (!userInput || !foundationalPromptInput || !additionalReferenceInput || !modelSelect || !modeSelect || !customPromptInput) {
+        console.error("One or more critical UI elements not found in sendMessage.");
+        return;
     }
+
+    const text = userInput.value.trim();
+    if (!text || isLoading) return;
+
+    addMessageToState(text, true);
+    renderMessage(text, true); 
+    userInput.value = '';
+    
+    isLoading = true;
+
+    // --- DELAYED LOADING BUBBLE ---
+    let loadingBubbleTimeout = setTimeout(() => {
+        showLoadingBubble();
+    }, 500);
+
+    const currentThread = getCurrentThread();
+    const selectedMode = chatModes[modeSelect.value];
+    const activeInstruction = selectedMode.name === "Custom"
+        ? customPromptInput.value.trim()
+        : selectedMode.instruction;
+
+    const payload = {
+        model: modelSelect.value,
+        messages: currentThread ? currentThread.messages.map(msg => ({
+            role: msg.isUser ? 'user' : 'assistant',
+            content: msg.text
+        })) : [],
+        foundationalPrompt: foundationalPromptInput.value.trim(),
+        additionalReferenceText: additionalReferenceInput.value.trim(),
+        activeInstruction: activeInstruction
+    };
+    
+    console.log("Sending this payload to the server:", payload);
+
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || 'API request failed');
+        }
+
+        const data = await response.json();
+        const aiResponse = data.choices[0].message.content;
+        addMessageToState(aiResponse, false);
+        renderMessage(aiResponse, false); // Render actual response
+
+        if (currentThread && currentThread.messages.length === 2) { 
+            currentThread.title = text.substring(0, 20) + (text.length > 20 ? '...' : '');
+            updateThreadMenu();
+        }
+
+    } catch (error) {
+        const errorMessage = `Error: ${error.message}`;
+        addMessageToState(errorMessage, false);
+        renderMessage(errorMessage, false); // Render error message
+    } finally {
+        clearTimeout(loadingBubbleTimeout); // Prevent bubble if response is fast
+        removeLoadingBubble(); // Remove if it was shown
+        isLoading = false; 
+    }
+}
     
     // summarizeCurrentThread remains the same
     async function summarizeCurrentThread() {

@@ -244,7 +244,7 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     position: relative; /* For pseudo-element glow */
     /* Increased glow travel upward without increasing brightness */
     box-shadow: 0 -1px 8px -1px var(--decorative-glow-color), /* Inner sharp line, slightly more spread */
-                0 -8px 32px -4px var(--decorative-glow-soft-aura); /* Much further travel up */
+                0 -16px 64px -8px var(--decorative-glow-soft-aura); /* Much further travel up */
 }
 
 #user-input {
