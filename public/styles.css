@@ -11,18 +11,19 @@
     --input-bg-color: #282a30;
     --input-bar-bg: #181a1f;
     
-    /* Style for Gray Message Bubbles (user) - MADE BRIGHTER */
-    --gray-message-bg: #4A4E5A; /* Changed from #32363e to a lighter Manatee gray */
-    --gray-message-text: #e8eaed;
-    --gray-glow-sharp: rgba(130, 135, 145, 0.5); /* Glow remains subtle */
+    /* User Message Bubble - Brighter with White Perimeter */
+    --user-message-bg: #484c54; /* Brighter gray for user bubble */
+    --user-message-text: #f0f2f5; /* Slightly brighter text for contrast */
+    --user-message-perimeter-color: rgba(255, 255, 255, 0.9); /* Sharp white perimeter */
+    --user-message-glow: rgba(150, 155, 165, 0.4); /* Softer, subtle gray glow */
     
-    /* Style for Colorful "Pearl/Milky Way" Message Bubbles (assistant) */
-    --colorful-message-bg-start: #2d3a4b; 
-    --colorful-message-bg-end: #3f3251;   
-    --colorful-message-text: #e8eaed;
-    --colorful-glow-sharp-1: rgba(173, 216, 230, 0.5); 
-    --colorful-glow-sharp-2: rgba(220, 190, 255, 0.4); 
-    --colorful-pearl-highlight: rgba(240, 248, 255, 0.15); 
+    /* Assistant Message Bubble - Colorful "Pearl/Milky Way" */
+    --assistant-message-bg-start: #2d3a4b; 
+    --assistant-message-bg-end: #3f3251;   
+    --assistant-message-text: #e8eaed;
+    --assistant-glow-sharp-1: rgba(173, 216, 230, 0.5); 
+    --assistant-glow-sharp-2: rgba(220, 190, 255, 0.4); 
+    --assistant-pearl-highlight: rgba(240, 248, 255, 0.15); 
     
     --settings-bg: #282a30;
     --icon-color: #a8b0b8; 
@@ -180,10 +181,14 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 }
 
 #mode-instruction, .summary-display {
-    background-color: var(--gray-message-bg); 
+    background-color: var(--user-message-bg); /* Changed to user message bg for consistency */
     padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.875rem; 
-    color: var(--gray-message-text); line-height: 1.5; 
+    color: var(--user-message-text); line-height: 1.5; 
     border: 1px solid var(--border-color);
+    /* Add perimeter and glow similar to user message if desired */
+    box-shadow: 0 0 0 1px var(--user-message-perimeter-color), 
+                0px 0px 6px 1px var(--user-message-glow),
+                inset 0 0 2px rgba(255,255,255,0.03);
 }
 .summary-display { margin-top: 0.75rem; }
 
@@ -196,25 +201,26 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 }
 .message:hover { transform: translateY(-1px); }
 
-/* USER messages now get the brighter gray style */
+/* USER messages - Brighter gray with white perimeter and subtle glow */
 .message.user {
-    background-color: var(--gray-message-bg); /* Uses the updated, brighter gray */
-    color: var(--gray-message-text);
+    background-color: var(--user-message-bg);
+    color: var(--user-message-text);
     align-self: flex-end;
     border-bottom-right-radius: 8px;
-    box-shadow: 0px 0px 7px 2px var(--gray-glow-sharp), 
-                inset 0 0 3px rgba(255,255,255,0.03); 
+    box-shadow: 0 0 0 1.5px var(--user-message-perimeter-color), /* White perimeter */
+                0px 0px 8px 2px var(--user-message-glow),     /* Subtle gray glow */
+                inset 0 0 3px rgba(255,255,255,0.05); /* Slight inner highlight */
 }
 
-/* ASSISTANT messages get the colorful "pearl/milky way" style */
+/* ASSISTANT messages - Colorful "pearl/milky way" style */
 .message.assistant {
-    background: linear-gradient(135deg, var(--colorful-message-bg-start) 0%, var(--colorful-message-bg-end) 100%);
-    color: var(--colorful-message-text);
+    background: linear-gradient(135deg, var(--assistant-message-bg-start) 0%, var(--assistant-message-bg-end) 100%);
+    color: var(--assistant-message-text); /* Renamed from --colorful-message-text for clarity */
     align-self: flex-start;
     border-bottom-left-radius: 8px;
-    box-shadow: 0px 0px 6px 1px var(--colorful-glow-sharp-1), 
-                0px 0px 12px 2px var(--colorful-glow-sharp-2), 
-                inset 0px 0px 4px 0px var(--colorful-pearl-highlight); 
+    box-shadow: 0px 0px 6px 1px var(--assistant-glow-sharp-1), 
+                0px 0px 12px 2px var(--assistant-glow-sharp-2), 
+                inset 0px 0px 4px 0px var(--assistant-pearl-highlight); 
 }
 
 .message p { margin: 0 0 0.6em 0; }
