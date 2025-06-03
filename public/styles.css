@@ -3,37 +3,43 @@
     --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     
     /* Dark Theme Variables are now default */
-    --bg-color: #1a1d24; 
-    --container-bg-color: #23272f; 
-    --text-color: #e0e6f0;
-    --secondary-text-color: #98a0aa;
-    --border-color: #383f4d;
-    --input-bg-color: #2c3038;
-    --input-bar-bg: #1f2329;
+    --bg-color: #121418; /* Slightly bluer dark */
+    --container-bg-color: #1c1f26; /* Slightly bluer container */
+    --text-color: #e8eaed;
+    --secondary-text-color: #9aa0a6;
+    --border-color: #3c4043; /* Adjusted border */
+    --input-bg-color: #282a30;
+    --input-bar-bg: #181a1f;
     
-    --message-user-bg-start: #2a3b34; 
-    --message-user-bg-end: #3a2a3b;   
-    --message-user-glow-1: rgba(80, 200, 130, 0.5);  
-    --message-user-glow-2: rgba(160, 100, 200, 0.5); 
-    --message-user-text: #e0e6f0;
+    /* User Message - "Pearl reflecting milky way" inspired */
+    --message-user-bg-start: #2d3a4b; /* Deep space blue */
+    --message-user-bg-end: #3f3251;   /* Cosmic purple */
+    --message-user-text: #e8eaed;
+    /* Subtle, sharper neon glows, leaning towards blues/purples/whites */
+    --user-glow-sharp-1: rgba(173, 216, 230, 0.5); /* Light Sky Blue, less spread */
+    --user-glow-sharp-2: rgba(220, 190, 255, 0.4); /* Soft Lavender, less spread */
+    --user-pearl-highlight: rgba(240, 248, 255, 0.15); /* AliceBlue for subtle pearl edge */
 
-    --message-assistant-bg: #3a3f4b; 
-    --message-assistant-text: #e0e6f0;
-    --message-assistant-glow: rgba(100, 105, 115, 0.6); 
+    /* Assistant Message - Gray with subtle, sharper Lighter Gray Glow */
+    --message-assistant-bg: #32363e; 
+    --message-assistant-text: #e8eaed;
+    --assistant-glow-sharp: rgba(130, 135, 145, 0.5); /* Sharper, less diffuse gray glow */
     
-    --settings-bg: #2c3038;
-    --icon-color: #a0a8b4; /* For icons like send button */
-    --shadow-color: rgba(0, 0, 0, 0.25);
+    --settings-bg: #282a30;
+    --icon-color: #a8b0b8; 
+    --shadow-color: rgba(0, 0, 0, 0.3); /* Kept shadow deep for dark theme contrast */
         
-    --button-accent-purple: #7B4C9F; 
-    --button-accent-purple-glow: rgba(178, 108, 224, 0.6); 
+    /* Button & Accent Colors - Dark Purple with refined Neon Glow */
+    --button-accent-purple: #704288; /* Slightly less saturated purple */
+    --button-neon-glow: rgba(200, 160, 220, 0.65); /* Lilac for neon effect */
     --button-accent-text: #ffffff;
 
-    --bg-edge-glow-yellow: rgba(240, 220, 130, 0.1); 
-    --bg-edge-glow-purple: rgba(190, 140, 240, 0.1);
+    /* Background Edge Glow - "Milky Way" inspired */
+    --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.1); /* Faint light blue */
+    --bg-edge-glow-milkyway-2: rgba(190, 170, 220, 0.1); /* Faint soft purple */
 
-    /* New variables for header gradient */
-    --header-text-gradient: linear-gradient(90deg, #DA70D6, #7B4C9F, #00BCD4); /* Orchid -> Deep Purple -> Cyan */
+    /* Header Gradient */
+    --header-text-gradient: linear-gradient(90deg, #C373E6, #8A55C1, #4AA0D1); /* Purple-Pink-Blue */
 }
 
 * { box-sizing: border-box; }
@@ -51,32 +57,28 @@ body {
     font-size: 16px;
     position: relative; 
 }
-body::before {
+body::before { /* "Milky Way" edge glow */
     content: '';
     position: fixed; 
     top: -50%; left: -50%; 
     width: 200%; height: 200%; 
     z-index: -1; 
     background-image: radial-gradient(ellipse at center, 
-        transparent 40%, 
-        var(--bg-edge-glow-yellow) 70%, 
-        var(--bg-edge-glow-purple) 95%);
-    opacity: 0.5; 
-    animation: subtlePulse 10s infinite alternate;
+        transparent 35%, /* Larger transparent center */
+        var(--bg-edge-glow-milkyway-1) 65%, 
+        var(--bg-edge-glow-milkyway-2) 90%);
+    opacity: 0.6; /* Still subtle */
+    animation: subtlePulse 12s infinite alternate ease-in-out;
 }
 
 @keyframes subtlePulse {
-    0% { transform: scale(1); opacity: 0.3; }
-    100% { transform: scale(1.05); opacity: 0.6; }
+    0% { transform: scale(1); opacity: 0.4; }
+    100% { transform: scale(1.03); opacity: 0.7; }
 }
 
 @keyframes textGradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-    100% {
-        background-position: 100% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
 }
 
 .container {
@@ -86,7 +88,7 @@ body::before {
     max-height: 850px;
     background-color: var(--container-bg-color);
     border-radius: 16px;
-    box-shadow: 0 10px 30px var(--shadow-color);
+    box-shadow: 0 8px 25px var(--shadow-color); /* Slightly adjusted */
     display: flex;
     flex-direction: column;
     border: 1px solid var(--border-color);
@@ -108,11 +110,10 @@ header h1 {
     font-weight: 700; 
     background: var(--header-text-gradient);
     -webkit-background-clip: text;
-    -moz-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: textGradientAnimation 10s ease infinite alternate;
-    background-size: 200% auto; 
+    animation: textGradientAnimation 8s ease infinite alternate; /* Slightly faster animation */
+    background-size: 250% auto; 
     display: inline-block; 
 }
 
@@ -122,25 +123,27 @@ header h1 {
 #new-chat-button, #summarize-chat-button, #chat-threads-menu {
     background-color: var(--button-accent-purple);
     color: var(--button-accent-text);
-    border: 1px solid transparent;
+    border: 1px solid rgba(255,255,255,0.1); /* Subtle border for definition */
     padding: 0.5rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 500;
-    transition: all 0.2s ease;
-    box-shadow: 0 0 8px 0px var(--button-accent-purple-glow),
-                0 0 16px 2px var(--button-accent-purple-glow);
+    transition: all 0.2s ease-out;
+    /* Sharper, more focused neon glow */
+    box-shadow: 0 0 3px 0px var(--button-neon-glow), 
+                0 0 6px 1px rgba(var(--button-neon-glow), 0.7),
+                inset 0 0 2px rgba(255,255,255,0.05); /* Very subtle inner edge */
 }
 #new-chat-button:hover, #summarize-chat-button:hover, #chat-threads-menu:hover {
-    opacity: 0.9;
-    box-shadow: 0 0 12px 2px var(--button-accent-purple-glow),
-                0 0 24px 5px var(--button-accent-purple-glow);
+    background-color: color-mix(in srgb, var(--button-accent-purple) 90%, white);
+    box-shadow: 0 0 5px 1px var(--button-neon-glow),
+                0 0 10px 3px rgba(var(--button-neon-glow), 0.8),
+                inset 0 0 3px rgba(255,255,255,0.1);
+    transform: translateY(-1px); /* Slight lift on hover */
 }
 #chat-threads-menu {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
+    -webkit-appearance: none; -moz-appearance: none; appearance: none;
     padding-right: 2.5rem;
     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
     background-repeat: no-repeat;
@@ -148,102 +151,75 @@ header h1 {
     background-size: .75em auto;
 }
 
-.settings-section { 
-    padding: 1.25rem; 
-    border-bottom: 1px solid var(--border-color); 
-    background-color: var(--settings-bg); 
-    font-size: 0.9rem; 
-}
+.settings-section { padding: 1.25rem; border-bottom: 1px solid var(--border-color); background-color: var(--settings-bg); font-size: 0.9rem; }
 .settings-section summary { 
-    cursor: pointer; 
-    font-weight: 600; 
-    padding-bottom: 0.85rem; /* Space for the underglow */
-    outline: none; 
-    position: relative; /* For ::after pseudo-element positioning */
-    transition: color 0.2s ease, text-shadow 0.3s ease;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1); 
+    cursor: pointer; font-weight: 600; padding-bottom: 0.85rem; outline: none; 
+    position: relative; transition: color 0.2s ease, text-shadow 0.3s ease;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2); 
 }
-.settings-section summary::after {
+.settings-section summary::after { /* Sharper underglow */
     content: '';
     position: absolute;
-    bottom: 0px; 
-    left: 5%; 
-    right: 5%; 
-    height: 4px; 
-    background: var(--button-accent-purple); 
-    border-radius: 2px;
-    opacity: 0.7;
-    filter: blur(5px); 
-    transition: opacity 0.3s ease, filter 0.3s ease, background 0.3s ease;
+    bottom: 2px; /* Closer to text */
+    left: 10%; 
+    right: 10%; 
+    height: 2px; /* Thinner, sharper line */
+    background: var(--button-neon-glow); 
+    border-radius: 1px;
+    opacity: 0.6;
+    filter: blur(1.5px); /* Less blur for sharpness */
+    transition: opacity 0.3s ease, filter 0.3s ease, background 0.3s ease, transform 0.3s ease;
 }
 .settings-section summary:hover::after,
 .settings-section summary:focus-visible::after {
-    opacity: 1;
-    background: var(--button-accent-purple-glow); 
-    filter: blur(8px);
+    opacity: 0.85;
+    filter: blur(2.5px);
+    transform: scaleY(1.5); /* Makes it slightly "brighter" by expanding */
 }
-.settings-section summary:focus-visible { 
-    color: var(--button-accent-purple); 
-}
+.settings-section summary:focus-visible { color: var(--button-accent-purple); }
 
 .settings-content { margin-top: 1rem; display: grid; gap: 1.25rem; }
 .prompt-editor, .model-picker, .mode-picker, .summary-section { display: flex; flex-direction: column; }
 label { margin-bottom: 0.5rem; font-size: 0.875rem; color: var(--secondary-text-color); font-weight: 500; }
 
 textarea, select:not(#chat-threads-menu) {
-    width: 100%;
-    padding: 0.75rem 1rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    font-family: inherit;
-    font-size: 0.9rem;
-    background-color: var(--input-bg-color);
-    color: var(--text-color);
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    width: 100%; padding: 0.75rem 1rem; border-radius: 8px;
+    border: 1px solid var(--border-color); font-family: inherit;
+    font-size: 0.9rem; background-color: var(--input-bg-color);
+    color: var(--text-color); transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 textarea:focus, select:not(#chat-threads-menu):focus {
-    outline: none;
-    border-color: var(--button-accent-purple);
-    box-shadow: 0 0 0 3px var(--button-accent-purple-glow);
+    outline: none; border-color: var(--button-accent-purple);
+    box-shadow: 0 0 0 2px var(--button-neon-glow); /* Use neon glow for focus */
 }
 
 #mode-instruction, .summary-display {
-    background-color: var(--message-assistant-bg);
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    font-size: 0.875rem;
-    color: var(--message-assistant-text);
-    line-height: 1.5;
-    border: 1px solid var(--border-color);
+    background-color: var(--message-assistant-bg); padding: 0.8rem 1rem;
+    border-radius: 8px; font-size: 0.875rem; color: var(--message-assistant-text);
+    line-height: 1.5; border: 1px solid var(--border-color);
 }
 .summary-display { margin-top: 0.75rem; }
 
-.chat-history {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
+.chat-history { flex-grow: 1; overflow-y: auto; padding: 1.25rem; display: flex; flex-direction: column; gap: 1rem; }
 
 .message {
-    max-width: 80%;
-    padding: 0.75rem 1.25rem;
-    border-radius: 20px;
-    line-height: 1.6;
-    word-wrap: break-word;
-    position: relative;
+    max-width: 80%; padding: 0.75rem 1.25rem; border-radius: 20px;
+    line-height: 1.6; word-wrap: break-word; position: relative;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.message:hover {
+    transform: translateY(-1px); /* Subtle lift on message hover */
 }
 
 .message.user {
-    background: linear-gradient(135deg, var(--message-user-bg-start), var(--message-user-bg-end));
+    background: linear-gradient(135deg, var(--message-user-bg-start) 0%, var(--message-user-bg-end) 100%);
     color: var(--message-user-text);
     align-self: flex-end;
     border-bottom-right-radius: 8px;
-    box-shadow: 0 0 10px 2px var(--message-user-glow-1), 
-                0 0 20px 8px var(--message-user-glow-2),
-                inset 0 0 5px rgba(255,255,255,0.05); 
+    /* Sharper "neon pearl" glow */
+    box-shadow: 0px 0px 6px 1px var(--user-glow-sharp-1), /* Base sharp glow */
+                0px 0px 12px 2px var(--user-glow-sharp-2), /* Softer outer aura */
+                inset 0px 0px 4px 0px var(--user-pearl-highlight); /* Inner pearl highlight */
 }
 
 .message.assistant {
@@ -251,8 +227,9 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     color: var(--message-assistant-text);
     align-self: flex-start;
     border-bottom-left-radius: 8px;
-    box-shadow: 0 0 12px 4px var(--message-assistant-glow),
-                inset 0 0 5px rgba(255,255,255,0.03); 
+    /* Sharper, subtle gray glow */
+    box-shadow: 0px 0px 7px 2px var(--assistant-glow-sharp),
+                inset 0 0 3px rgba(255,255,255,0.03); 
 }
 
 .message p { margin: 0 0 0.6em 0; }
@@ -261,71 +238,54 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 .message ol, .message ul { padding-left: 1.75rem; margin-top: 0.6em; margin-bottom: 0.6em;}
 .message li { margin-bottom: 0.3em; }
 .message code {
-    background-color: var(--input-bar-bg);
-    padding: 0.15em 0.5em;
-    border-radius: 5px;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 0.875em;
-    border: 1px solid var(--border-color);
+    background-color: var(--input-bar-bg); padding: 0.15em 0.5em;
+    border-radius: 5px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    font-size: 0.875em; border: 1px solid var(--border-color);
 }
 .message pre {
-    background-color: var(--input-bar-bg);
-    padding: 1rem;
-    border-radius: 8px;
-    overflow-x: auto;
+    background-color: var(--input-bar-bg); padding: 1rem;
+    border-radius: 8px; overflow-x: auto;
     font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 0.875em;
-    margin: 0.75em 0;
+    font-size: 0.875em; margin: 0.75em 0;
     border: 1px solid var(--border-color);
     box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); 
 }
 .message pre code { padding: 0; background-color: transparent; border: none; box-shadow: none;}
 
 .input-bar {
-    display: flex;
-    align-items: flex-end;
-    padding: 1rem 1.25rem;
-    border-top: 1px solid var(--border-color);
-    background-color: var(--input-bar-bg);
+    display: flex; align-items: flex-end; padding: 1rem 1.25rem;
+    border-top: 1px solid var(--border-color); background-color: var(--input-bar-bg);
     gap: 0.75rem;
 }
 
 #user-input {
-    flex-grow: 1;
-    border-radius: 22px;
-    padding: 0.75rem 1.25rem;
-    resize: none;
-    font-size: 1rem;
-    line-height: 1.5;
-    max-height: 130px;
-    overflow-y: auto;
-    border: 1px solid var(--border-color);
-    background-color: var(--input-bg-color); 
-    color: var(--text-color); 
+    flex-grow: 1; border-radius: 22px; padding: 0.75rem 1.25rem;
+    resize: none; font-size: 1rem; line-height: 1.5;
+    max-height: 130px; overflow-y: auto; border: 1px solid var(--border-color);
+    background-color: var(--input-bg-color); color: var(--text-color); 
 }
 #user-input:focus {
     border-color: var(--button-accent-purple);
-    box-shadow: 0 0 0 3px var(--button-accent-purple-glow);
+    box-shadow: 0 0 0 2px var(--button-neon-glow); /* Use neon glow for input focus */
 }
 
 #send-button {
     background: var(--button-accent-purple);
-    border: 1px solid transparent;
-    cursor: pointer;
-    padding: 0;
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    flex-shrink: 0;
-    box-shadow: 0 0 8px 0px var(--button-accent-purple-glow),
-                0 0 16px 2px var(--button-accent-purple-glow);
+    border: 1px solid rgba(255,255,255,0.1); /* Subtle border */
+    cursor: pointer; padding: 0; width: 44px; height: 44px;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s ease-out; flex-shrink: 0;
+    /* Sharper neon glow */
+    box-shadow: 0 0 4px 0px var(--button-neon-glow), 
+                0 0 8px 2px rgba(var(--button-neon-glow), 0.7);
 }
 #send-button svg { width: 24px; height: 24px; fill: var(--button-accent-text); stroke: none; }
-#send-button:hover { opacity: 0.9; box-shadow: 0 0 12px 2px var(--button-accent-purple-glow), 0 0 24px 5px var(--button-accent-purple-glow); }
+#send-button:hover { 
+    background-color: color-mix(in srgb, var(--button-accent-purple) 90%, white);
+    box-shadow: 0 0 6px 1px var(--button-neon-glow), 
+                0 0 12px 4px rgba(var(--button-neon-glow), 0.8);
+    transform: scale(1.05); /* Slightly larger on hover */
+}
 #send-button:disabled { background-color: var(--secondary-text-color); opacity: 0.6; cursor: not-allowed; box-shadow: none; }
 #send-button:disabled svg { fill: var(--text-color); opacity: 0.7; }
 
