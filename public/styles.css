@@ -14,8 +14,8 @@
     /* User Message Bubble - Brighter with White Perimeter */
     --user-message-bg: #484c54; /* Brighter gray for user bubble */
     --user-message-text: #f0f2f5; /* Slightly brighter text for contrast */
-    --user-message-perimeter-color: rgba(255, 255, 255, 0.9); /* Sharp white perimeter */
-    --user-message-glow: rgba(150, 155, 165, 0.4); /* Softer, subtle gray glow */
+    --user-message-perimeter-color: rgba(205, 205, 205, 0.511); /* Sharp white perimeter */
+    --user-message-glow: rgba(163, 170, 182, 0.4); /* Softer, subtle gray glow */
     
     /* Assistant Message Bubble - Colorful "Pearl/Milky Way" */
     --assistant-message-bg-start: #2d3a4b; 
