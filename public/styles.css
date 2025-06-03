@@ -6,6 +6,9 @@
     --bg-color: #000000; 
     --container-bg-color: #1c1f26; 
     --text-color: #e8eaed;
+
+    /* Message Action Button Background */
+    --message-action-bg: rgba(60, 60, 80, 0.85);
     --secondary-text-color: #9aa0a6;
     --border-color: #3c4043; 
     --input-bg-color: #282a30;
@@ -447,16 +450,18 @@ body.widget-mode::before { display: none; }
     right: 12px;
     opacity: 0;
     pointer-events: none;
-    transition: opacity 0.25s;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
     z-index: 2;
-}
-.message.user:hover .message-actions,
+.message.user:hover .message-actions, 
 .message.assistant:hover .message-actions {
     opacity: 1;
     pointer-events: auto;
 }
+    visibility: visible;
+}
 .message-action-btn {
-    background: rgba(60, 60, 80, 0.85);
+    background: var(--message-action-bg);
     border: none;
     border-radius: 6px;
     color: var(--button-main-text);
@@ -466,11 +471,11 @@ body.widget-mode::before { display: none; }
     display: flex;
     align-items: center;
     transition: background 0.2s, color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.13);
-    opacity: 0.85;
-}
 .message-action-btn:hover {
-    background: color-mix(in srgb, var(--button-main-bg) 80%, #fff 20%);
+    background: #4c4c6e; /* Precomputed mixed color */
+    color: #fff;
+    opacity: 1;
+}
     color: #fff;
     opacity: 1;
 }
