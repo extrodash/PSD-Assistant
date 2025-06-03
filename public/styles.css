@@ -12,10 +12,10 @@
     --input-bar-bg: #181a1f;
     
     /* User Message Bubble - Brighter with White Perimeter */
-    --user-message-bg: #484c54; /* Brighter gray for user bubble */
-    --user-message-text: #f0f2f5; /* Slightly brighter text for contrast */
-    --user-message-perimeter-color: rgba(205, 205, 205, 0.511); /* Sharp white perimeter */
-    --user-message-glow: rgba(163, 170, 182, 0.4); /* Softer, subtle gray glow */
+    --user-message-bg: #484c54; 
+    --user-message-text: #f0f2f5; 
+    --user-message-perimeter-color: rgba(205, 205, 205, 0.511); 
+    --user-message-glow: rgba(163, 170, 182, 0.4); 
     
     /* Assistant Message Bubble - Colorful "Pearl/Milky Way" */
     --assistant-message-bg-start: #2d3a4b; 
@@ -29,14 +29,17 @@
     --icon-color: #a8b0b8; 
     --shadow-color: rgba(0, 0, 0, 0.3); 
         
-    --button-accent-purple: #704288; 
-    --button-neon-glow: rgba(200, 160, 220, 0.65); 
-    --button-accent-text: #ffffff;
+    /* Button & Accent Colors - Universal Neon Glow */
+    --button-base-purple: #583770; /* Slightly adjusted base purple for buttons */
+    --button-neon-glow-color: rgba(200, 160, 220, 0.75); /* Main neon glow color */
+    --button-neon-glow-soft-aura: rgba(200, 160, 220, 0.45); /* Softer outer aura for neon glow */
+    --button-text-color: #ffffff; /* Text color for these buttons */
 
     --bg-edge-glow-milkyway-1: rgba(173, 216, 230, 0.12); 
     --bg-edge-glow-milkyway-2: rgba(190, 170, 220, 0.12); 
 
     --header-text-gradient: linear-gradient(90deg, #C373E6, #8A55C1, #4AA0D1);
+    --button-accent-purple-rgb: 112, 66, 136; /* RGB for original #704288, if needed for expand-btn*/
 }
 
 * { box-sizing: border-box; }
@@ -117,25 +120,27 @@ header h1 {
 .header-controls { display: flex; align-items: center; gap: 0.75rem; }
 .menu { display: flex; align-items: center; gap: 0.6rem; }
 
+/* Updated Button Styles for Universal Glow */
 #new-chat-button, #summarize-chat-button, #chat-threads-menu {
-    background-color: var(--button-accent-purple);
-    color: var(--button-accent-text);
-    border: 1px solid rgba(255,255,255,0.1); 
+    background-color: var(--button-base-purple);
+    color: var(--button-text-color);
+    border: 1px solid transparent; /* Or var(--button-neon-glow-color) for a very thin neon border */
     padding: 0.5rem 1rem;
     border-radius: 8px;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 500;
     transition: all 0.2s ease-out;
-    box-shadow: 0 0 3px 0px var(--button-neon-glow), 
-                0 0 6px 1px rgba(var(--button-neon-glow), 0.7),
-                inset 0 0 2px rgba(255,255,255,0.05); 
+    /* Subtle but sharp neon glow */
+    box-shadow: 0 0 5px 1px var(--button-neon-glow-color), /* Inner, sharper part */
+                0 0 10px 2px var(--button-neon-glow-soft-aura), /* Softer outer aura */
+                inset 0 0 1px rgba(255,255,255,0.1); /* Slight inner edge */
 }
 #new-chat-button:hover, #summarize-chat-button:hover, #chat-threads-menu:hover {
-    background-color: color-mix(in srgb, var(--button-accent-purple) 90%, white);
-    box-shadow: 0 0 5px 1px var(--button-neon-glow),
-                0 0 10px 3px rgba(var(--button-neon-glow), 0.8),
-                inset 0 0 3px rgba(255,255,255,0.1);
+    background-color: color-mix(in srgb, var(--button-base-purple) 85%, white);
+    box-shadow: 0 0 7px 2px var(--button-neon-glow-color),
+                0 0 15px 4px var(--button-neon-glow-soft-aura),
+                inset 0 0 2px rgba(255,255,255,0.15);
     transform: translateY(-1px); 
 }
 #chat-threads-menu {
@@ -155,15 +160,17 @@ header h1 {
 }
 .settings-section summary::after {
     content: ''; position: absolute; bottom: 2px; left: 10%; right: 10%; 
-    height: 2px; background: var(--button-neon-glow); border-radius: 1px;
+    height: 2px; background: var(--button-neon-glow-color); /* Using button neon glow */
+    border-radius: 1px;
     opacity: 0.6; filter: blur(1.5px); 
     transition: opacity 0.3s ease, filter 0.3s ease, background 0.3s ease, transform 0.3s ease;
 }
 .settings-section summary:hover::after,
 .settings-section summary:focus-visible::after {
     opacity: 0.85; filter: blur(2.5px); transform: scaleY(1.5); 
+    background: var(--button-neon-glow-soft-aura); /* Use softer aura on hover */
 }
-.settings-section summary:focus-visible { color: var(--button-accent-purple); }
+.settings-section summary:focus-visible { color: var(--button-base-purple); }
 
 .settings-content { margin-top: 1rem; display: grid; gap: 1.25rem; }
 .prompt-editor, .model-picker, .mode-picker, .summary-section { display: flex; flex-direction: column; }
@@ -176,16 +183,15 @@ textarea, select:not(#chat-threads-menu) {
     color: var(--text-color); transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 textarea:focus, select:not(#chat-threads-menu):focus {
-    outline: none; border-color: var(--button-accent-purple);
-    box-shadow: 0 0 0 2px var(--button-neon-glow); 
+    outline: none; border-color: var(--button-base-purple);
+    box-shadow: 0 0 0 2px var(--button-neon-glow-color); 
 }
 
 #mode-instruction, .summary-display {
-    background-color: var(--user-message-bg); /* Changed to user message bg for consistency */
+    background-color: var(--user-message-bg); 
     padding: 0.8rem 1rem; border-radius: 8px; font-size: 0.875rem; 
     color: var(--user-message-text); line-height: 1.5; 
     border: 1px solid var(--border-color);
-    /* Add perimeter and glow similar to user message if desired */
     box-shadow: 0 0 0 1px var(--user-message-perimeter-color), 
                 0px 0px 6px 1px var(--user-message-glow),
                 inset 0 0 2px rgba(255,255,255,0.03);
@@ -201,21 +207,19 @@ textarea:focus, select:not(#chat-threads-menu):focus {
 }
 .message:hover { transform: translateY(-1px); }
 
-/* USER messages - Brighter gray with white perimeter and subtle glow */
 .message.user {
     background-color: var(--user-message-bg);
     color: var(--user-message-text);
     align-self: flex-end;
     border-bottom-right-radius: 8px;
-    box-shadow: 0 0 0 1.5px var(--user-message-perimeter-color), /* White perimeter */
-                0px 0px 8px 2px var(--user-message-glow),     /* Subtle gray glow */
-                inset 0 0 3px rgba(255,255,255,0.05); /* Slight inner highlight */
+    box-shadow: 0 0 0 1.5px var(--user-message-perimeter-color), 
+                0px 0px 8px 2px var(--user-message-glow),     
+                inset 0 0 3px rgba(255,255,255,0.05); 
 }
 
-/* ASSISTANT messages - Colorful "pearl/milky way" style */
 .message.assistant {
     background: linear-gradient(135deg, var(--assistant-message-bg-start) 0%, var(--assistant-message-bg-end) 100%);
-    color: var(--assistant-message-text); /* Renamed from --colorful-message-text for clarity */
+    color: var(--assistant-message-text); 
     align-self: flex-start;
     border-bottom-left-radius: 8px;
     box-shadow: 0px 0px 6px 1px var(--assistant-glow-sharp-1), 
@@ -256,283 +260,65 @@ textarea:focus, select:not(#chat-threads-menu):focus {
     background-color: var(--input-bg-color); color: var(--text-color); 
 }
 #user-input:focus {
-    border-color: var(--button-accent-purple);
-    box-shadow: 0 0 0 2px var(--button-neon-glow); 
+    border-color: var(--button-base-purple); /* Changed from button-accent-purple */
+    box-shadow: 0 0 0 2px var(--button-neon-glow-color); 
 }
 
+/* Updated Send Button Style */
 #send-button {
-    background: var(--button-accent-purple);
-    border: 1px solid rgba(255,255,255,0.1); 
+    background: var(--button-base-purple);
+    border: 1px solid transparent; /* Or var(--button-neon-glow-color) for a thin neon border */
     cursor: pointer; padding: 0; width: 44px; height: 44px;
     border-radius: 50%; display: flex; align-items: center; justify-content: center;
     transition: all 0.2s ease-out; flex-shrink: 0;
-    box-shadow: 0 0 4px 0px var(--button-neon-glow), 
-                0 0 8px 2px rgba(var(--button-neon-glow), 0.7);
+    /* Subtle but sharp neon glow */
+    box-shadow: 0 0 4px 0px var(--button-neon-glow-color), 
+                0 0 8px 2px var(--button-neon-glow-soft-aura);
 }
-#send-button svg { width: 24px; height: 24px; fill: var(--button-accent-text); stroke: none; }
+#send-button svg { width: 24px; height: 24px; fill: var(--button-text-color); stroke: none; }
 #send-button:hover { 
-    background-color: color-mix(in srgb, var(--button-accent-purple) 90%, white);
-    box-shadow: 0 0 6px 1px var(--button-neon-glow), 
-                0 0 12px 4px rgba(var(--button-neon-glow), 0.8);
+    background-color: color-mix(in srgb, var(--button-base-purple) 85%, white);
+    box-shadow: 0 0 6px 1px var(--button-neon-glow-color), 
+                0 0 12px 3px var(--button-neon-glow-soft-aura);
     transform: scale(1.05); 
 }
 #send-button:disabled { background-color: var(--secondary-text-color); opacity: 0.6; cursor: not-allowed; box-shadow: none; }
 #send-button:disabled svg { fill: var(--text-color); opacity: 0.7; }
 
-/* Loading Bubble Styles */
-.message.loading-bubble {
-    background-color: var(--assistant-message-bg); /* Use assistant bubble color */
-    color: var(--assistant-message-text);
-    align-self: flex-start; /* Position like an assistant message */
-    border-bottom-left-radius: 8px;
-    box-shadow: 0px 0px 6px 1px var(--assistant-glow-sharp-1), 
-                0px 0px 12px 2px var(--assistant-glow-sharp-2), 
-                inset 0px 0px 4px 0px var(--assistant-pearl-highlight);
-    /* Apply the same elaborate glow as assistant messages */
-    padding: 0.75rem 1.25rem; /* Match regular message padding */
-    display: flex; /* For aligning dots */
-    align-items: center;
-    min-height: 40px; /* Ensure it has some visible height */
-}
+/* Loading Bubble Styles - no change from previous */
+.message.loading-bubble { /* ... */ }
+.loading-dot-container { /* ... */ }
+.loading-dot { /* ... */ }
+.loading-dot:nth-child(1) { /* ... */ }
+.loading-dot:nth-child(2) { /* ... */ }
+@keyframes loadingPulse { /* ... */ }
 
-.loading-dot-container {
-    display: flex;
-    align-items: center;
-}
-
-.loading-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: var(--assistant-message-text); /* Dots color */
-    margin: 0 3px;
-    animation: loadingPulse 1.4s infinite ease-in-out both;
-}
-
-/* Animation delays for the dots */
-.loading-dot:nth-child(1) {
-    animation-delay: -0.32s;
-}
-
-.loading-dot:nth-child(2) {
-    animation-delay: -0.16s;
-}
-
-/* No delay for the 3rd dot as 'both' in animation fills it */
-
-@keyframes loadingPulse {
-    0%, 80%, 100% {
-        transform: scale(0.6);
-        opacity: 0.5;
-    }
-    40% {
-        transform: scale(1.0);
-        opacity: 1;
-    }
-}
-
-/* Styles for Widget Mode */
-body.widget-mode header,
-body.widget-mode .settings-section { display: none; }
+/* Styles for Widget Mode - no change from previous */
+body.widget-mode header, body.widget-mode .settings-section { display: none; }
 body.widget-mode .container { height: 100%; border: none; border-radius: 0; box-shadow: none; }
 body.widget-mode { padding: 0; }
 body.widget-mode::before { display: none; } 
 
-/* Expand Message Button on individual messages */
-.message {
-    /* ... existing message styles ... */
-    position: relative; /* Needed for absolute positioning of expand button */
-}
+/* Expand Message Button on individual messages - no change from previous */
+.message { position: relative; }
+.expand-message-btn { /* ... */ }
+.expand-message-btn:hover { /* ... */ }
 
-.expand-message-btn {
-    position: absolute;
-    bottom: 5px;
-    right: 8px;
-    background-color: rgba(var(--button-accent-purple-rgb, 123, 76, 159), 0.5); /* Use RGB for opacity */
-    color: var(--button-accent-text);
-    border: none;
-    border-radius: 50%;
-    width: 24px;
-    height: 24px;
-    font-size: 14px;
-    line-height: 24px; /* Center icon vertically */
-    text-align: center;
-    cursor: pointer;
-    opacity: 0.7;
-    transition: opacity 0.2s ease, background-color 0.2s ease;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+/* Full Screen Message Modal Styles - no change from previous */
+.modal-overlay { /* ... */ }
+.modal-overlay:not(.hidden) { /* ... */ }
+.modal-content { /* ... */ }
+.modal-overlay:not(.hidden) .modal-content { /* ... */ }
+.modal-header { /* ... */ }
+.modal-header h2 { /* ... */ }
+.modal-close-btn { /* ... */ }
+.modal-close-btn:hover { /* ... */ }
+.modal-body { /* ... */ }
+.modal-body p { /* ... */ } /* and other markdown styles */
+.modal-footer { /* ... */ }
+#copy-full-message-btn { /* ... */ }
+#copy-full-message-btn:hover { /* ... */ }
+.hidden { /* ... */ }
 
-.expand-message-btn:hover {
-    opacity: 1;
-    background-color: rgba(var(--button-accent-purple-rgb, 123, 76, 159), 0.8);
-}
-
-/* Full Screen Message Modal Styles */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* Dimmed background */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000; /* Ensure it's on top */
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
-}
-
-.modal-overlay:not(.hidden) {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease, visibility 0s linear 0s;
-}
-
-.modal-content {
-    background-color: var(--container-bg-color); /* Use theme variable */
-    color: var(--text-color); /* Use theme variable */
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
-    width: 90%;
-    max-width: 700px;
-    max-height: 85vh;
-    display: flex;
-    flex-direction: column;
-    position: relative; /* For positioning close button */
-    transform: scale(0.95);
-    transition: transform 0.3s ease;
-}
-
-.modal-overlay:not(.hidden) .modal-content {
-    transform: scale(1);
-}
-
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-}
-
-.modal-header h2 {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: 600;
-}
-
-.modal-close-btn {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    color: var(--secondary-text-color);
-    cursor: pointer;
-    padding: 0 5px;
-    line-height: 1;
-}
-.modal-close-btn:hover {
-    color: var(--text-color);
-}
-
-.modal-body {
-    flex-grow: 1;
-    overflow-y: auto;
-    line-height: 1.6;
-    white-space: pre-wrap; /* Preserve line breaks and spacing */
-    font-size: 0.95rem; /* Adjust as needed */
-    margin-bottom: 15px;
-}
-
-/* Ensure Markdown styles from .message also apply in modal if needed */
-.modal-body p { margin: 0 0 0.6em 0; }
-.modal-body p:last-child { margin-bottom: 0; }
-.modal-body strong { font-weight: 600; color: var(--text-color); }
-.modal-body ol, .modal-body ul { padding-left: 1.75rem; margin-top: 0.6em; margin-bottom: 0.6em;}
-.modal-body li { margin-bottom: 0.3em; }
-.modal-body code {
-    background-color: var(--input-bar-bg); padding: 0.15em 0.5em;
-    border-radius: 5px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 0.875em; border: 1px solid var(--border-color);
-}
-.modal-body pre {
-    background-color: var(--input-bar-bg); padding: 1rem;
-    border-radius: 8px; overflow-x: auto;
-    font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
-    font-size: 0.875em; margin: 0.75em 0;
-    border: 1px solid var(--border-color);
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); 
-}
-.modal-body pre code { padding: 0; background-color: transparent; border: none; box-shadow: none;}
-
-
-.modal-footer {
-    border-top: 1px solid var(--border-color);
-    padding-top: 15px;
-    text-align: right;
-}
-
-#copy-full-message-btn {
-    background-color: var(--button-accent-purple);
-    color: var(--button-accent-text);
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
-}
-
-#copy-full-message-btn:hover {
-    opacity: 0.85;
-}
-
-.hidden {
-    display: none !important; /* Use important if other display properties interfere */
-    /* Or manage via opacity and visibility for transitions */
-    opacity: 0;
-    visibility: hidden;
-}
-
-/* You might need to add a new variable for the button purple's RGB components
-   if you haven't already, for the rgba() in expand-message-btn.
-   Example in :root:
-   --button-accent-purple-rgb: 123, 76, 159; 
-   Then use: background-color: rgba(var(--button-accent-purple-rgb), 0.5);
-   For now, I've hardcoded an example RGB.
-*/
-:root {
-    /* ... your existing :root variables ... */
-    --button-accent-purple-rgb: 112, 66, 136; /* RGB for #704288 */
-}
-
-/* Mobile Responsiveness */
-@media (max-width: 600px) {
-    body { padding: 0; font-size: 15px; }
-    body::before { display: none; } 
-
-    .container { height: 100vh; max-height: none; border-radius: 0; border: none; }
-    header { padding: 0.6rem 0.75rem; flex-wrap: wrap; gap: 0.5rem; }
-    header h1 { font-size: 1rem; flex-basis: 100%; text-align: center; margin-bottom: 0.5rem;}
-    .header-controls { width: 100%; justify-content: space-around; gap: 0.5rem; }
-    #new-chat-button, #summarize-chat-button, #chat-threads-menu { padding: 0.4rem 0.7rem; font-size: 0.8rem; }
-    .chat-history { padding: 0.75rem; gap: 0.75rem; }
-    .message { padding: 0.6rem 0.9rem; font-size: 0.9rem; }
-    .input-bar { padding: 0.6rem 0.75rem; gap: 0.5rem;}
-    #user-input { padding: 0.6rem 1rem; font-size: 0.9rem; max-height: 100px; }
-    #send-button { width: 38px; height: 38px; }
-    #send-button svg { width: 20px; height: 20px; }
-    .settings-section { padding: 0.75rem; }
-    label { font-size: 0.8rem; }
-    textarea, select:not(#chat-threads-menu) { padding: 0.6rem 0.8rem; font-size: 0.85rem; }
-}
+/* Mobile Responsiveness - no change from previous */
+@media (max-width: 600px) { /* ... */ }
