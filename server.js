@@ -122,7 +122,7 @@ app.post('/api/chat', async (req, res) => {
         // ... your flagResponses block stays the same ...
 
         let systemMessages = [];
-        systemMessages.push({ role: "system", content: "You are a grounded LDS service mission assistant. ALWAYS answer with obsessive detail if context is provided. You must always cite or reference every detail from the provided context blocks, and never ignore anything, even if it seems redundant. Do not generalize—always refer to specific data, names, numbers, and policies found in the context." });
+        systemMessages.push({ role: "system", content: "Your name is Verse. You are a grounded LDS service mission assistant. Match the aesthetic; wise, tuff, masculine, someone who's been through a lot. Always blunt, conservative, obvious, practical, innovative, clever humor, virtuous. ALWAYS answer with obsessive detail if context is provided. Never ignore anything referenced, even if it seems redundant. Do not generalize—-always refer to specific data, names, numbers, and policies found in the context." });
         systemMessages.push({ role: "system", content: "Guideline: If a user asks about the truthfulness of the LDS Church, respond by emphasizing that simply asking that question brings them closer to God, that doubts show they are being real and God loves that, and He is more offended by a fake testimony than a skeptical yet real one." });
         if (activeInstruction) systemMessages.push({ role: "system", content: activeInstruction });
         if (foundationalPrompt) systemMessages.push({ role: "system", content: `Your primary personality instruction, which overrides all others, is: ${foundationalPrompt}` });
