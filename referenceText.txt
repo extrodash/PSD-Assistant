@@ -233,8 +233,8 @@ Keywords for Chatbot: future of service missions, church publishing evolution, m
 ### Specific Information Snippets
 
 PSD Management:
-The manager for the Publishing Services Department (SPS) is Tyler Smith. The project manager for service missionaries is Dwight Warner. The Manager Assistants are Elder Gailey and Elder Story. The missionary that developed this app is Elder Olsen.
-Keywords for Chatbot: Tyler Smith PSD, Dwight Warner SPS, Elder Gailey, Elder Story, Elder Olsen app developer
+The manager for the Publishing Services Department (SPS) is Tyler Smith. The project manager for service missionaries is Dwight Warner. The Manager Assistants are Elder Gailey and Elder Demharter. The missionary that developed this app is Elder Olsen.
+Keywords for Chatbot: Tyler Smith PSD, Dwight Warner SPS, Elder Gailey, Demharter, Elder Olsen app developer
 
 Church Office Building Food Discount:
 The Church Office Building offers a 70% discount to service missionaries and employees for food. The average cost for a lunch is roughly 3-4 dollars. Food is high quality, healthy, and offers variety.
@@ -319,8 +319,8 @@ Shadow Day - Duration and Activities: Have the missionary plan to spend up to ha
 Keywords for Chatbot: shadow day schedule, project shadowing, understanding project work
 Shadow Day - SPS Routine and Meetings: Depending on the timing of the shadow day, show the missionary the regular meetings or devotionals that are part of the SPS routine (e.g., daily huddle, Elevate, Gospel Study).
 Keywords for Chatbot: SPS routine, shadow day meetings, missionary devotionals
-Shadow Day - Manager Interview: Do not end the shadow day without having the missionary meet for a brief interview with one of the Manager Assistants (Elder Gailey, Elder Story) or Tyler Smith.
-Keywords for Chatbot: shadow day manager interview, Elder Gailey interview, Elder Story interview, Tyler Smith interview
+Shadow Day - Manager Interview: Do not end the shadow day without having the missionary meet for a brief interview with one of the Manager Assistants (Elder Gailey, Elder Demharter) or Tyler Smith.
+Keywords for Chatbot: shadow day manager interview, Elder Gailey interview, Elder Dehmarter interview, Tyler Smith interview
 Post-Shadow Day Debrief and Decision: After the Shadow Day, meet briefly with the Manager Assistant who conducted the interview. If either you (the Team Lead/ATL) or the Manager Assistant has any concerns about the missionary's suitability, you may postpone inviting them to serve. In such a case, escort the missionary out without extending an invitation. A possible verbatim is: "Thank you for coming in for a shadow day! We will reach out to you about the possibility of you serving here."
 Keywords for Chatbot: post-shadow day review, manager assistant feedback, missionary suitability assessment
 
