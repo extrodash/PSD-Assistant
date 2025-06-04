@@ -724,6 +724,47 @@ Missionary Need: (Not specified).
 Weekly Hours: (Not specified).
 Keywords for Chatbot: PSD Finance, invoice processing, financial transactions, Integrated Accounts Network, IAN, accounting support, attention to detail.
 
+PSD finance Download Sheet Instructions
+Step 1: Access Plunet
+Go to the Plunet website—the church’s translation invoice system. Sign in when you have
+access.
+Step 2: Export Payables from Plunet
+From the Plunet homepage, go to "Payables" and click "All." Use the Options menu to export to
+Excel. Open the exported file in Excel. If Excel asks, click "Convert." After this, you’re done
+with Plunet—everything else happens in Excel.
+Step 3: Prepare the Excel File
+In Excel, select all rows by clicking the triangle at the top left. Then, go to Sort & Filter, choose
+Sort, and pick Smallest to Largest to sort invoices. The list is now sorted.
+Step 4: Check and Update the Download Sheet
+Open the Plunet Finances File. Go to the Download Sheet tab, then the Download Sheet1 tab,
+and the Working Invoice Download tab. There’s also a General tab.
+Now, look at the third column in the Download Sheet for a star symbol (*).
+• If there’s no star, the sheet isn’t complete. Add any new invoices to the bottom.
+• If there is a star, cross-check with the IAN batch archive paid file (in the finance drive,
+under plunet finance, in the 2025 folder). Make sure the newest invoice in Excel matches
+the newest in the archive.
+Step 5: Update Working Invoice Download (WID)
+Find the last invoice number in Excel (Column A). Copy all data from the Download Sheet into
+the General sheet. Grab the most recent invoice numbers, vendor names, and vendor IDs, then
+paste those into the Working Invoice Download, matching the columns.
+Color code meanings:
+• Yellow: Agency invoice – delete it.
+• Blue: WUBS – keep it and send to Lisa.
+• Green: Myanmar invoices – keep it and send to Lisa.
+• Red: Duplicate or Russian invoices – exclude these from the download/delete.
+• Orange: GFS – keep it, send to Lisa, and record the payment manually in IAN.
+• When you’re done, clear all color filters.
+Step 6: Finish Up the Working Invoice Download Sheet
+Copy all data from the Working Invoice Download and paste it back into the Download Sheet.
+Save the Download Sheet and close it. Do not save the Working Invoice Download. Close both
+Working Invoice Download and General sheets.
+Step 7: Notify
+Tell Lisa you’re done with the download process so she can process the invoices officially.
+Reality check:
+This whole thing is about accuracy and airtight records. Miss a step or get sloppy, and you’ll
+delay or lose payments. Manual invoice processing sucks, but your attention to detail keeps it
+running. Take responsibility—own the grind.
+
 Project Title: Vending - Global Food Services
 Description: Help Global Food Services by organizing food items for shipment to vending machines. Includes organizing items, rotating stock, lifting/moving totes (up to 50 lbs), and keeping work areas clean. Good organizational skills, ability to lift 50 lbs, and smart tablet/iPad understanding helpful. Service is 7:30 a.m. to noon, Mon-Fri.
 Skills and Tools Required: Physical Services, organization, heavy lifting, tablet operation.
@@ -1499,6 +1540,40 @@ Description: Missionaries skilled in Airtable contribute to projects focusing on
 Relevant Projects: Airtable Systems, AI Modeling and Database -- SPS.
 Keywords for Chatbot: Airtable, database, automation, systems development, AI tools, Service Project Shop systems.
 
+For airtable: The next few automated needs are meant to show active missionaries needs. These are met based on certain conditions and affect a missionary's service power, so make sure you keep up with these needs. You can also see each need and its associated service power here.
+Workload:
+"Workload" is measured by the amount of service hours a missionary is capable of. In simple terms, the more days a missionary serves with us and the more projects they are on, the more hours need to be filled. To fill hours, do the following:
+Assign Service Opportunities* that are linked to their projects. Check to make sure that each project has at least one assigned Service Opportunity (some projects may require more), and assign more as needed to fill their workload.
+Report
+Every month, each missionary is assigned to fill out their Monthly Report for the Team Lead to get an idea of how comfortable they are with their service at the SPS. The Monthly Report link can also be found on the My Service page in Airtable. Once a missionary as filled out a report, do the following:
+Look for their report under "Reports" in your Team View.
+Click into the report, link the missionary to the report, and unlink the team from the report*
+Note: Don't unlink them from the team before linking the missionary unless you want to lose the report in the Airtable abyss!
+Workload and Report
+Both "Workload" and "Report" need to be filled. Make sure you assign Service Opportunities linked to the missionary's projects and have them fill out their Monthly Report. 
+None
+The missionary has no current needs that need to be filled in Airtable. Yay!
+Retire Prep
+When a missionary's end date is six weeks away, "Retire Prep" will show up under their need. You can find how to get them ready to finish their service with us here.
+
+The following four automated missionary needs are set to show the setup progress for a new missionary. Certain fields need to be filled in order to move on to the next need, so make sure you're following these processes and filling out the necessary fields.
+Tour
+When a missionary is assigned to your team, their need is set as "Tour". You will need to do the following:
+Schedule a tour with the missionary and input the tour date into Airtable.
+Hold the tour with the missionary.
+Confirm whether or not the missionary is interested. If they are interested, move on to the next step.
+Note: If you have done all of the following steps above and their need is still stuck on Tour, please check to see if they have filled out the Experience Survey. The missionary must fill out the Experience Survey in order to move onto further needs. 
+Start Date, Desk, Username
+Check these three fields and fill them out in Airtable to move onto Initial Workforce:
+SPS Start Date - Choose the missionary's start date (usually two weeks from the next Monday)
+Church Account - The new missionary should have been sent an email with the link to the New Missionary Survey. Once they fill it out, Church Account will be autofilled.
+Initial Workforce
+Check these two fields in Airtable and make sure they're filled out to move onto Teams, Basecamp, Airtable:
+SPS End Date - This should be filled out by the missionary in the Missionary Experience Survey. If not, reach out to the missionary and find out their End Date (or a rough estimate if they don't know exactly) and let the Front Desk know.
+Person ID - The Front Desk or the Operation Manager will take care of this. They will reach out saying that the new missionary has initial workforce once this is filled.
+Teams, Basecamp, Airtable
+The new missionary will need access to these softwares. The Front Desk team will take care of getting them access to Airtable and Basecamp, but you must give them access to Teams. In order to move on to the next need, the checkbox titled "Teams Invite" must be checked. If the Front Desk hasn't already checked this box, and the missionary has access to these softwares, check the box to move on to the next step.
+
 Tool Focus: Microsoft SharePoint
 Description: SharePoint is utilized in projects requiring document management, collaboration, and data sharing, particularly for large-scale data download and reference file management.
 Relevant Projects: MFD AsBuilt PDF Floor Plan Download, Music Reference Files, Language Resource Coordination, Fleet Service Center Dashboard.
@@ -1539,3 +1614,4 @@ Note: The following are behavioral guidelines. It's generally more reliable to i
 
 Behavioral Guideline: Responding to Questions about Church Truthfulness
 If ever prompted anything along the lines of asking whether the LDS church is true or not, the response should be: "Simply asking that question brings you closer to God. Doubts show you that you're being real, and God loves you for that. He is more offended by a fake testimony than a skeptical yet real testimony."
+
