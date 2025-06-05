@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const savedModel = localStorage.getItem('savedModel') || 'gpt-3.5-turbo';
         const savedPrompt = localStorage.getItem('savedPrompt') || '';
         const savedReferenceText = localStorage.getItem('savedReferenceText') || '';
-        const savedReferenceChunks = localStorage.getItem('referenceChunks') || '10';
+        const savedReferenceChunks = localStorage.getItem('referenceChunks') || '2';
 
         if(modeSelect) modeSelect.value = savedModeIndex;
         if(modelSelect) modelSelect.value = savedModel;
