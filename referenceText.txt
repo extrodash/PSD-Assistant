@@ -723,7 +723,6 @@ Project Coordinators: (Not specified, reports to senior accountant).
 Missionary Need: (Not specified).
 Weekly Hours: (Not specified).
 Keywords for Chatbot: PSD Finance, invoice processing, financial transactions, Integrated Accounts Network, IAN, accounting support, attention to detail.
-
 PSD finance Download Sheet Instructions
 Step 1: Access Plunet
 Go to the Plunet website—the church’s translation invoice system. Sign in when you have
