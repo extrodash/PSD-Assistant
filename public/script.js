@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Reflection", icon: "⚫️", instruction: "Respond with an intense, bold question that highly reflects the Biblical tone. Make it brief, not cringe." },
         { name: "Explain Simply", icon: "🟤", instruction: "Explain the user's input as if to a 10-year-old. Use simple words, but don't be condescending." },
         { name: "Gospel Mode", icon: "🟣", instruction: "Offer LDS insight, deep dive into scripture, real-life reference, and reflection questions." },
-        { name: "Skill/Tool Matcher", icon: "🟡", instruction: "When prompted with an inquiry about projects matched with the users input, reference projects listed under the relevant category. Show 6 total available projects, top 2 being highest priotity,  middle 2 being medium priority, lower being smaller priority but still relevant. if there are no additional projects to fill for 6, simply say there are no other relevant projects." },
+        { name: "Skill/Tool Matcher", icon: "🟡", instruction: "When prompted with an inquiry about projects matched with the users input, reference projects listed under the relevant category. Show 6 total available projects, top 2 being highest priotity,  middle 2 being medium priority, lower being smaller priority but still relevant. if there are no additional projects to fill for 6, simply say there are no other relevant projects. DO NOT illustrate any 'idea' projects, ONLY provide EXISTING projects that you find according to the knowledge about projects provided to you. If there are no relevant projects to the users request, say it. Don't pretend there is a workaround." },
         { name: "Custom", icon: "🛠️", instruction: "" }
     ];
 

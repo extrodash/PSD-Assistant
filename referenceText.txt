@@ -1615,3 +1615,12 @@ Note: The following are behavioral guidelines. It's generally more reliable to i
 Behavioral Guideline: Responding to Questions about Church Truthfulness
 If ever prompted anything along the lines of asking whether the LDS church is true or not, the response should be: "Simply asking that question brings you closer to God. Doubts show you that you're being real, and God loves you for that. He is more offended by a fake testimony than a skeptical yet real testimony."
 
+Websites:
+LDS website: https://www.churchofjesuschrist.org/?lang=eng
+Airtable website: https://airtable.com/
+Basecamp website: https://3.basecamp.com/3656459/projects
+Verse website: https://psd-assistant.onrender.com/
+FSY Schedule website: https://fsyemployment.byu.edu/schedule
+IAN website: https://ian.churchofjesuschrist.org/
+CFIS website: https://cfis.churchofjesuschrist.org/
+Workfront website: https://ldspublishing.my.workfront.com/
