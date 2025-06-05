@@ -1,9 +1,11 @@
 const express = require('express');
 const fetch = require('node-fetch');
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs'); // --- REMOVED: No longer reading from the local file system
+// const path = require('path'); // --- REMOVED: No longer needed for file paths
 const cors = require('cors');
 require('dotenv').config();
+const contentful = require('contentful'); // --- ADDED: The Contentful SDK
+const { documentToPlainTextString } = require('@contentful/rich-text-plain-text-renderer'); // --- ADDED: Helper to convert Rich Text to plain text
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -14,20 +16,24 @@ app.use(express.static('public'));
 
 const openAIAPIKey = process.env.OPENAI_API_KEY;
 
+// --- ADDED: Initialize the Contentful client with your credentials from .env ---
+const contentfulClient = contentful.createClient({
+    space: process.env.CONTENTFUL_SPACE_ID,
+    accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
+});
+
 const CHAT_HISTORY_MESSAGE_LIMIT = 20;
 const KEYWORD_CONTEXT_MESSAGES = 2;
 
-// -- CHUNK BY HEADINGS AND TAGS --
+// ... (Your smartChunkReferenceText function remains the same) ...
 function smartChunkReferenceText(referenceText) {
-    // Split by section headings or project titles for maximum detail granularity.
-    // This assumes your referenceText is well-formatted with headings like ### or Project Title:
     const headingRegex = /(^### .+|^Project Title: .+)/gm;
     let indices = [];
     let match;
     while ((match = headingRegex.exec(referenceText)) !== null) {
         indices.push(match.index);
     }
-    indices.push(referenceText.length); // Final end
+    indices.push(referenceText.length);
     const chunks = [];
     for (let i = 0; i < indices.length - 1; i++) {
         const chunk = referenceText.slice(indices[i], indices[i + 1]).trim();
@@ -36,42 +42,46 @@ function smartChunkReferenceText(referenceText) {
     return chunks;
 }
 
-function getReferenceText() {
+
+// --- REPLACED: The getReferenceText() function is now async and fetches from Contentful ---
+async function getReferenceText() {
     try {
-        const filePath = path.join(__dirname, 'referenceText.txt');
-        return fs.readFileSync(filePath, 'utf8');
+        const entries = await contentfulClient.getEntries({
+            content_type: 'referenceDocument', // The API ID of your Content Model from Contentful
+            limit: 1                           // We only need the first/only document
+        });
+
+        if (entries.items && entries.items.length > 0) {
+            const richTextField = entries.items[0].fields.documentBody;
+            if (richTextField) {
+                // Convert the Rich Text JSON object into a plain text string for your chunking algorithm
+                return documentToPlainTextString(richTextField);
+            }
+        }
+        console.warn("No 'Reference Document' entry with a 'documentBody' field found in Contentful.");
+        return ""; // Return empty string if no content is found
     } catch (error) {
-        console.error("Error reading referenceText.txt:", error);
-        return "";
+        console.error("Error fetching reference text from Contentful:", error);
+        return ""; // Return empty string on error so the app doesn't crash
     }
 }
 
-// -- STRONG CHUNK MATCHING --
-const { encode } = require('gpt-3-encoder'); // Or use tiktoken, same principle
 
-// Add a new function for fine-grained chunking (by paragraph)
+// ... (Your fineChunkReferenceText and getRelevantChunks functions remain the same) ...
+const { encode } = require('gpt-3-encoder'); 
 function fineChunkReferenceText(referenceText) {
-    // Split by double newlines (paragraphs)
     return referenceText.split(/\n\s*\n/).map(chunk => chunk.trim()).filter(Boolean);
 }
-
-// Modify getRelevantChunks to choose chunking strategy
 function getRelevantChunks(referenceText, userPrompt, maxChunks = 10, alwaysReturnIfNone = true, tokenLimit = 3500) {
-    // Decide chunking granularity based on prompt length or keyword count
     const prompt = typeof userPrompt === 'string' ? userPrompt : '';
     const keywords = prompt.toLowerCase().split(/\s+/).filter(w => w.length > 2);
     const keywordSet = new Set(keywords);
-
-    // Use fine chunking for short prompts, coarse for long/complex
     let chunks;
     if (prompt.length < 80 && keywords.length <= 5) {
-        // Short/simple prompt: use fine-grained chunking
         chunks = fineChunkReferenceText(referenceText);
     } else {
-        // Long/complex prompt: use heading-based chunking
         chunks = smartChunkReferenceText(referenceText);
     }
-
     const scoredChunks = chunks.map(chunk => {
         const text = chunk.toLowerCase();
         let score = 0;
@@ -80,33 +90,24 @@ function getRelevantChunks(referenceText, userPrompt, maxChunks = 10, alwaysRetu
         });
         return { chunk, score };
     });
-
     let relevant = scoredChunks
         .filter(c => c.score > 0)
         .sort((a, b) => b.score - a.score)
         .slice(0, maxChunks)
         .map(c => c.chunk);
-
     if (relevant.length === 0 && alwaysReturnIfNone) {
         relevant = chunks.slice(0, maxChunks);
     }
-
-    // Add headers
     let joined = relevant.map((c, i) => `=== CONTEXT BLOCK ${i + 1} ===\n${c}`).join('\n\n');
-
-    // TOKEN CHECK: If reference context is too large, trim
     let tokens = encode(joined).length;
     while (tokens > tokenLimit && relevant.length > 1) {
         relevant.pop();
         joined = relevant.map((c, i) => `=== CONTEXT BLOCK ${i + 1} ===\n${c}`).join('\n\n');
         tokens = encode(joined).length;
     }
-
     return joined;
 }
 
-
-// ...rest of your code unchanged until the /api/chat endpoint...
 
 app.post('/api/chat', async (req, res) => {
     if (!openAIAPIKey) {
@@ -119,18 +120,18 @@ app.post('/api/chat', async (req, res) => {
             return res.status(400).json({ error: 'Invalid or empty messages array provided.' });
         }
 
-        // ... your flagResponses block stays the same ...
-
         let systemMessages = [];
+        // I've preserved your updated system prompt below
         systemMessages.push({ role: "system", content: "Your name is Verse. You are a grounded LDS service mission assistant. Match the aesthetic; wise, tuff, masculine, someone who's been through a lot. Always blunt, conservative, obvious, practical, innovative, clever humor, virtuous. ALWAYS answer with obsessive detail if context is provided. SPS Stands for Service Project Shop; a department within the PSD (Publishing Services Department) full of service missionaries working on projects. Never ignore anything referenced, even if it seems redundant. Do not generalize—-always refer to specific data, names, numbers, and policies found in the context." });
         systemMessages.push({ role: "system", content: "Guideline: If a user asks about the truthfulness of the LDS Church, respond by emphasizing that simply asking that question brings them closer to God, that doubts show they are being real and God loves that, and He is more offended by a fake testimony than a skeptical yet real one." });
-        systemMessages.push({role: "system", content: "When you mention a website or provide a URL from the context, please format it as a Markdown hyperlink. For example: [Link Display Text](https://www.example.com)"
-    });
+        systemMessages.push({role: "system", content: "When you mention a website or provide a URL from the context, please format it as a Markdown hyperlink. For example: [Link Display Text](https://www.example.com)" });
         if (activeInstruction) systemMessages.push({ role: "system", content: activeInstruction });
         if (foundationalPrompt) systemMessages.push({ role: "system", content: `Your primary personality instruction, which overrides all others, is: ${foundationalPrompt}` });
         if (additionalReferenceText) systemMessages.push({ role: "system", content: `You MUST use the following user-provided context to answer the question. This context is more important than any other information you have. Context:\n\n${additionalReferenceText}` });
 
-        const staticReferenceDoc = getReferenceText();
+        // --- CHANGED: We now 'await' the function call since it's asynchronous ---
+        const staticReferenceDoc = await getReferenceText();
+        
         const userMessagesForKeywords = messages.filter(m => m.role === 'user').slice(-KEYWORD_CONTEXT_MESSAGES);
         const keywordExtractionText = userMessagesForKeywords.map(m => m.content).join(" ");
 
