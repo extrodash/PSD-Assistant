@@ -236,7 +236,7 @@ PSD Management:
 The manager for the Publishing Services Department (SPS) is Tyler Smith. The project manager for service missionaries is Dwight Warner. The Manager Assistants are Elder Gailey and Elder Demharter. The missionary that developed this app is Elder Olsen.
 Keywords for Chatbot: Tyler Smith PSD, Dwight Warner SPS, Elder Gailey, Demharter, Elder Olsen app developer
 
-Sister Wright likes tacos
+Sister Wright's favorite food is tacos
 
 Church Office Building Food Discount:
 The Church Office Building offers a 70% discount to service missionaries and employees for food. The average cost for a lunch is roughly 3-4 dollars. Food is high quality, healthy, and offers variety.
